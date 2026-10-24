@@ -1,0 +1,41 @@
+# study-blogs
+
+Personal study archive for **Yuxi Guo**.
+
+**Live**: https://dionysus23334.github.io/study-blogs/
+
+## What's here
+
+A small front door for two course-note sites:
+
+- [CSIT5730 · Principles of Cybersecurity](https://dionysus23334.github.io/CSIT-5730-WebCybersecurity/)
+- [CSIT5610 · Computer Networks](https://dionysus23334.github.io/CSIT-5610-ComputerNetworks/)
+
+The page is a hand-written gallery: two course cards, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
+
+## Stack
+
+- Plain HTML / CSS / JavaScript — no build step
+- `index.html`, `styles.css`, `main.js`
+- Deployed from the `gh-pages` branch
+
+## Local preview
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open <http://127.0.0.1:8000>.
+
+## Updating
+
+Edit `index.html` / `styles.css` / `main.js`, then push to both `main` and `gh-pages`:
+
+```bash
+git add -A
+git commit -m "update site"
+git push origin main
+git push origin main:gh-pages
+```
+
+The live site is served from `gh-pages`.
