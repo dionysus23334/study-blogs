@@ -218,3 +218,17 @@ h1 em { color: var(--acc); font-style: italic; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* language switch */
+.lang-switch {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+  color: var(--mut); white-space: nowrap;
+}
+.lang-switch a { color: var(--mut); text-decoration: none; transition: color .2s; }
+.lang-switch a:hover { color: var(--acc); }
+.lang-current { color: var(--ink); }
+.lang-sep { opacity: .35; }
+@media (max-width: 620px) {
+  .site-nav a:first-child { display: none; }
+}

@@ -4,6 +4,11 @@ Personal study archive for **Yuxi Guo**.
 
 **Live**: https://dionysus23334.github.io/study-blogs/
 
+## Languages
+
+- 中文: https://dionysus23334.github.io/study-blogs/
+- English: https://dionysus23334.github.io/study-blogs/en/
+
 ## What's here
 
 A small front door for two course-note sites:
@@ -16,7 +21,8 @@ The page is a hand-written gallery: two course cards, a quick index of outlines/
 ## Stack
 
 - Plain HTML / CSS / JavaScript — no build step
-- `index.html`, `styles.css`, `main.js`
+- `index.html` (Chinese), `en/index.html` (English)
+- `styles.css`, `main.js` shared by both
 - Deployed from the `gh-pages` branch
 
 ## Local preview
