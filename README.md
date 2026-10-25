@@ -16,13 +16,18 @@ A small front door for two course-note sites:
 - [CSIT5730 · Principles of Cybersecurity](https://dionysus23334.github.io/CSIT-5730-WebCybersecurity/)
 - [CSIT5610 · Computer Networks](https://dionysus23334.github.io/CSIT-5610-ComputerNetworks/)
 
-The page is a hand-written gallery: two course cards, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
+The page is a hand-written gallery: two course cards, an **Explorations** section for small projects, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
+
+## Explorations
+
+- [Paper Town / Agent-City-Demo](https://dionysus23334.github.io/Agent-City-Demo/) — a hand-drawn interactive town with twenty neighbours, weather, time, and small story events. No API, no backend.
 
 ## Stack
 
 - Plain HTML / CSS / JavaScript — no build step
 - `index.html` (Chinese), `en/index.html` (English)
 - `styles.css`, `main.js` shared by both
+- `assets/agent-city.webp` — cover image for the Paper Town exploration card
 - Deployed from the `gh-pages` branch
 
 ## Local preview

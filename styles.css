@@ -84,7 +84,7 @@ h1 {
 }
 h1 em { color: var(--acc); font-style: italic; }
 .lead { max-width: 36em; margin: 0; color: var(--mut); font-size: 16px; line-height: 1.85; }
-.hero-meta { display: flex; gap: 42px; margin-top: 46px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 20px 42px; margin-top: 46px; }
 .stat { display: flex; flex-direction: column; gap: 2px; }
 .stat b { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .08em; color: var(--acc); }
 .stat span { font-size: 12px; color: var(--mut); letter-spacing: .03em; }
@@ -143,6 +143,33 @@ h1 em { color: var(--acc); font-style: italic; }
 .card:hover .card-link span { transform: translateX(4px); }
 .card-terms { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--mut); }
 
+/* exploration card */
+.explore-card {
+  grid-column: span 12; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--panel); color: var(--ink); text-decoration: none;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .25s, box-shadow .35s;
+}
+.explore-card:hover { transform: translateY(-4px); border-color: var(--acc); box-shadow: 0 18px 44px -28px color-mix(in srgb, var(--acc) 45%, transparent); }
+.explore-visual { position: relative; min-height: 390px; overflow: hidden; background: #e7e1d2; }
+.explore-visual img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.explore-card:hover .explore-visual img { transform: scale(1.025); }
+.explore-visual::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(20,25,20,.06), transparent 35%, rgba(20,25,20,.10)); }
+.explore-badge {
+  position: absolute; z-index: 2; top: 18px; left: 18px;
+  padding: .48rem .65rem; border-radius: 999px;
+  background: rgba(255,255,255,.84); color: #2a3028;
+  font: 600 10px/1 var(--mono); letter-spacing: .12em;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.explore-body { display: flex; flex-direction: column; justify-content: center; padding: 34px 32px; }
+.explore-body h3 { margin: 10px 0 10px; font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.02em; }
+.explore-body h3 span { color: var(--mut); font-style: italic; font-weight: 400; font-size: .62em; letter-spacing: 0; }
+.explore-body p { margin: 0 0 20px; color: var(--mut); font-size: 14px; line-height: 1.8; }
+.explore-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.explore-tags span { padding: .3rem .55rem; border: 1px solid var(--line); border-radius: 999px; font-family: var(--mono); font-size: 9px; letter-spacing: .06em; color: var(--mut); }
+.explore-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; }
+
 /* index */
 .index-list { border-top: 1px solid var(--line); }
 .index-row {
@@ -194,13 +221,18 @@ h1 em { color: var(--acc); font-style: italic; }
   .card--wide, .card--narrow { grid-column: span 12; }
   .cover { height: 280px; }
   .about { grid-template-columns: 1fr; gap: 34px; }
+  .explore-card { grid-template-columns: 1fr; }
+  .explore-visual { min-height: 300px; }
+  .explore-body { padding: 26px 24px; }
   .index-row { grid-template-columns: 36px 1fr 20px; gap: 12px; }
   .index-desc { display: none; }
   .site-footer { flex-direction: column; gap: 10px; }
 }
 @media (max-width: 620px) {
   .shell { width: min(100% - 32px, 1120px); }
-  .site-nav a:nth-child(2), .site-nav a:nth-child(3) { display: none; }
+  .site-nav { display: none; }
+  .lang-switch { margin-left: auto; }
+  .header-inner { gap: 12px; }
   .brand-sub { display: none; }
   h1 { font-size: clamp(40px, 12vw, 54px); }
   .lead { font-size: 14px; }
@@ -211,6 +243,9 @@ h1 em { color: var(--acc); font-style: italic; }
   .card-body { padding: 18px 20px; }
   .card h3 { font-size: 22px; }
   .about-card { padding: 24px 22px; }
+  .explore-visual { min-height: 230px; }
+  .explore-badge { top: 12px; left: 12px; }
+  .explore-body { padding: 22px 20px; }
   .monogram { font-size: 84px; }
 }
 @media (prefers-reduced-motion: reduce) {
