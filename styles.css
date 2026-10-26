@@ -286,3 +286,11 @@ h1 em { color: var(--acc); font-style: italic; }
 @media (max-width: 620px) {
   .card--full .cover { height: 220px; }
 }
+
+/* algorithms cover */
+.cover--algo {
+  background: linear-gradient(145deg, #7c2d12 0%, #3f1608 52%, #1c0b05 100%);
+}
+.cover--algo .cover-no {
+  font-size: 150px; opacity: .16;
+}

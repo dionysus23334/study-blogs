@@ -11,16 +11,20 @@ Personal study archive for **Yuxi Guo**.
 
 ## What's here
 
-A small front door for two course-note sites and one mathematics note:
+A small front door for two course-note sites, one mathematics note, and one algorithms repository:
 
 - [CSIT5730 · Principles of Cybersecurity](https://dionysus23334.github.io/CSIT-5730-WebCybersecurity/)
 - [CSIT5610 · Computer Networks](https://dionysus23334.github.io/CSIT-5610-ComputerNetworks/)
 
-The page is a hand-written gallery: two course cards, one mathematics note card, an **Explorations** section for small projects, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
+The page is a hand-written gallery: two course cards, a mathematics note card, an algorithms card, an **Explorations** section for small projects, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
 
 ## Mathematics note
 
 - [Classical academics & learning stages](https://dionysus23334.github.io/Mathematics/) — one entry for the classical route and the learning-stage route.
+
+## Algorithms
+
+- [Algorithms](https://github.com/dionysus23334/Algorithms) — notes and implementations: data structures, complexity, graphs, and dynamic programming.
 
 ## Explorations
 
