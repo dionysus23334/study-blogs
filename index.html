@@ -19,6 +19,7 @@
     </a>
     <nav class="site-nav" aria-label="主导航">
       <a class="nav-notes" href="#notes">Notes</a>
+      <a class="nav-math" href="#mathematics">Mathematics</a>
       <a class="nav-explore" href="#explorations">探索</a>
       <a class="nav-index" href="#index">Index</a>
       <a class="nav-about" href="#about">About</a>
@@ -40,6 +41,7 @@
     <p class="lead reveal">HKUST 学习档案。课程笔记、术语表、作业复盘，以及一些还没想清楚的边角问题；偶尔也把想法做成可以点开的小项目。把散落的东西收在一起，方便以后翻，也方便现在的自己。</p>
     <div class="hero-meta reveal">
       <div class="stat"><b>02</b><span>course sites</span></div>
+      <div class="stat"><b>01</b><span>math library</span></div>
       <div class="stat"><b>10</b><span>chapters</span></div>
       <div class="stat"><b>121</b><span>glossary terms</span></div>
       <div class="stat"><b>01</b><span>exploration</span></div>
@@ -88,10 +90,52 @@
     </div>
   </section>
 
+  <section class="section shell" id="mathematics">
+    <div class="section-head reveal">
+      <div>
+        <p class="section-label">02 / Mathematics</p>
+        <h2>数学不是一条直线，是一张有地基的地图。</h2>
+      </div>
+      <p class="section-aside">同一套知识，两种读法：按证明依赖，或按学习阶段。每一页都写明前置。</p>
+    </div>
+
+    <div class="gallery">
+      <a class="card card--wide reveal" href="https://dionysus23334.github.io/Mathematics/theory/" target="_blank" rel="noopener">
+        <div class="cover cover--math-a">
+          <span class="cover-no">∑</span>
+          <div class="cover-kicker">Mathematics · Route A</div>
+          <div class="cover-title">Classical<br>Mathematics</div>
+          <div class="cover-tags">Logic · Sets · Numbers · Analysis</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span>Mathematics</span><span>7 layers</span></div>
+          <h3>经典数学理论体系</h3>
+          <p>从逻辑、集合、数系与代数结构出发，按“定义 → 定理 → 分支”推进；共同地基之上再分支。</p>
+          <div class="card-foot"><span class="card-link">进入理论路线 <span aria-hidden="true">→</span></span><span class="card-terms">dependency order</span></div>
+        </div>
+      </a>
+
+      <a class="card card--narrow reveal" href="https://dionysus23334.github.io/Mathematics/stages/" target="_blank" rel="noopener">
+        <div class="cover cover--math-b">
+          <span class="cover-no">∫</span>
+          <div class="cover-kicker">Mathematics · Route B</div>
+          <div class="cover-title">Learning<br>Stages</div>
+          <div class="cover-tags">Elementary · Secondary · University</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span>Mathematics</span><span>3 stages + competition</span></div>
+          <h3>教育阶段体系</h3>
+          <p>从数量、图形与实际问题出发，经过中学、竞赛与大学公共基础，逐步进入抽象与证明。</p>
+          <div class="card-foot"><span class="card-link">进入学习阶段 <span aria-hidden="true">→</span></span><span class="card-terms">learning order</span></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <section class="section shell" id="explorations">
     <div class="section-head reveal">
       <div>
-        <p class="section-label">02 / Explorations</p>
+        <p class="section-label">03 / Explorations</p>
         <h2>学习也是钻研，偶尔做点小东西。</h2>
       </div>
       <p class="section-aside">不为交作业，只为把一个念头跑起来。这里是零碎的实验、原型和小世界。</p>
@@ -117,7 +161,7 @@
   <section class="section shell" id="index">
     <div class="section-head reveal">
       <div>
-        <p class="section-label">03 / Index</p>
+        <p class="section-label">04 / Index</p>
         <h2>直接跳到某一页。</h2>
       </div>
       <p class="section-aside">大纲、术语表、仓库源码——常用的入口都放在这里。</p>
@@ -145,6 +189,9 @@
       <a class="index-row" href="https://dionysus23334.github.io/Agent-City-Demo/" target="_blank" rel="noopener">
         <span class="index-num">07</span><span class="index-name">Agent-City-Demo · Paper Town</span><span class="index-desc">一座可以点击的小镇</span><span class="index-arrow" aria-hidden="true">↗</span>
       </a>
+      <a class="index-row" href="https://dionysus23334.github.io/Mathematics/" target="_blank" rel="noopener">
+        <span class="index-num">08</span><span class="index-name">Mathematics · 数学知识体系</span><span class="index-desc">两套并行目录：理论依赖 / 学习阶段</span><span class="index-arrow" aria-hidden="true">↗</span>
+      </a>
     </div>
   </section>
 
@@ -159,10 +206,10 @@
       </div>
     </div>
     <div class="about-copy reveal">
-      <p class="section-label">04 / About</p>
+      <p class="section-label">05 / About</p>
       <h2>我是 Yuxi Guo，在 HKUST 读书。</h2>
       <p>这个站点是学习档案的入口。两个课程站点用 MkDocs 搭，配色、排版和这个首页的 CSS 是手写的；所有笔记都来自课件、课堂和自己的整理。</p>
-      <p>写笔记的原因很简单：不写下来，就以为自己会了。术语表是为了让“第一次见到某个缩写”不再靠猜；作业复盘是为了记住踩过的坑，而不是只记住答案。偶尔也做点小项目——学习不只是把知识收进来，也是把它拿出来用一用。</p>
+      <p>写笔记的原因很简单：不写下来，就以为自己会了。术语表是为了让“第一次见到某个缩写”不再靠猜；作业复盘是为了记住踩过的坑，而不是只记住答案。偶尔也做点小项目——学习不只是把知识收进来，也是把它拿出来用一用。数学库是最近加的第二条线：一套按依赖、一套按阶段；它提醒我，学习不只是课程表。</p>
       <p class="about-links">
         <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="https://dionysus23334.github.io/CSIT-5730-WebCybersecurity/" target="_blank" rel="noopener">CSIT5730 ↗</a>
