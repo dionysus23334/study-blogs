@@ -279,63 +279,10 @@ h1 em { color: var(--acc); font-style: italic; }
   font-size: 150px; opacity: .18;
 }
 
-/* mathematics note inside Notes */
-.math-note {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 18px;
-  padding: 18px 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
-  text-decoration: none;
-  color: var(--ink);
-  transition: transform .3s ease, border-color .25s ease, box-shadow .3s ease;
-}
-.math-note:hover {
-  transform: translateY(-3px);
-  border-color: var(--acc);
-  box-shadow: 0 16px 36px -30px color-mix(in srgb, var(--acc) 45%, transparent);
-}
-.math-note-mark {
-  flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--acc) 9%, transparent);
-  color: var(--acc);
-  font-family: var(--serif);
-  font-size: 30px;
-}
-.math-note-copy { display: flex; flex-direction: column; min-width: 0; }
-.math-note-kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--mut);
-}
-.math-note-title {
-  margin: 4px 0 3px;
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -.01em;
-}
-.math-note-desc { color: var(--mut); font-size: 12px; line-height: 1.6; }
-.math-note-go {
-  margin-left: auto;
-  flex: 0 0 auto;
-  color: var(--acc);
-  font-size: 12px;
-  font-weight: 500;
-}
-.math-note-go span { display: inline-block; margin-left: 4px; transition: transform .2s; }
-.math-note:hover .math-note-go span { transform: translateX(4px); }
+/* full-width note card in the notes gallery */
+.card--full { grid-column: span 12; }
+.card--full .cover { height: 250px; }
+.card--full .card-body h3 { font-size: 24px; }
 @media (max-width: 620px) {
-  .math-note { flex-wrap: wrap; align-items: flex-start; }
-  .math-note-go { margin-left: 70px; }
+  .card--full .cover { height: 220px; }
 }
