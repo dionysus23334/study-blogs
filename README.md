@@ -11,17 +11,16 @@ Personal study archive for **Yuxi Guo**.
 
 ## What's here
 
-A small front door for two course-note sites:
+A small front door for two course-note sites and one mathematics note:
 
 - [CSIT5730 · Principles of Cybersecurity](https://dionysus23334.github.io/CSIT-5730-WebCybersecurity/)
 - [CSIT5610 · Computer Networks](https://dionysus23334.github.io/CSIT-5610-ComputerNetworks/)
 
-The page is a hand-written gallery: two course cards, a **Mathematics** section with two parallel routes, an **Explorations** section for small projects, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
+The page is a hand-written gallery: two course cards, one mathematics note card, an **Explorations** section for small projects, a quick index of outlines/glossaries/repos, and a short about section. It shares the same editorial visual language as the notes: dotted paper background, serif headings, blue accent, dark mode.
 
-## Mathematics
+## Mathematics note
 
-- [Classical Mathematics · Theory route](https://dionysus23334.github.io/Mathematics/theory/) — seven layers from logic and sets to analysis, algebra, topology, and advanced theory.
-- [Learning Stages](https://dionysus23334.github.io/Mathematics/stages/) — elementary → secondary (including competition) → university.
+- [Classical academics & learning stages](https://dionysus23334.github.io/Mathematics/) — one entry for the classical route and the learning-stage route.
 
 ## Explorations
 
