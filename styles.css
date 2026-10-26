@@ -218,7 +218,7 @@ h1 em { color: var(--acc); font-style: italic; }
   .section-head { align-items: start; flex-direction: column; gap: 14px; }
   .section-aside { max-width: 34em; }
   .gallery { gap: 18px; }
-  .card--wide, .card--narrow, .card--half { grid-column: span 12; }
+  .card--wide, .card--narrow { grid-column: span 12; }
   .cover { height: 280px; }
   .about { grid-template-columns: 1fr; gap: 34px; }
   .explore-card { grid-template-columns: 1fr; }
@@ -277,14 +277,6 @@ h1 em { color: var(--acc); font-style: italic; }
 }
 .cover--math-a .cover-no, .cover--math-b .cover-no {
   font-size: 150px; opacity: .18;
-}
-
-/* half-width note cards in the notes gallery */
-.card--half { grid-column: span 6; }
-.card--half .cover { height: 280px; }
-.card--half .card-body h3 { font-size: 24px; }
-@media (max-width: 620px) {
-  .card--half .cover { height: 220px; }
 }
 
 /* algorithms cover */
