@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>瑞士杠杆擒纵 · Swiss Lever Escapement</title>
+<style>
+  :root {
+    --bg: #e8e4dc;
+    --panel: rgba(28, 30, 36, 0.88);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --text: #f2f0ea;
+    --muted: #a8a49a;
+    --accent: #c9a227;
+    --accent2: #e85d4c;
+    --ruby: #c41e3a;
+    --ok: #5ecf8a;
+    --btn: rgba(255,255,255,0.08);
+    --btn-h: rgba(255,255,255,0.16);
+    --btn-a: rgba(201,162,39,0.35);
+    --font: "SF Pro Text", "Segoe UI", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    --mono: "SF Mono", "JetBrains Mono", "Cascadia Code", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); font-family: var(--font); color: var(--text); }
+  #c { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+  #c.dragging { cursor: grabbing; }
+
+  .hud {
+    position: absolute; inset: 0; pointer-events: none;
+    display: grid;
+    grid-template-columns: 300px 1fr 280px;
+    grid-template-rows: auto 1fr auto;
+    padding: 18px;
+    gap: 14px;
+  }
+  .panel {
+    pointer-events: auto;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+  .title-block {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    padding: 16px 20px;
+    max-width: 560px;
+  }
+  .title-block h1 {
+    font-size: 18px; font-weight: 650; letter-spacing: 0.02em;
+    background: linear-gradient(90deg, #f5e6b8, #c9a227 40%, #e8d5a3);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .title-block .sub { margin-top: 4px; font-size: 12px; color: var(--muted); }
+  .title-block .hint { margin-top: 8px; font-size: 11px; color: #8c887e; line-height: 1.45; }
+
+  .gauges {
+    grid-column: 3; grid-row: 1 / 3;
+    padding: 14px 16px;
+    align-self: start;
+  }
+  .gauges h2 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin-bottom: 12px; font-weight: 600;
+  }
+  .g-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+  }
+  .g-row:last-child { border-bottom: none; }
+  .g-label { color: var(--muted); }
+  .g-val { font-family: var(--mono); font-size: 13px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .g-val.accent { color: var(--accent); }
+  .g-val.impulse { color: var(--accent2); font-weight: 600; }
+  .bar {
+    margin-top: 4px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.08); overflow: hidden;
+  }
+  .bar > i {
+    display: block; height: 100%; width: 50%;
+    background: linear-gradient(90deg, var(--accent), #e8d5a3);
+    border-radius: 2px; transform-origin: left center;
+  }
+  .event-log {
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px; color: var(--muted); min-height: 48px;
+    font-family: var(--mono); line-height: 1.5;
+  }
+  .event-log .flash { color: var(--accent2); }
+
+  .controls {
+    grid-column: 1; grid-row: 3;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 340px;
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .row label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); width: 100%; margin-bottom: 2px;
+  }
+  button {
+    appearance: none; border: 1px solid rgba(255,255,255,0.1);
+    background: var(--btn); color: var(--text);
+    font-family: inherit; font-size: 12px; padding: 7px 11px;
+    border-radius: 8px; cursor: pointer; transition: background .15s, border-color .15s, transform .1s;
+    pointer-events: auto;
+  }
+  button:hover { background: var(--btn-h); }
+  button:active { transform: scale(0.97); }
+  button.active { background: var(--btn-a); border-color: rgba(201,162,39,0.55); color: #ffe9a8; }
+  button.primary { background: rgba(201,162,39,0.25); border-color: rgba(201,162,39,0.45); }
+
+  .legend {
+    grid-column: 3; grid-row: 3;
+    padding: 12px 14px; align-self: end;
+    font-size: 11px; color: var(--muted); line-height: 1.55;
+  }
+  .legend span { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .sw-brass { background: #c9a227; }
+  .sw-steel { background: #9aa3ad; }
+  .sw-ruby { background: #c41e3a; }
+  .sw-plate { background: #3a3f48; }
+
+  .tour-badge {
+    position: absolute; left: 50%; top: 18px; transform: translateX(-50%);
+    pointer-events: none;
+    background: rgba(28,30,36,0.9); color: #ffe9a8;
+    font-size: 12px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid rgba(201,162,39,0.4);
+    opacity: 0; transition: opacity .35s; z-index: 5;
+  }
+  .tour-badge.show { opacity: 1; }
+
+  .fake-cursor {
+    position: absolute; width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid #ffe9a8; background: rgba(201,162,39,0.35);
+    pointer-events: none; z-index: 20; opacity: 0;
+    box-shadow: 0 0 12px rgba(201,162,39,0.5);
+    transition: left .6s ease, top .6s ease, opacity .25s;
+  }
+
+  @media (max-width: 900px) {
+    .hud { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding: 10px; }
+    .title-block, .gauges, .controls, .legend { grid-column: 1; max-width: none; }
+    .gauges { grid-row: 2; }
+    .controls { grid-row: 4; }
+    .legend { display: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="tour-badge" id="tourBadge">自动导览 · Auto tour</div>
+<div class="fake-cursor" id="fakeCursor"></div>
+
+<div class="hud">
+  <div class="panel title-block">
+    <h1>瑞士杠杆擒纵 · Swiss Lever Escapement</h1>
+    <div class="sub">interactive study model · Grok Bot demo</div>
+    <div class="hint">拖拽旋转 · 滚轮缩放 · 拖右键/中键平移。数学驱动：摆轮 ~4 Hz（28800 bph），擒纵轮 15 齿，每拍进一齿。</div>
+  </div>
+
+  <div class="panel gauges">
+    <h2>Live gauges · 实时读数</h2>
+    <div class="g-row"><span class="g-label">Balance θ</span><span class="g-val accent" id="gBal">0.0°</span></div>
+    <div class="bar"><i id="barBal"></i></div>
+    <div class="g-row"><span class="g-label">Frequency</span><span class="g-val" id="gFreq">4.00 Hz</span></div>
+    <div class="g-row"><span class="g-label">Escape tooth</span><span class="g-val" id="gTooth">0 / 15</span></div>
+    <div class="g-row"><span class="g-label">Escape ω</span><span class="g-val" id="gEsc">0.0°</span></div>
+    <div class="g-row"><span class="g-label">Lever α</span><span class="g-val" id="gLev">0.0°</span></div>
+    <div class="g-row"><span class="g-label">Beat count</span><span class="g-val" id="gBeat">0</span></div>
+    <div class="g-row"><span class="g-label">Impulse</span><span class="g-val" id="gImp">—</span></div>
+    <div class="g-row"><span class="g-label">Speed</span><span class="g-val" id="gSpd">1×</span></div>
+    <div class="event-log" id="eventLog">就绪 · Ready</div>
+  </div>
+
+  <div class="panel controls">
+    <div class="row">
+      <label>Playback · 播放</label>
+      <button class="primary" id="btnPlay" type="button">Pause · 暂停</button>
+      <button data-speed="0.25" type="button">0.25×</button>
+      <button data-speed="1" class="active" type="button">1×</button>
+      <button data-speed="4" type="button">4×</button>
+    </div>
+    <div class="row">
+      <label>Disassembly · 拆解</label>
+      <button id="btnExplode" type="button">Explode · 拆开</button>
+      <button id="btnAssemble" type="button">Assemble · 合上</button>
+    </div>
+    <div class="row">
+      <label>Isolate · 隔离</label>
+      <button data-iso="all" class="active" type="button">All</button>
+      <button data-iso="balance" type="button">Balance</button>
+      <button data-iso="lever" type="button">Lever</button>
+      <button data-iso="escape" type="button">Escape</button>
+    </div>
+    <div class="row">
+      <label>View · 视角</label>
+      <button data-cam="hero" class="active" type="button">Hero</button>
+      <button data-cam="side" type="button">Side</button>
+      <button data-cam="top" type="button">Top</button>
+      <button data-cam="inside" type="button">Inside</button>
+      <button id="btnCut" type="button">Cutaway · 剖视</button>
+    </div>
+  </div>
+
+  <div class="panel legend">
+    <div><span class="sw-brass"></span>Brass wheels · 黄铜轮系</div>
+    <div><span class="sw-steel"></span>Steel arbors · 钢轴</div>
+    <div><span class="sw-ruby"></span>Ruby pallets / jewel · 红宝石</div>
+    <div><span class="sw-plate"></span>Plate / bridge · 夹板</div>
+    <div style="margin-top:8px;opacity:.85">闲置 ~22s 自动导览。任意操作取消。</div>
+  </div>
+</div>
+
+<script src="./three.min.js"></script>
+<script>
+/*
+  Swiss lever escapement — parametric study model
+  Approximations (documented):
+  - Balance: simple harmonic motion θ = A·sin(2πft), f=4 Hz (≈28800 bph), A≈66°.
+  - Real balance is slightly anisochronous; hairspring overcoil / banking ignored.
+  - Escape wheel: 15 club-ish teeth; advances ONE tooth per beat (half-cycle).
+  - Lever: snaps between banking angles ±β with a short impulse blend window.
+  - Impulse jewel / fork interaction is kinematic (phase windows), not full Hertzian contact.
+  - Drop, lock, draw angles are stylized for readability, not chronometric certification.
+  Driven by a single time parameter t (seconds of simulated watch time).
+*/
+(function () {
+  'use strict';
+  if (typeof THREE === 'undefined') {
+    document.body.innerHTML = '<div style="padding:40px;font:16px/1.5 sans-serif;color:#333">Failed to load ./three.min.js — keep it next to index.html.</div>';
+    return;
+  }
+
+  // ---------- Math model ----------
+  const FREQ = 4;                 // Hz balance frequency
+  const AMP = 1.15;               // rad ≈ 66°
+  const N_TEETH = 15;
+  const TOOTH = (Math.PI * 2) / N_TEETH;
+  const LEVER_BANK = 0.22;        // rad banking angle
+  const IMPULSE_WIDTH = 0.18;     // rad of balance phase near zero-crossing for impulse blend
+  const HAIRSPRING_TURNS = 8;
+
+  function wrapPi(a) {
+    const t = (a + Math.PI) % (Math.PI * 2);
+    return t < 0 ? t + Math.PI * 2 - Math.PI : t - Math.PI;
+  }
+
+  function smoothstep(e0, e1, x) {
+    const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  /** Pure function of simulated time t (s). */
+  function escapementAt(t) {
+    const omega = Math.PI * 2 * FREQ;
+    const phase = omega * t; // balance phase
+    const bal = AMP * Math.sin(phase);
+    const balVel = AMP * omega * Math.cos(phase);
+
+    // Two beats per full oscillation (entry + exit)
+    const beatsExact = 2 * FREQ * t;
+    const beatCount = Math.floor(beatsExact);
+    const beatFrac = beatsExact - beatCount;
+
+    // Which half-cycle: even = entry impulse side, odd = exit
+    const side = beatCount % 2; // 0 entry, 1 exit
+    const sideName = side === 0 ? 'entry' : 'exit';
+
+    // Impulse window: near phase multiples of π (zero crossings of balance)
+    // Map local phase within half-cycle [0, π]
+    const halfPhase = ((phase % Math.PI) + Math.PI) % Math.PI;
+    // Center impulse slightly after unlock — around mid of first portion of half-cycle
+    // Use distance to 0 in halfPhase for unlock/impulse near each beat start
+    const distToBeat = Math.min(halfPhase, Math.PI - halfPhase);
+    // Better: impulse near beginning of each half after zero cross → use phase distance to k*π
+    const nearestCross = Math.round(phase / Math.PI) * Math.PI;
+    const dCross = Math.abs(phase - nearestCross);
+    const inImpulse = dCross < IMPULSE_WIDTH;
+    const impulseAmt = inImpulse ? 1 - smoothstep(0, IMPULSE_WIDTH, dCross) : 0;
+
+    // Escape wheel: locked most of time; advances one tooth during impulse of each beat
+    // Base tooth index = beatCount (each beat unlocks one tooth)
+    // During impulse, interpolate +TOOTH * (1 - impulseAmt remaining) ...
+    // At start of beat impulseAmt high → still at previous; as impulse progresses tooth advances
+    const advanceFrac = inImpulse ? smoothstep(0, IMPULSE_WIDTH, dCross) : 1;
+    // When far past cross, fully advanced for this beat
+    const escAngle = beatCount * TOOTH + (inImpulse ? advanceFrac * TOOTH : TOOTH) - TOOTH;
+    // Clarify: tooth index completed = beatCount when past impulse, else beatCount-1 + advance
+    const toothIndex = ((beatCount % N_TEETH) + N_TEETH) % N_TEETH;
+    const escAngleNorm = ((escAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+
+    // Lever: banks to +LEVER_BANK on entry lock, -LEVER_BANK on exit lock; blends during impulse
+    const targetBank = side === 0 ? LEVER_BANK : -LEVER_BANK;
+    const prevBank = side === 0 ? -LEVER_BANK : LEVER_BANK;
+    const leverBlend = inImpulse ? smoothstep(0, IMPULSE_WIDTH, dCross) : 1;
+    const lever = prevBank + (targetBank - prevBank) * leverBlend;
+
+    // Impulse jewel angle rides with balance (on roller)
+    const jewelAngle = bal;
+
+    return {
+      t, bal, balVel, balDeg: bal * 180 / Math.PI,
+      phase, freq: FREQ,
+      beatCount, side, sideName,
+      inImpulse: impulseAmt > 0.05,
+      impulseAmt,
+      lever, leverDeg: lever * 180 / Math.PI,
+      escAngle: escAngleNorm,
+      escDeg: escAngleNorm * 180 / Math.PI,
+      toothIndex,
+      jewelAngle
+    };
+  }
+
+  // ---------- Three.js scene ----------
+  const canvas = document.getElementById('c');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight, false);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xe8e4dc);
+  scene.fog = new THREE.Fog(0xe8e4dc, 18, 42);
+
+  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.05, 100);
+  camera.position.set(4.2, 2.8, 5.2);
+
+  // Soft studio lights
+  scene.add(new THREE.AmbientLight(0xfff5e6, 0.55));
+  const key = new THREE.DirectionalLight(0xffffff, 1.15);
+  key.position.set(5, 8, 4);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.near = 1;
+  key.shadow.camera.far = 30;
+  key.shadow.camera.left = -6;
+  key.shadow.camera.right = 6;
+  key.shadow.camera.top = 6;
+  key.shadow.camera.bottom = -6;
+  key.shadow.bias = -0.0005;
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xb8c8ff, 0.45);
+  fill.position.set(-4, 3, -2);
+  scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xffe0b0, 0.35);
+  rim.position.set(0, 2, -5);
+  scene.add(rim);
+
+  // Invisible shadow floor
+  const floor = new THREE.Mesh(
+    new THREE.CircleGeometry(8, 64),
+    new THREE.ShadowMaterial({ opacity: 0.18 })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.35;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  // Materials
+  const matBrass = new THREE.MeshStandardMaterial({
+    color: 0xc9a227, metalness: 0.85, roughness: 0.32, roughnessMap: null
+  });
+  const matBrassDark = new THREE.MeshStandardMaterial({
+    color: 0x8a7018, metalness: 0.8, roughness: 0.4
+  });
+  const matSteel = new THREE.MeshStandardMaterial({
+    color: 0x9aa3ad, metalness: 0.95, roughness: 0.25
+  });
+  const matRuby = new THREE.MeshStandardMaterial({
+    color: 0xc41e3a, metalness: 0.15, roughness: 0.2,
+    emissive: 0x4a0510, emissiveIntensity: 0.25
+  });
+  const matRubyGlow = new THREE.MeshStandardMaterial({
+    color: 0xe85d4c, metalness: 0.1, roughness: 0.18,
+    emissive: 0xff2244, emissiveIntensity: 0.55
+  });
+  const matPlate = new THREE.MeshStandardMaterial({
+    color: 0x3a3f48, metalness: 0.6, roughness: 0.45
+  });
+  const matPlateCut = new THREE.MeshStandardMaterial({
+    color: 0x4a5160, metalness: 0.55, roughness: 0.5, transparent: true, opacity: 0.35, side: THREE.DoubleSide
+  });
+  const matSpring = new THREE.MeshStandardMaterial({
+    color: 0xd4af37, metalness: 0.9, roughness: 0.28
+  });
+  const matAccent = new THREE.MeshStandardMaterial({
+    color: 0xffe08a, metalness: 0.7, roughness: 0.3,
+    emissive: 0xc9a227, emissiveIntensity: 0.35
+  });
+
+  function enableShadow(o) {
+    o.traverse(function (c) {
+      if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; }
+    });
+  }
+
+  // Root groups for explode / isolate
+  const root = new THREE.Group();
+  scene.add(root);
+
+  const gPlate = new THREE.Group(); gPlate.name = 'plate';
+  const gEscape = new THREE.Group(); gEscape.name = 'escape';
+  const gLever = new THREE.Group(); gLever.name = 'lever';
+  const gBalance = new THREE.Group(); gBalance.name = 'balance';
+  root.add(gPlate, gEscape, gLever, gBalance);
+
+  // Explode rest offsets (documented)
+  const EXPLODE = {
+    plate:   new THREE.Vector3(0, -0.55, -0.4),
+    escape:  new THREE.Vector3(-2.4, 0.2, 0.55),
+    lever:   new THREE.Vector3(0.2, 1.55, 0.35),
+    balance: new THREE.Vector3(2.55, 0.55, -0.35)
+  };
+  const HOME = {
+    plate: new THREE.Vector3(0, 0, 0),
+    escape: new THREE.Vector3(-0.55, 0, 0),
+    lever: new THREE.Vector3(0.05, 0, 0),
+    balance: new THREE.Vector3(0.95, 0, 0)
+  };
+  gPlate.position.copy(HOME.plate);
+  gEscape.position.copy(HOME.escape);
+  gLever.position.copy(HOME.lever);
+  gBalance.position.copy(HOME.balance);
+
+  // --- Geometry helpers ---
+  function latheXY(points2d, segments, mat) {
+    const pts = points2d.map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+    const geo = new THREE.LatheGeometry(pts, segments);
+    return new THREE.Mesh(geo, mat);
+  }
+
+  // Partial main plate
+  (function buildPlate() {
+    const plate = new THREE.Mesh(
+      new THREE.CylinderGeometry(2.35, 2.35, 0.12, 64, 1, false),
+      matPlate
+    );
+    plate.position.y = -0.55;
+    gPlate.add(plate);
+
+    // Cutaway half (togglable)
+    const cut = new THREE.Mesh(
+      new THREE.CylinderGeometry(2.32, 2.32, 0.08, 48, 1, false, 0, Math.PI),
+      matPlateCut
+    );
+    cut.position.y = -0.42;
+    cut.name = 'cutaway';
+    cut.visible = false;
+    gPlate.add(cut);
+
+    // Bridge over balance
+    const bridge = new THREE.Mesh(
+      new THREE.BoxGeometry(1.4, 0.08, 0.45),
+      matPlate
+    );
+    bridge.position.set(0.95, 0.55, 0);
+    gPlate.add(bridge);
+
+    // Pillars
+    [[-1.6, -0.2], [1.7, -0.3], [-0.2, 1.5]].forEach(function (p) {
+      const pil = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.0, 12), matSteel);
+      pil.position.set(p[0], 0, p[1]);
+      gPlate.add(pil);
+    });
+
+    // Jewel settings (decorative)
+    [[-0.55, 0], [0.05, 0], [0.95, 0]].forEach(function (p) {
+      const set = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.06, 20), matSteel);
+      set.position.set(p[0], -0.42, p[1]);
+      gPlate.add(set);
+      const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.08, 16), matRuby);
+      hole.position.set(p[0], -0.4, p[1]);
+      gPlate.add(hole);
+    });
+  })();
+
+  // Escape wheel — 15 club-tooth silhouette
+  const escapeSpin = new THREE.Group();
+  gEscape.add(escapeSpin);
+
+  (function buildEscape() {
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.1, 24), matBrassDark);
+    escapeSpin.add(hub);
+    const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.72, 0.72, 0.06, 48), matBrass);
+    escapeSpin.add(rim);
+    // spokes
+    for (let i = 0; i < 5; i++) {
+      const sp = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.05, 0.55), matBrassDark);
+      sp.rotation.y = (i / 5) * Math.PI * 2;
+      sp.position.y = 0;
+      escapeSpin.add(sp);
+    }
+    // teeth
+    for (let i = 0; i < N_TEETH; i++) {
+      const ang = (i / N_TEETH) * Math.PI * 2;
+      const tooth = new THREE.Group();
+      // club foot
+      const foot = new THREE.Mesh(
+        new THREE.BoxGeometry(0.1, 0.07, 0.22),
+        matBrass
+      );
+      foot.position.z = 0.78;
+      tooth.add(foot);
+      // impulse face tip (club)
+      const tip = new THREE.Mesh(
+        new THREE.BoxGeometry(0.07, 0.065, 0.12),
+        matBrass
+      );
+      tip.position.set(0.04, 0, 0.92);
+      tip.rotation.y = 0.35;
+      tooth.add(tip);
+      tooth.rotation.y = ang;
+      escapeSpin.add(tooth);
+    }
+    // arbor
+    const arbor = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.4, 12), matSteel);
+    arbor.position.y = 0.1;
+    gEscape.add(arbor);
+    const pivot = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 12), matSteel);
+    pivot.position.y = 0.85;
+    gEscape.add(pivot);
+  })();
+
+  // Lever (anchor) with entry/exit pallet stones
+  const leverSpin = new THREE.Group();
+  gLever.add(leverSpin);
+
+  const palletEntry = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.22), matRuby);
+  const palletExit = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.22), matRuby);
+
+  (function buildLever() {
+    // Body along +X toward balance, -X toward escape (watch plane = XZ, staffs || Y)
+    const body = new THREE.Mesh(new THREE.BoxGeometry(1.05, 0.07, 0.14), matSteel);
+    leverSpin.add(body);
+    // Fork horns (toward balance / +X)
+    const fork = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.06, 0.28), matSteel);
+    fork.position.x = 0.58;
+    leverSpin.add(fork);
+    const hornL = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.06), matSteel);
+    hornL.position.set(0.68, 0, -0.14);
+    leverSpin.add(hornL);
+    const hornR = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.06), matSteel);
+    hornR.position.set(0.68, 0, 0.14);
+    leverSpin.add(hornR);
+    // Dart / guard pin
+    const dart = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.12, 8), matSteel);
+    dart.rotation.z = Math.PI / 2;
+    dart.position.x = 0.48;
+    leverSpin.add(dart);
+
+    // Pallet stones near escape (-X): entry & exit
+    palletEntry.position.set(-0.42, 0.02, -0.28);
+    palletEntry.rotation.y = 0.45;
+    palletEntry.name = 'palletEntry';
+    leverSpin.add(palletEntry);
+
+    palletExit.position.set(-0.38, 0.02, 0.28);
+    palletExit.rotation.y = -0.4;
+    palletExit.name = 'palletExit';
+    leverSpin.add(palletExit);
+
+    const arbor = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.1, 10), matSteel);
+    gLever.add(arbor);
+  })();
+
+  // Balance wheel + hairspring + roller / impulse jewel
+  const balanceSpin = new THREE.Group();
+  gBalance.add(balanceSpin);
+
+  const impulseJewel = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.08, 0.12), matRuby);
+
+  (function buildBalance() {
+    // rim
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.07, 12, 64), matBrass);
+    rim.rotation.x = Math.PI / 2;
+    balanceSpin.add(rim);
+    // timing screws (decorative)
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * Math.PI * 2;
+      const sc = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.1, 8), matBrassDark);
+      sc.position.set(Math.cos(a) * 0.85, 0, Math.sin(a) * 0.85);
+      balanceSpin.add(sc);
+    }
+    // spokes
+    for (let i = 0; i < 3; i++) {
+      const sp = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.04, 0.07), matBrassDark);
+      sp.rotation.y = (i / 3) * Math.PI;
+      balanceSpin.add(sp);
+    }
+    // hub
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.12, 20), matSteel);
+    balanceSpin.add(hub);
+
+    // roller table
+    const roller = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 24), matSteel);
+    roller.position.y = -0.18;
+    balanceSpin.add(roller);
+
+    // impulse jewel on roller
+    impulseJewel.position.set(0.16, -0.18, 0);
+    impulseJewel.name = 'impulseJewel';
+    balanceSpin.add(impulseJewel);
+
+    // hairspring (flat Archimedean spiral)
+    const springPts = [];
+    const turns = HAIRSPRING_TURNS;
+    const N = 280;
+    for (let i = 0; i < N; i++) {
+      const u = i / (N - 1);
+      const ang = u * turns * Math.PI * 2;
+      const r = 0.12 + u * 0.55;
+      springPts.push(new THREE.Vector3(Math.cos(ang) * r, 0.16, Math.sin(ang) * r));
+    }
+    const springGeo = new THREE.TubeGeometry(
+      new THREE.CatmullRomCurve3(springPts), 280, 0.012, 5, false
+    );
+    const spring = new THREE.Mesh(springGeo, matSpring);
+    balanceSpin.add(spring);
+
+    // balance staff
+    const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 10), matSteel);
+    gBalance.add(staff);
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 10), matSteel);
+    tip.position.y = 0.8;
+    gBalance.add(tip);
+  })();
+
+  enableShadow(root);
+
+  // Small fourth-wheel hint (decorative train)
+  (function hintTrain() {
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.05, 24), matBrassDark);
+    w.position.set(-1.35, -0.15, 0.9);
+    const teeth = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.03, 6, 20), matBrass);
+    teeth.rotation.x = Math.PI / 2;
+    teeth.position.copy(w.position);
+    gPlate.add(w, teeth);
+  })();
+
+  // ---------- Simple orbit controls (file:// friendly, no OrbitControls module) ----------
+  const orbit = {
+    target: new THREE.Vector3(0.2, 0, 0),
+    spherical: new THREE.Spherical(7.2, 1.15, 0.85),
+    dragging: false,
+    panning: false,
+    lastX: 0, lastY: 0,
+    minR: 2.2, maxR: 16
+  };
+
+  function syncCamera() {
+    orbit.spherical.theta = orbit.spherical.theta;
+    orbit.spherical.phi = Math.max(0.12, Math.min(Math.PI - 0.12, orbit.spherical.phi));
+    orbit.spherical.radius = Math.max(orbit.minR, Math.min(orbit.maxR, orbit.spherical.radius));
+    camera.position.setFromSpherical(orbit.spherical);
+    camera.position.add(orbit.target);
+    camera.lookAt(orbit.target);
+  }
+  syncCamera();
+
+  const cams = {
+    hero:   { radius: 7.2, phi: 1.15, theta: 0.85, target: [0.2, 0, 0] },
+    side:   { radius: 6.5, phi: 1.35, theta: 0.05, target: [0.2, 0, 0] },
+    top:    { radius: 7.0, phi: 0.28, theta: 0.9, target: [0.15, 0, 0] },
+    inside: { radius: 3.4, phi: 1.2, theta: 1.35, target: [0.3, 0.05, 0] }
+  };
+  let camTween = null;
+
+  function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+  function goCamera(name, dur) {
+    const c = cams[name];
+    if (!c) return;
+    const from = {
+      radius: orbit.spherical.radius,
+      phi: orbit.spherical.phi,
+      theta: orbit.spherical.theta,
+      tx: orbit.target.x, ty: orbit.target.y, tz: orbit.target.z
+    };
+    const to = {
+      radius: c.radius, phi: c.phi, theta: c.theta,
+      tx: c.target[0], ty: c.target[1], tz: c.target[2]
+    };
+    // shortest theta
+    let dth = to.theta - from.theta;
+    while (dth > Math.PI) dth -= Math.PI * 2;
+    while (dth < -Math.PI) dth += Math.PI * 2;
+    to.theta = from.theta + dth;
+    camTween = { from, to, t0: performance.now(), dur: dur || 700 };
+    document.querySelectorAll('[data-cam]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-cam') === name);
+    });
+  }
+
+  canvas.addEventListener('pointerdown', function (e) {
+    bumpIdle();
+    canvas.setPointerCapture(e.pointerId);
+    orbit.lastX = e.clientX; orbit.lastY = e.clientY;
+    if (e.button === 1 || e.button === 2 || (e.button === 0 && e.shiftKey)) {
+      orbit.panning = true;
+    } else {
+      orbit.dragging = true;
+    }
+    canvas.classList.add('dragging');
+    camTween = null;
+  });
+  canvas.addEventListener('pointermove', function (e) {
+    if (!orbit.dragging && !orbit.panning) return;
+    const dx = e.clientX - orbit.lastX;
+    const dy = e.clientY - orbit.lastY;
+    orbit.lastX = e.clientX; orbit.lastY = e.clientY;
+    if (orbit.panning) {
+      const pan = new THREE.Vector3();
+      const right = new THREE.Vector3();
+      const up = new THREE.Vector3();
+      right.setFromMatrixColumn(camera.matrix, 0);
+      up.setFromMatrixColumn(camera.matrix, 1);
+      pan.addScaledVector(right, -dx * 0.004 * orbit.spherical.radius * 0.15);
+      pan.addScaledVector(up, dy * 0.004 * orbit.spherical.radius * 0.15);
+      orbit.target.add(pan);
+    } else {
+      orbit.spherical.theta -= dx * 0.005;
+      orbit.spherical.phi -= dy * 0.005;
+    }
+    syncCamera();
+  });
+  function endDrag(e) {
+    orbit.dragging = false; orbit.panning = false;
+    canvas.classList.remove('dragging');
+    try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+  }
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  canvas.addEventListener('wheel', function (e) {
+    bumpIdle();
+    e.preventDefault();
+    orbit.spherical.radius *= Math.exp(e.deltaY * 0.0012);
+    camTween = null;
+    syncCamera();
+  }, { passive: false });
+
+  window.addEventListener('resize', function () {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+  });
+
+  // ---------- Interaction state ----------
+  let playing = true;
+  let speed = 1;
+  let simT = 0;
+  let lastFrame = performance.now();
+  let explodeAmt = 0; // 0 assemble .. 1 explode
+  let explodeTarget = 0;
+  let isolate = 'all';
+  let cutaway = false;
+  let lastImpulseBeat = -1;
+
+  // Idle auto-tour
+  const IDLE_MS = 22000;
+  let lastInput = performance.now();
+  let tourActive = false;
+  let tourStep = 0;
+  let tourTimer = null;
+
+  function bumpIdle() {
+    lastInput = performance.now();
+    if (tourActive) stopTour();
+  }
+
+  function stopTour() {
+    tourActive = false;
+    tourStep = 0;
+    if (tourTimer) { clearTimeout(tourTimer); tourTimer = null; }
+    document.getElementById('tourBadge').classList.remove('show');
+    document.getElementById('fakeCursor').style.opacity = '0';
+  }
+
+  function showTourBadge(text) {
+    const b = document.getElementById('tourBadge');
+    b.textContent = text;
+    b.classList.add('show');
+  }
+
+  function moveFakeCursorTo(el, cb) {
+    const fc = document.getElementById('fakeCursor');
+    if (!el) { fc.style.opacity = '0'; if (cb) cb(); return; }
+    const r = el.getBoundingClientRect();
+    fc.style.opacity = '1';
+    fc.style.left = (r.left + r.width / 2 - 9) + 'px';
+    fc.style.top = (r.top + r.height / 2 - 9) + 'px';
+    setTimeout(function () {
+      el.classList.add('active');
+      if (cb) cb();
+    }, 650);
+  }
+
+  function runTourStep() {
+    if (!tourActive) return;
+    const steps = [
+      function () {
+        showTourBadge('Explode · 拆开零件');
+        moveFakeCursorTo(document.getElementById('btnExplode'), function () {
+          explodeTarget = 1;
+          document.getElementById('btnExplode').classList.add('active');
+          document.getElementById('btnAssemble').classList.remove('active');
+        });
+      },
+      function () {
+        showTourBadge('Isolate balance · 隔离摆轮');
+        const btn = document.querySelector('[data-iso="balance"]');
+        moveFakeCursorTo(btn, function () { setIsolate('balance'); });
+      },
+      function () {
+        showTourBadge('Isolate lever · 隔离叉瓦');
+        const btn = document.querySelector('[data-iso="lever"]');
+        moveFakeCursorTo(btn, function () { setIsolate('lever'); });
+      },
+      function () {
+        showTourBadge('Assemble · 合上');
+        moveFakeCursorTo(document.getElementById('btnAssemble'), function () {
+          setIsolate('all');
+          explodeTarget = 0;
+          document.getElementById('btnAssemble').classList.add('active');
+          document.getElementById('btnExplode').classList.remove('active');
+        });
+      },
+      function () {
+        showTourBadge('Hero view · 主视角');
+        const btn = document.querySelector('[data-cam="hero"]');
+        moveFakeCursorTo(btn, function () { goCamera('hero', 900); });
+      },
+      function () {
+        showTourBadge('导览结束 · Tour complete');
+        document.getElementById('fakeCursor').style.opacity = '0';
+        setTimeout(function () {
+          document.getElementById('tourBadge').classList.remove('show');
+          tourActive = false;
+          lastInput = performance.now();
+        }, 1600);
+      }
+    ];
+    if (tourStep >= steps.length) {
+      tourActive = false;
+      lastInput = performance.now();
+      return;
+    }
+    steps[tourStep]();
+    tourStep++;
+    tourTimer = setTimeout(runTourStep, 2800);
+  }
+
+  function startTour() {
+    tourActive = true;
+    tourStep = 0;
+    showTourBadge('自动导览开始 · Auto tour');
+    tourTimer = setTimeout(runTourStep, 800);
+  }
+
+  function setIsolate(mode) {
+    isolate = mode;
+    document.querySelectorAll('[data-iso]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-iso') === mode);
+    });
+    gBalance.visible = mode === 'all' || mode === 'balance';
+    gLever.visible = mode === 'all' || mode === 'lever';
+    gEscape.visible = mode === 'all' || mode === 'escape';
+    gPlate.visible = mode === 'all';
+    // Reframe so isolated part is not off-camera
+    if (mode === 'balance') {
+      cams.inside.target = [gBalance.position.x, 0.05, 0];
+      goCamera('inside', 600);
+    } else if (mode === 'lever') {
+      cams.inside.target = [gLever.position.x, 0.05, 0];
+      goCamera('inside', 600);
+    } else if (mode === 'escape') {
+      cams.inside.target = [gEscape.position.x, 0.05, 0];
+      goCamera('inside', 600);
+    } else {
+      cams.inside.target = [0.3, 0.05, 0];
+    }
+  }
+
+  // UI wiring
+  document.getElementById('btnPlay').addEventListener('click', function () {
+    bumpIdle();
+    playing = !playing;
+    this.textContent = playing ? 'Pause · 暂停' : 'Play · 播放';
+  });
+  document.querySelectorAll('[data-speed]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      bumpIdle();
+      speed = parseFloat(b.getAttribute('data-speed'));
+      document.querySelectorAll('[data-speed]').forEach(function (x) {
+        x.classList.toggle('active', x === b);
+      });
+      document.getElementById('gSpd').textContent = speed + '×';
+    });
+  });
+  document.getElementById('btnExplode').addEventListener('click', function () {
+    bumpIdle();
+    explodeTarget = 1;
+    this.classList.add('active');
+    document.getElementById('btnAssemble').classList.remove('active');
+  });
+  document.getElementById('btnAssemble').addEventListener('click', function () {
+    bumpIdle();
+    explodeTarget = 0;
+    this.classList.add('active');
+    document.getElementById('btnExplode').classList.remove('active');
+  });
+  document.querySelectorAll('[data-iso]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      bumpIdle();
+      setIsolate(b.getAttribute('data-iso'));
+    });
+  });
+  document.querySelectorAll('[data-cam]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      bumpIdle();
+      goCamera(b.getAttribute('data-cam'));
+    });
+  });
+  document.getElementById('btnCut').addEventListener('click', function () {
+    bumpIdle();
+    cutaway = !cutaway;
+    this.classList.toggle('active', cutaway);
+    const cut = gPlate.getObjectByName('cutaway');
+    if (cut) cut.visible = cutaway;
+    // fade plate cylinder a bit when cutaway
+    gPlate.children.forEach(function (ch) {
+      if (ch.isMesh && ch.geometry && ch.geometry.type === 'CylinderGeometry' && ch.material === matPlate) {
+        ch.material = cutaway ? matPlateCut : matPlate;
+      }
+    });
+  });
+
+  ['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach(function (ev) {
+    window.addEventListener(ev, function () { bumpIdle(); }, { passive: true });
+  });
+
+  // ---------- Animate ----------
+  const tmpHome = new THREE.Vector3();
+  const tmpExp = new THREE.Vector3();
+
+  function applyExplode(group, key, amt) {
+    tmpHome.copy(HOME[key]);
+    tmpExp.copy(HOME[key]).add(EXPLODE[key]);
+    group.position.lerpVectors(tmpHome, tmpExp, amt);
+  }
+
+  function setImpulseHighlight(state) {
+    if (state.inImpulse) {
+      impulseJewel.material = matRubyGlow;
+      if (state.side === 0) {
+        palletEntry.material = matRubyGlow;
+        palletExit.material = matRuby;
+      } else {
+        palletExit.material = matRubyGlow;
+        palletEntry.material = matRuby;
+      }
+    } else {
+      impulseJewel.material = matRuby;
+      palletEntry.material = matRuby;
+      palletExit.material = matRuby;
+    }
+  }
+
+  function updateHUD(state) {
+    document.getElementById('gBal').textContent = state.balDeg.toFixed(1) + '°';
+    document.getElementById('gFreq').textContent = state.freq.toFixed(2) + ' Hz';
+    document.getElementById('gTooth').textContent = state.toothIndex + ' / ' + N_TEETH;
+    document.getElementById('gEsc').textContent = state.escDeg.toFixed(1) + '°';
+    document.getElementById('gLev').textContent = state.leverDeg.toFixed(1) + '°';
+    document.getElementById('gBeat').textContent = String(state.beatCount);
+    const gImp = document.getElementById('gImp');
+    if (state.inImpulse) {
+      gImp.textContent = state.sideName.toUpperCase() + ' · ' + Math.round(state.impulseAmt * 100) + '%';
+      gImp.className = 'g-val impulse';
+    } else {
+      gImp.textContent = 'locked';
+      gImp.className = 'g-val';
+    }
+    // balance bar: map -AMP..AMP → 0..100%
+    const pct = (state.bal / AMP + 1) * 50;
+    document.getElementById('barBal').style.width = Math.max(0, Math.min(100, pct)) + '%';
+
+    if (state.inImpulse && state.beatCount !== lastImpulseBeat) {
+      lastImpulseBeat = state.beatCount;
+      const log = document.getElementById('eventLog');
+      log.innerHTML = '<span class="flash">⚡ Impulse ' + state.sideName + '</span> · beat #' + state.beatCount +
+        '<br>tooth → ' + state.toothIndex;
+    }
+  }
+
+  function frame(now) {
+    const dt = Math.min(0.05, (now - lastFrame) / 1000);
+    lastFrame = now;
+
+    if (playing) simT += dt * speed;
+
+    // explode tween
+    explodeAmt += (explodeTarget - explodeAmt) * Math.min(1, dt * 4);
+    applyExplode(gPlate, 'plate', explodeAmt);
+    applyExplode(gEscape, 'escape', explodeAmt);
+    applyExplode(gLever, 'lever', explodeAmt);
+    applyExplode(gBalance, 'balance', explodeAmt);
+
+    // camera tween
+    if (camTween) {
+      const u = easeInOut(Math.min(1, (now - camTween.t0) / camTween.dur));
+      const f = camTween.from, t = camTween.to;
+      orbit.spherical.radius = f.radius + (t.radius - f.radius) * u;
+      orbit.spherical.phi = f.phi + (t.phi - f.phi) * u;
+      orbit.spherical.theta = f.theta + (t.theta - f.theta) * u;
+      orbit.target.set(
+        f.tx + (t.tx - f.tx) * u,
+        f.ty + (t.ty - f.ty) * u,
+        f.tz + (t.tz - f.tz) * u
+      );
+      syncCamera();
+      if (u >= 1) camTween = null;
+    }
+
+    const state = escapementAt(simT);
+
+    balanceSpin.rotation.y = state.bal;
+    leverSpin.rotation.y = state.lever;
+    // Align lever body so fork faces balance (offset ~90° visual)
+    // Our lever extends in Z; rotate so banking is around Y — already Y.
+    // Orient lever group so pallets face escape (escape is at -X from lever home)
+    escapeSpin.rotation.y = state.escAngle;
+
+    // Hairspring wind visual: slight scale pulse with amplitude (subtle)
+    // (spring is child of balanceSpin so it rotates with balance — correct enough)
+
+    setImpulseHighlight(state);
+    updateHUD(state);
+
+    // Idle tour
+    if (!tourActive && (now - lastInput) > IDLE_MS) {
+      startTour();
+    }
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+
+  // URL helpers for demos / headless: ?explode=1&isolate=balance&speed=4&cam=top
+  (function applyQuery() {
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('explode') === '1') { explodeTarget = 1; explodeAmt = 1; document.getElementById('btnExplode').classList.add('active'); }
+      if (q.get('isolate')) setIsolate(q.get('isolate'));
+      if (q.get('speed')) {
+        speed = parseFloat(q.get('speed')) || 1;
+        document.getElementById('gSpd').textContent = speed + '×';
+        document.querySelectorAll('[data-speed]').forEach(function (b) {
+          b.classList.toggle('active', parseFloat(b.getAttribute('data-speed')) === speed);
+        });
+      }
+      if (q.get('cam')) goCamera(q.get('cam'), 1);
+      if (q.get('cut') === '1') document.getElementById('btnCut').click();
+      if (q.get('pause') === '1') { playing = false; document.getElementById('btnPlay').textContent = 'Play · 播放'; }
+    } catch (e) {}
+  })();
+
+  requestAnimationFrame(frame);
+
+  // Expose for debug / headless checks
+  window.__escapement = {
+    at: escapementAt,
+    get simT() { return simT; },
+    setSpeed: function (s) { speed = s; },
+    explode: function (v) { explodeTarget = v ? 1 : 0; },
+    isolate: setIsolate,
+    goCamera: goCamera
+  };
+})();
+</script>
+</body>
+</html>

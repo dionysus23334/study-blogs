@@ -29,6 +29,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 ## Explorations
 
 - [Paper Town / Agent-City-Demo](https://dionysus23334.github.io/Agent-City-Demo/) — a hand-drawn interactive town with twenty neighbours, weather, time, and small story events. No API, no backend.
+- [Swiss lever escapement](https://dionysus23334.github.io/study-blogs/watch-escapement/) — interactive three.js study model of a Swiss lever watch escapement (`watch-escapement/`).
 
 ## Stack
 
@@ -36,6 +37,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 - `index.html` (Chinese), `en/index.html` (English)
 - `styles.css`, `main.js` shared by both
 - `assets/agent-city.webp` — cover image for the Paper Town exploration card
+- `watch-escapement/` — Swiss lever escapement demo (`index.html` next to local `three.min.js`)
 - Deployed from the `gh-pages` branch
 
 ## Local preview
