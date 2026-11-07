@@ -37,6 +37,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 - `index.html` (Chinese), `en/index.html` (English)
 - `styles.css`, `main.js` shared by both
 - `assets/agent-city.webp` — cover image for the Paper Town exploration card
+- `assets/watch-escapement.webp` — cover image for the Swiss lever escapement card
 - `watch-escapement/` — Swiss lever escapement demo (`index.html` next to local `three.min.js`)
 - Deployed from the `gh-pages` branch
 
