@@ -442,68 +442,105 @@
   const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.05, 100);
   camera.position.set(4.2, 2.8, 5.2);
 
-  // Soft studio lights
-  scene.add(new THREE.AmbientLight(0xfff5e6, 0.55));
-  const key = new THREE.DirectionalLight(0xffffff, 1.15);
-  key.position.set(5, 8, 4);
+  // Soft studio lights (teardown / pale-studio look)
+  scene.add(new THREE.AmbientLight(0xfff6ea, 0.42));
+  const hemi = new THREE.HemisphereLight(0xfff8f0, 0xc8c2b4, 0.38);
+  scene.add(hemi);
+  const key = new THREE.DirectionalLight(0xfff5e8, 1.12);
+  key.position.set(5.5, 9, 4.5);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.near = 1;
-  key.shadow.camera.far = 30;
-  key.shadow.camera.left = -6;
-  key.shadow.camera.right = 6;
-  key.shadow.camera.top = 6;
-  key.shadow.camera.bottom = -6;
-  key.shadow.bias = -0.0005;
+  key.shadow.camera.far = 32;
+  key.shadow.camera.left = -7;
+  key.shadow.camera.right = 7;
+  key.shadow.camera.top = 7;
+  key.shadow.camera.bottom = -7;
+  key.shadow.bias = -0.00035;
+  key.shadow.normalBias = 0.02;
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xb8c8ff, 0.45);
-  fill.position.set(-4, 3, -2);
+  const fill = new THREE.DirectionalLight(0xb8c8ff, 0.38);
+  fill.position.set(-5, 3.5, -2.5);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffe0b0, 0.35);
-  rim.position.set(0, 2, -5);
+  const rim = new THREE.DirectionalLight(0xffe0b0, 0.42);
+  rim.position.set(-1, 3, -6);
   scene.add(rim);
+  const bounce = new THREE.DirectionalLight(0xffffff, 0.18);
+  bounce.position.set(0, -4, 2);
+  scene.add(bounce);
 
   // Invisible shadow floor
   const floor = new THREE.Mesh(
-    new THREE.CircleGeometry(8, 64),
-    new THREE.ShadowMaterial({ opacity: 0.18 })
+    new THREE.CircleGeometry(9, 64),
+    new THREE.ShadowMaterial({ opacity: 0.22 })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -1.35;
   floor.receiveShadow = true;
   scene.add(floor);
 
-  // Materials
+  // ---------- Materials (teardown-style) ----------
   const matBrass = new THREE.MeshStandardMaterial({
-    color: 0xc9a227, metalness: 0.85, roughness: 0.32, roughnessMap: null
+    color: 0xb8922a, metalness: 0.88, roughness: 0.42
   });
   const matBrassDark = new THREE.MeshStandardMaterial({
-    color: 0x8a7018, metalness: 0.8, roughness: 0.4
+    color: 0x7a6214, metalness: 0.86, roughness: 0.48
+  });
+  const matBrassPolished = new THREE.MeshStandardMaterial({
+    color: 0xc9a84a, metalness: 0.92, roughness: 0.28
   });
   const matSteel = new THREE.MeshStandardMaterial({
-    color: 0x9aa3ad, metalness: 0.95, roughness: 0.25
+    color: 0xa8b2bc, metalness: 0.92, roughness: 0.32
   });
-  const matRuby = new THREE.MeshStandardMaterial({
-    color: 0xc41e3a, metalness: 0.15, roughness: 0.2,
-    emissive: 0x4a0510, emissiveIntensity: 0.25
+  const matSteelPolished = new THREE.MeshStandardMaterial({
+    color: 0xc5ced8, metalness: 0.95, roughness: 0.22
   });
-  const matRubyGlow = new THREE.MeshStandardMaterial({
-    color: 0xe85d4c, metalness: 0.1, roughness: 0.18,
-    emissive: 0xff2244, emissiveIntensity: 0.55
+  const matLeverSteel = new THREE.MeshStandardMaterial({
+    color: 0xd0d7e0, metalness: 0.9, roughness: 0.26
+  });
+  const matBlued = new THREE.MeshStandardMaterial({
+    color: 0x2a3d6e, metalness: 0.92, roughness: 0.22,
+    emissive: 0x0a1528, emissiveIntensity: 0.15
+  });
+  const matRuby = new THREE.MeshPhysicalMaterial({
+    color: 0xb0122e, metalness: 0.05, roughness: 0.12,
+    transmission: 0.35, thickness: 0.4, ior: 1.77,
+    clearcoat: 1.0, clearcoatRoughness: 0.08,
+    emissive: 0x3a0410, emissiveIntensity: 0.22,
+    transparent: true, opacity: 0.95, side: THREE.FrontSide
+  });
+  const matRubyGlow = new THREE.MeshPhysicalMaterial({
+    color: 0xe84a55, metalness: 0.05, roughness: 0.1,
+    transmission: 0.25, thickness: 0.35, ior: 1.77,
+    clearcoat: 1.0, clearcoatRoughness: 0.06,
+    emissive: 0xff2244, emissiveIntensity: 0.85,
+    transparent: true, opacity: 0.98
+  });
+  const matJewelHole = new THREE.MeshPhysicalMaterial({
+    color: 0x8a1024, metalness: 0.05, roughness: 0.15,
+    transmission: 0.45, thickness: 0.25, ior: 1.77,
+    clearcoat: 0.9, emissive: 0x2a0408, emissiveIntensity: 0.15,
+    transparent: true, opacity: 0.9
   });
   const matPlate = new THREE.MeshStandardMaterial({
-    color: 0x3a3f48, metalness: 0.6, roughness: 0.45
+    color: 0x343942, metalness: 0.72, roughness: 0.42
+  });
+  const matPlateEdge = new THREE.MeshStandardMaterial({
+    color: 0x2a2e36, metalness: 0.7, roughness: 0.5
   });
   const matPlateCut = new THREE.MeshStandardMaterial({
-    color: 0x4a5160, metalness: 0.55, roughness: 0.5, transparent: true, opacity: 0.35, side: THREE.DoubleSide
+    color: 0x4a5160, metalness: 0.55, roughness: 0.5,
+    transparent: true, opacity: 0.32, side: THREE.DoubleSide
   });
   const matSpring = new THREE.MeshStandardMaterial({
-    color: 0xd4af37, metalness: 0.9, roughness: 0.28
+    color: 0xd4b45a, metalness: 0.92, roughness: 0.3
   });
-  const matAccent = new THREE.MeshStandardMaterial({
-    color: 0xffe08a, metalness: 0.7, roughness: 0.3,
-    emissive: 0xc9a227, emissiveIntensity: 0.35
+  const matInk = new THREE.MeshStandardMaterial({
+    color: 0x1a1c22, metalness: 0.4, roughness: 0.55
   });
+
+  // Tone exposure so brass doesn't clip white
+  renderer.toneMappingExposure = 0.98;
 
   function enableShadow(o) {
     o.traverse(function (c) {
@@ -546,18 +583,104 @@
     return new THREE.Mesh(geo, mat);
   }
 
-  // Partial main plate
+  function makeScrew(radius, height, mat) {
+    const g = new THREE.Group();
+    const head = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius * 0.95, height * 0.45, 20), mat || matBlued);
+    head.position.y = height * 0.35;
+    g.add(head);
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(radius * 1.5, height * 0.12, radius * 0.22), matInk);
+    slot.position.y = height * 0.55;
+    g.add(slot);
+    const shank = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.45, radius * 0.45, height * 0.7, 10), matSteel);
+    shank.position.y = -height * 0.05;
+    g.add(shank);
+    return g;
+  }
+
+  function makeChaton(x, y, z, outerR, jewelR) {
+    const g = new THREE.Group();
+    // stepped setting
+    const outer = new THREE.Mesh(new THREE.CylinderGeometry(outerR, outerR * 1.08, 0.04, 28), matSteelPolished);
+    outer.position.set(x, y, z);
+    g.add(outer);
+    const mid = new THREE.Mesh(new THREE.CylinderGeometry(outerR * 0.78, outerR * 0.78, 0.035, 24), matSteel);
+    mid.position.set(x, y + 0.028, z);
+    g.add(mid);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(jewelR * 1.15, 0.012, 8, 28), matSteelPolished);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.set(x, y + 0.045, z);
+    g.add(ring);
+    const jewel = new THREE.Mesh(new THREE.CylinderGeometry(jewelR, jewelR, 0.045, 20), matJewelHole);
+    jewel.position.set(x, y + 0.04, z);
+    g.add(jewel);
+    return g;
+  }
+
+  function makeSteppedArbor(totalH, mats) {
+    const g = new THREE.Group();
+    const m = mats || matSteelPolished;
+    // tip / pivot
+    const tip = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.022, 0.12, 12), m);
+    tip.position.y = totalH * 0.5 - 0.06;
+    g.add(tip);
+    const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.08, 14), matSteel);
+    shoulder.position.y = totalH * 0.5 - 0.16;
+    g.add(shoulder);
+    const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, totalH * 0.55, 14), m);
+    shaft.position.y = 0.05;
+    g.add(shaft);
+    const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.02, 0.14, 12), m);
+    foot.position.y = -totalH * 0.42;
+    g.add(foot);
+    const pivotLow = new THREE.Mesh(new THREE.SphereGeometry(0.022, 10, 10), matSteelPolished);
+    pivotLow.position.y = -totalH * 0.5;
+    g.add(pivotLow);
+    return g;
+  }
+
+  function clubToothShape() {
+    // Club-tooth silhouette in XY — stem + asymmetric club / impulse face
+    const s = new THREE.Shape();
+    s.moveTo(0.000, 0.000);
+    s.lineTo(0.048, 0.000);
+    s.lineTo(0.052, 0.085);
+    s.lineTo(0.058, 0.155);
+    s.lineTo(0.070, 0.195);      // throat
+    s.lineTo(0.110, 0.215);      // impulse face outer
+    s.lineTo(0.118, 0.242);      // club tip
+    s.lineTo(0.095, 0.268);
+    s.lineTo(0.055, 0.262);
+    s.lineTo(0.030, 0.235);
+    s.lineTo(0.018, 0.175);
+    s.lineTo(0.012, 0.090);
+    s.lineTo(0.008, 0.025);
+    s.lineTo(0.000, 0.000);
+    return s;
+  }
+
+  // Partial main plate + bridges + chatons
   (function buildPlate() {
+    // thinner main plate
     const plate = new THREE.Mesh(
-      new THREE.CylinderGeometry(2.35, 2.35, 0.12, 64, 1, false),
+      new THREE.CylinderGeometry(2.38, 2.38, 0.085, 80, 1, false),
       matPlate
     );
     plate.position.y = -0.55;
+    plate.name = 'mainPlate';
     gPlate.add(plate);
+
+    // beveled rim ring
+    const rim = new THREE.Mesh(
+      new THREE.TorusGeometry(2.34, 0.035, 10, 80),
+      matPlateEdge
+    );
+    rim.rotation.x = Math.PI / 2;
+    rim.position.y = -0.505;
+    gPlate.add(rim);
 
     // Cutaway half (togglable)
     const cut = new THREE.Mesh(
-      new THREE.CylinderGeometry(2.32, 2.32, 0.08, 48, 1, false, 0, Math.PI),
+      new THREE.CylinderGeometry(2.34, 2.34, 0.06, 56, 1, false, 0, Math.PI),
       matPlateCut
     );
     cut.position.y = -0.42;
@@ -565,118 +688,286 @@
     cut.visible = false;
     gPlate.add(cut);
 
-    // Bridge over balance
-    const bridge = new THREE.Mesh(
-      new THREE.BoxGeometry(1.4, 0.08, 0.45),
-      matPlate
-    );
-    bridge.position.set(0.95, 0.55, 0);
-    gPlate.add(bridge);
+    // Balance cock / bridge — elegant extruded outline (not a plain box)
+    const cockShape = new THREE.Shape();
+    cockShape.moveTo(-0.15, -0.22);
+    cockShape.lineTo(0.55, -0.28);
+    cockShape.quadraticCurveTo(0.85, -0.2, 0.92, 0.0);
+    cockShape.quadraticCurveTo(0.85, 0.2, 0.55, 0.28);
+    cockShape.lineTo(-0.15, 0.22);
+    cockShape.quadraticCurveTo(-0.32, 0.0, -0.15, -0.22);
+    // jewel clearance hole
+    const hole = new THREE.Path();
+    hole.absarc(0.0, 0.0, 0.11, 0, Math.PI * 2, true);
+    cockShape.holes.push(hole);
+    const cockGeo = new THREE.ExtrudeGeometry(cockShape, {
+      depth: 0.07, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.01, bevelSegments: 2, curveSegments: 20
+    });
+    cockGeo.rotateX(-Math.PI / 2);
+    const cock = new THREE.Mesh(cockGeo, matPlate);
+    cock.position.set(0.95, 0.52, 0);
+    gPlate.add(cock);
 
-    // Pillars
-    [[-1.6, -0.2], [1.7, -0.3], [-0.2, 1.5]].forEach(function (p) {
-      const pil = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.0, 12), matSteel);
+    // cock foot pad
+    const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.05, 20), matPlateEdge);
+    foot.position.set(1.55, 0.48, 0);
+    gPlate.add(foot);
+
+    // screw heads on cock
+    const sc1 = makeScrew(0.045, 0.08, matBlued);
+    sc1.position.set(1.55, 0.52, 0);
+    gPlate.add(sc1);
+    const sc2 = makeScrew(0.038, 0.07, matBlued);
+    sc2.position.set(0.55, 0.56, 0.18);
+    gPlate.add(sc2);
+
+    // Escape bridge (smaller)
+    const escBridgeShape = new THREE.Shape();
+    escBridgeShape.moveTo(-0.35, -0.16);
+    escBridgeShape.lineTo(0.35, -0.16);
+    escBridgeShape.quadraticCurveTo(0.48, 0, 0.35, 0.16);
+    escBridgeShape.lineTo(-0.35, 0.16);
+    escBridgeShape.quadraticCurveTo(-0.48, 0, -0.35, -0.16);
+    const eh = new THREE.Path();
+    eh.absarc(0, 0, 0.09, 0, Math.PI * 2, true);
+    escBridgeShape.holes.push(eh);
+    const ebGeo = new THREE.ExtrudeGeometry(escBridgeShape, {
+      depth: 0.055, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.006, bevelSegments: 2
+    });
+    ebGeo.rotateX(-Math.PI / 2);
+    const escBridge = new THREE.Mesh(ebGeo, matPlate);
+    escBridge.position.set(-0.55, 0.42, 0);
+    gPlate.add(escBridge);
+    const escSc = makeScrew(0.035, 0.065, matBlued);
+    escSc.position.set(-0.9, 0.46, 0.12);
+    gPlate.add(escSc);
+
+    // Pillars with polished shoulders
+    [[-1.65, -0.25], [1.75, -0.35], [-0.15, 1.55], [0.9, -1.55]].forEach(function (p) {
+      const pil = latheXY([
+        [0.05, -0.5], [0.07, -0.35], [0.065, 0.2], [0.08, 0.35], [0.055, 0.45]
+      ], 16, matSteelPolished);
       pil.position.set(p[0], 0, p[1]);
       gPlate.add(pil);
     });
 
-    // Jewel settings (decorative)
-    [[-0.55, 0], [0.05, 0], [0.95, 0]].forEach(function (p) {
-      const set = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.06, 20), matSteel);
-      set.position.set(p[0], -0.42, p[1]);
-      gPlate.add(set);
-      const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.08, 16), matRuby);
-      hole.position.set(p[0], -0.4, p[1]);
-      gPlate.add(hole);
-    });
+    // Jewel chatons at arbor positions
+    gPlate.add(makeChaton(-0.55, -0.42, 0, 0.13, 0.048));
+    gPlate.add(makeChaton(0.05, -0.42, 0, 0.12, 0.042));
+    gPlate.add(makeChaton(0.95, -0.42, 0, 0.14, 0.05));
+    // upper cock jewel
+    gPlate.add(makeChaton(0.95, 0.55, 0, 0.11, 0.042));
+
+    // decorative countersinks on plate
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2 + 0.3;
+      const r = 1.85;
+      const cs = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.09, 0.02, 16), matPlateEdge);
+      cs.position.set(Math.cos(a) * r, -0.5, Math.sin(a) * r);
+      gPlate.add(cs);
+      const sc = makeScrew(0.032, 0.05, matBlued);
+      sc.position.set(Math.cos(a) * r, -0.48, Math.sin(a) * r);
+      gPlate.add(sc);
+    }
   })();
 
-  // Escape wheel — 15 club-tooth silhouette
+  // Escape wheel — 15 true club-tooth profile
   const escapeSpin = new THREE.Group();
   gEscape.add(escapeSpin);
 
   (function buildEscape() {
-    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.1, 24), matBrassDark);
+    // Hub with rivet / collet detail (lathe)
+    const hub = latheXY([
+      [0.0, -0.06], [0.16, -0.055], [0.18, -0.03], [0.17, 0.0],
+      [0.19, 0.02], [0.15, 0.045], [0.08, 0.055], [0.0, 0.055]
+    ], 32, matBrassDark);
     escapeSpin.add(hub);
-    const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.72, 0.72, 0.06, 48), matBrass);
-    escapeSpin.add(rim);
-    // spokes
+    // rivet cap
+    const rivet = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.03, 16), matBrassPolished);
+    rivet.position.y = 0.06;
+    escapeSpin.add(rivet);
+
+    // Spoke / arms (5) — tapered
     for (let i = 0; i < 5; i++) {
-      const sp = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.05, 0.55), matBrassDark);
-      sp.rotation.y = (i / 5) * Math.PI * 2;
-      sp.position.y = 0;
-      escapeSpin.add(sp);
+      const arm = new THREE.Group();
+      const sp = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.04, 0.48), matBrassDark);
+      sp.position.z = 0.28;
+      // slight taper via second narrower segment
+      const tip = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.035, 0.12), matBrass);
+      tip.position.z = 0.55;
+      arm.add(sp, tip);
+      arm.rotation.y = (i / 5) * Math.PI * 2;
+      escapeSpin.add(arm);
     }
-    // teeth
+
+    // Polished rim ring under teeth
+    const rimRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.68, 0.028, 10, 64),
+      matBrassPolished
+    );
+    rimRing.rotation.x = Math.PI / 2;
+    escapeSpin.add(rimRing);
+    const rimDisk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.695, 0.695, 0.028, 72),
+      matBrass
+    );
+    escapeSpin.add(rimDisk);
+
+    // Club teeth — extruded Shape, slight bevel
+    const toothShape = clubToothShape();
+    const toothGeo = new THREE.ExtrudeGeometry(toothShape, {
+      depth: 0.055,
+      bevelEnabled: true,
+      bevelThickness: 0.006,
+      bevelSize: 0.005,
+      bevelSegments: 2,
+      curveSegments: 4
+    });
+    // Shape is in XY with tooth extending +Y; Extrude along Z.
+    // Reorient: tooth radial = +Z in watch plane, thickness || Y
+    toothGeo.rotateX(Math.PI / 2);   // depth → Y (thickness)
+    toothGeo.rotateY(Math.PI / 2);   // profile Y → -Z? wait — let's place via group
+    // After rotateX(PI/2): original Y→-Z, Z→Y. Profile extends -Z.
+    // We want profile extending +Z (radial). Rotate Y by PI:
+    toothGeo.rotateY(Math.PI);
+    // Center thickness on Y=0
+    toothGeo.translate(0, -0.0275, 0);
+
     for (let i = 0; i < N_TEETH; i++) {
       const ang = (i / N_TEETH) * Math.PI * 2;
-      const tooth = new THREE.Group();
-      // club foot
-      const foot = new THREE.Mesh(
-        new THREE.BoxGeometry(0.1, 0.07, 0.22),
-        matBrass
-      );
-      foot.position.z = 0.78;
-      tooth.add(foot);
-      // impulse face tip (club)
-      const tip = new THREE.Mesh(
-        new THREE.BoxGeometry(0.07, 0.065, 0.12),
-        matBrass
-      );
-      tip.position.set(0.04, 0, 0.92);
-      tip.rotation.y = 0.35;
-      tooth.add(tip);
-      tooth.rotation.y = ang;
-      escapeSpin.add(tooth);
+      const tooth = new THREE.Mesh(toothGeo, matBrassPolished);
+      // place base of tooth on rim ~0.68
+      const g = new THREE.Group();
+      tooth.position.z = 0.68;
+      g.add(tooth);
+      g.rotation.y = ang;
+      escapeSpin.add(g);
     }
-    // arbor
-    const arbor = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.4, 12), matSteel);
-    arbor.position.y = 0.1;
+
+    // Stepped arbor through jewels
+    const arbor = makeSteppedArbor(1.45);
+    arbor.position.y = 0.05;
     gEscape.add(arbor);
-    const pivot = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 12), matSteel);
-    pivot.position.y = 0.85;
-    gEscape.add(pivot);
   })();
 
   // Lever (anchor) with entry/exit pallet stones
   const leverSpin = new THREE.Group();
   gLever.add(leverSpin);
 
-  const palletEntry = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.22), matRuby);
-  const palletExit = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.22), matRuby);
+  // Pallet stones — chamfered ruby rectangles (Box + slight bevel via lathe-ish stacked)
+  function makePalletStone(w, h, d) {
+    const g = new THREE.Group();
+    const core = new THREE.Mesh(new THREE.BoxGeometry(w * 0.92, h * 0.85, d * 0.92), matRuby);
+    g.add(core);
+    // chamfer bands
+    const top = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.2, d), matRuby);
+    top.position.y = h * 0.38;
+    g.add(top);
+    const bot = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.15, d * 0.85), matRuby);
+    bot.position.y = -h * 0.4;
+    g.add(bot);
+    // expose a Mesh-like material swap target: use core as the named mesh
+    core.name = '_palletCore';
+    g.userData.core = core;
+    return g;
+  }
+
+  // Keep Mesh refs for impulse highlight (material swap)
+  const palletEntry = new THREE.Mesh(
+    new THREE.BoxGeometry(0.085, 0.07, 0.20),
+    matRuby
+  );
+  const palletExit = new THREE.Mesh(
+    new THREE.BoxGeometry(0.085, 0.07, 0.20),
+    matRuby
+  );
 
   (function buildLever() {
-    // Body along +X toward balance, -X toward escape (watch plane = XZ, staffs || Y)
-    const body = new THREE.Mesh(new THREE.BoxGeometry(1.05, 0.07, 0.14), matSteel);
+    // Milled lever body — tapered bar with shoulders
+    const body = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.055, 0.12), matLeverSteel);
     leverSpin.add(body);
-    // Fork horns (toward balance / +X)
-    const fork = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.06, 0.28), matSteel);
-    fork.position.x = 0.58;
-    leverSpin.add(fork);
-    const hornL = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.06), matSteel);
-    hornL.position.set(0.68, 0, -0.14);
-    leverSpin.add(hornL);
-    const hornR = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.06), matSteel);
-    hornR.position.set(0.68, 0, 0.14);
-    leverSpin.add(hornR);
-    // Dart / guard pin
-    const dart = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.12, 8), matSteel);
-    dart.rotation.z = Math.PI / 2;
-    dart.position.x = 0.48;
-    leverSpin.add(dart);
+    // milled edge detail
+    const edgeL = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.02, 0.02), matSteel);
+    edgeL.position.set(0, 0.032, 0.055);
+    leverSpin.add(edgeL);
+    const edgeR = edgeL.clone();
+    edgeR.position.z = -0.055;
+    leverSpin.add(edgeR);
 
-    // Pallet stones near escape (-X): entry & exit
-    palletEntry.position.set(-0.42, 0.02, -0.28);
-    palletEntry.rotation.y = 0.45;
+    // Escape-side arms (pallet staff arms)
+    const armEntry = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.048, 0.07), matSteel);
+    armEntry.position.set(-0.42, 0, -0.22);
+    armEntry.rotation.y = 0.55;
+    leverSpin.add(armEntry);
+    const armExit = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.048, 0.07), matSteel);
+    armExit.position.set(-0.40, 0, 0.22);
+    armExit.rotation.y = -0.5;
+    leverSpin.add(armExit);
+
+    // Fork horns (toward balance / +X) — proper notch
+    const forkBase = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.26), matLeverSteel);
+    forkBase.position.x = 0.52;
+    leverSpin.add(forkBase);
+    const hornL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.048, 0.055), matSteel);
+    hornL.position.set(0.66, 0, -0.12);
+    hornL.rotation.y = 0.12;
+    leverSpin.add(hornL);
+    const hornR = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.048, 0.055), matSteel);
+    hornR.position.set(0.66, 0, 0.12);
+    hornR.rotation.y = -0.12;
+    leverSpin.add(hornR);
+    // horn tips slightly thicker
+    const tipL = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.055, 0.06), matSteelPolished);
+    tipL.position.set(0.76, 0, -0.13);
+    leverSpin.add(tipL);
+    const tipR = tipL.clone();
+    tipR.position.z = 0.13;
+    leverSpin.add(tipR);
+
+    // Dart / guard pin
+    const dart = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.11, 10), matSteelPolished);
+    dart.rotation.z = Math.PI / 2;
+    dart.position.set(0.42, 0, 0);
+    leverSpin.add(dart);
+    const dartTip = new THREE.Mesh(new THREE.ConeGeometry(0.02, 0.04, 8), matSteel);
+    dartTip.rotation.z = -Math.PI / 2;
+    dartTip.position.set(0.49, 0, 0);
+    leverSpin.add(dartTip);
+
+    // Banking pins (optional, on plate side — mounted on lever group for visibility)
+    const bankPin1 = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.14, 10), matBlued);
+    bankPin1.position.set(0.15, 0.08, 0.32);
+    leverSpin.add(bankPin1);
+    const bankPin2 = bankPin1.clone();
+    bankPin2.position.z = -0.32;
+    leverSpin.add(bankPin2);
+
+    // Pallet stones with chamfer shells
+    palletEntry.position.set(-0.48, 0.015, -0.30);
+    palletEntry.rotation.y = 0.48;
     palletEntry.name = 'palletEntry';
+    // chamfer frame
+    const peFrame = new THREE.Mesh(new THREE.BoxGeometry(0.095, 0.078, 0.22), matRuby);
+    peFrame.position.copy(palletEntry.position);
+    peFrame.rotation.copy(palletEntry.rotation);
+    peFrame.scale.set(1.08, 0.55, 1.06);
+    peFrame.position.y += 0.025;
+    leverSpin.add(peFrame);
     leverSpin.add(palletEntry);
 
-    palletExit.position.set(-0.38, 0.02, 0.28);
-    palletExit.rotation.y = -0.4;
+    palletExit.position.set(-0.44, 0.015, 0.30);
+    palletExit.rotation.y = -0.42;
     palletExit.name = 'palletExit';
+    const pxFrame = new THREE.Mesh(new THREE.BoxGeometry(0.095, 0.078, 0.22), matRuby);
+    pxFrame.position.copy(palletExit.position);
+    pxFrame.rotation.copy(palletExit.rotation);
+    pxFrame.scale.set(1.08, 0.55, 1.06);
+    pxFrame.position.y += 0.025;
+    leverSpin.add(pxFrame);
     leverSpin.add(palletExit);
 
-    const arbor = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.1, 10), matSteel);
+    // Staff / arbor
+    const arbor = makeSteppedArbor(1.15);
     gLever.add(arbor);
   })();
 
@@ -684,61 +975,123 @@
   const balanceSpin = new THREE.Group();
   gBalance.add(balanceSpin);
 
-  const impulseJewel = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.08, 0.12), matRuby);
+  const impulseJewel = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.032, 0.032, 0.095, 12),
+    matRuby
+  );
 
   (function buildBalance() {
-    // rim
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.07, 12, 64), matBrass);
+    // Rim — torus with slightly rectangular cross-section feel via tube + outer band
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.86, 0.055, 14, 80), matBrass);
     rim.rotation.x = Math.PI / 2;
     balanceSpin.add(rim);
-    // timing screws (decorative)
+    // outer polish band
+    const rimOuter = new THREE.Mesh(new THREE.TorusGeometry(0.90, 0.018, 10, 80), matBrassPolished);
+    rimOuter.rotation.x = Math.PI / 2;
+    balanceSpin.add(rimOuter);
+    // inner step
+    const rimInner = new THREE.Mesh(new THREE.TorusGeometry(0.80, 0.016, 10, 72), matBrassDark);
+    rimInner.rotation.x = Math.PI / 2;
+    balanceSpin.add(rimInner);
+
+    // Timing screws (8) — small cylinders with slot
     for (let i = 0; i < 8; i++) {
       const a = (i / 8) * Math.PI * 2;
-      const sc = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.1, 8), matBrassDark);
-      sc.position.set(Math.cos(a) * 0.85, 0, Math.sin(a) * 0.85);
+      const sc = makeScrew(0.032, 0.07, matBrassDark);
+      sc.position.set(Math.cos(a) * 0.86, 0.02, Math.sin(a) * 0.86);
+      // point screw radially outward a bit
+      sc.rotation.z = Math.cos(a) * 0.15;
+      sc.rotation.x = Math.sin(a) * 0.15;
       balanceSpin.add(sc);
     }
-    // spokes
-    for (let i = 0; i < 3; i++) {
-      const sp = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.04, 0.07), matBrassDark);
-      sp.rotation.y = (i / 3) * Math.PI;
-      balanceSpin.add(sp);
+
+    // Elegant rim slots (between screws) — small notches
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
+      const slot = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.08), matBrassDark);
+      slot.position.set(Math.cos(a) * 0.88, 0, Math.sin(a) * 0.88);
+      slot.rotation.y = -a;
+      balanceSpin.add(slot);
     }
-    // hub
-    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.12, 20), matSteel);
+
+    // 3 spokes — tapered arms
+    for (let i = 0; i < 3; i++) {
+      const a = (i / 3) * Math.PI;
+      const sp = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.032, 0.055), matBrassDark);
+      sp.rotation.y = a;
+      balanceSpin.add(sp);
+      // spoke fillet near hub
+      const fil = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.04, 0.09), matBrass);
+      fil.position.set(Math.cos(a) * 0.2, 0, Math.sin(a) * 0.2);
+      fil.rotation.y = a;
+      balanceSpin.add(fil);
+    }
+
+    // Hub / collet
+    const hub = latheXY([
+      [0, -0.07], [0.12, -0.065], [0.14, -0.02], [0.13, 0.02], [0.1, 0.06], [0, 0.065]
+    ], 28, matSteelPolished);
     balanceSpin.add(hub);
+    const collet = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.05, 20), matSteel);
+    collet.position.y = 0.08;
+    balanceSpin.add(collet);
 
-    // roller table
-    const roller = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 24), matSteel);
-    roller.position.y = -0.18;
+    // Roller table (double roller suggestion: large + small)
+    const roller = latheXY([
+      [0, -0.04], [0.18, -0.038], [0.2, -0.01], [0.19, 0.02], [0.1, 0.035], [0, 0.038]
+    ], 28, matSteelPolished);
+    roller.position.y = -0.2;
     balanceSpin.add(roller);
+    // safety roller (smaller)
+    const safety = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.04, 20), matSteel);
+    safety.position.y = -0.28;
+    balanceSpin.add(safety);
 
-    // impulse jewel on roller
-    impulseJewel.position.set(0.16, -0.18, 0);
+    // Impulse jewel — ruby peg on roller
+    impulseJewel.rotation.z = Math.PI / 2;
+    impulseJewel.position.set(0.155, -0.2, 0);
     impulseJewel.name = 'impulseJewel';
     balanceSpin.add(impulseJewel);
+    // jewel setting collar
+    const ijCollar = new THREE.Mesh(new THREE.TorusGeometry(0.028, 0.008, 6, 14), matSteelPolished);
+    ijCollar.rotation.y = Math.PI / 2;
+    ijCollar.position.set(0.12, -0.2, 0);
+    balanceSpin.add(ijCollar);
 
-    // hairspring (flat Archimedean spiral)
+    // Hairspring — Archimedean spiral, many turns, slight taper
     const springPts = [];
-    const turns = HAIRSPRING_TURNS;
-    const N = 280;
+    const turns = HAIRSPRING_TURNS + 2; // 10 turns
+    const N = 520;
     for (let i = 0; i < N; i++) {
       const u = i / (N - 1);
       const ang = u * turns * Math.PI * 2;
-      const r = 0.12 + u * 0.55;
-      springPts.push(new THREE.Vector3(Math.cos(ang) * r, 0.16, Math.sin(ang) * r));
+      const r = 0.09 + u * 0.58;
+      // slight vertical flatness (Breguet overcoil hint near outer end)
+      let y = 0.175;
+      if (u > 0.92) y += (u - 0.92) * 0.35;
+      springPts.push(new THREE.Vector3(Math.cos(ang) * r, y, Math.sin(ang) * r));
     }
-    const springGeo = new THREE.TubeGeometry(
-      new THREE.CatmullRomCurve3(springPts), 280, 0.012, 5, false
-    );
+    const curve = new THREE.CatmullRomCurve3(springPts);
+    // Variable radius via multiple tube segments for taper
+    const springGeo = new THREE.TubeGeometry(curve, 480, 0.011, 6, false);
     const spring = new THREE.Mesh(springGeo, matSpring);
     balanceSpin.add(spring);
+    // outer attachment stub
+    const stub = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.025, 0.02), matSteel);
+    const last = springPts[springPts.length - 1];
+    stub.position.copy(last);
+    balanceSpin.add(stub);
+    // stud
+    const stud = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.08, 10), matBlued);
+    stud.position.set(last.x * 0.3 + 0.55, 0.22, last.z * 0.3);
+    balanceSpin.add(stud);
 
-    // balance staff
-    const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 10), matSteel);
+    // Balance staff — stepped
+    const staff = makeSteppedArbor(1.55);
     gBalance.add(staff);
-    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 10), matSteel);
-    tip.position.y = 0.8;
+    // upper pivot tip through cock jewel
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.028, 0.09, 12), matSteelPolished);
+    tip.position.y = 0.82;
     gBalance.add(tip);
   })();
 
@@ -746,22 +1099,35 @@
 
   // Small fourth-wheel hint (decorative train)
   (function hintTrain() {
-    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.05, 24), matBrassDark);
-    w.position.set(-1.35, -0.15, 0.9);
-    const teeth = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.03, 6, 20), matBrass);
-    teeth.rotation.x = Math.PI / 2;
-    teeth.position.copy(w.position);
-    gPlate.add(w, teeth);
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.04, 32), matBrassDark);
+    w.position.set(-1.4, -0.18, 0.95);
+    // fine teeth ring
+    for (let i = 0; i < 24; i++) {
+      const a = (i / 24) * Math.PI * 2;
+      const t = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.035, 0.06), matBrass);
+      t.position.set(
+        w.position.x + Math.cos(a) * 0.34,
+        w.position.y,
+        w.position.z + Math.sin(a) * 0.34
+      );
+      t.rotation.y = -a;
+      gPlate.add(t);
+    }
+    gPlate.add(w);
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.06, 12), matSteel);
+    hub.position.copy(w.position);
+    hub.position.y += 0.02;
+    gPlate.add(hub);
   })();
 
-  // ---------- Simple orbit controls (file:// friendly, no OrbitControls module) ----------
+  // ---------- Simple orbit controls  // ---------- Simple orbit controls (file:// friendly, no OrbitControls module) ----------
   const orbit = {
     target: new THREE.Vector3(0.2, 0, 0),
-    spherical: new THREE.Spherical(7.2, 1.15, 0.85),
+    spherical: new THREE.Spherical(6.2, 1.12, 0.82),
     dragging: false,
     panning: false,
     lastX: 0, lastY: 0,
-    minR: 2.2, maxR: 16
+    minR: 2.4, maxR: 16
   };
 
   function syncCamera() {
@@ -775,10 +1141,10 @@
   syncCamera();
 
   const cams = {
-    hero:   { radius: 7.2, phi: 1.15, theta: 0.85, target: [0.2, 0, 0] },
+    hero:   { radius: 6.2, phi: 1.12, theta: 0.82, target: [0.2, 0.05, 0] },
     side:   { radius: 6.5, phi: 1.35, theta: 0.05, target: [0.2, 0, 0] },
-    top:    { radius: 7.0, phi: 0.28, theta: 0.9, target: [0.15, 0, 0] },
-    inside: { radius: 3.4, phi: 1.2, theta: 1.35, target: [0.3, 0.05, 0] }
+    top:    { radius: 6.8, phi: 0.35, theta: 0.9, target: [0.2, 0, 0] },
+    inside: { radius: 3.8, phi: 1.05, theta: 1.15, target: [0.25, 0.08, 0] }
   };
   let camTween = null;
 
@@ -787,6 +1153,20 @@
   function goCamera(name, dur) {
     const c = cams[name];
     if (!c) return;
+    document.querySelectorAll('[data-cam]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-cam') === name);
+    });
+    // Instant snap for very short durations (URL params). Avoids rAF/performance.now
+    // mismatch that can explode the orbit when dur≈1ms.
+    if (dur !== undefined && dur !== null && dur <= 16) {
+      orbit.spherical.radius = c.radius;
+      orbit.spherical.phi = c.phi;
+      orbit.spherical.theta = c.theta;
+      orbit.target.set(c.target[0], c.target[1], c.target[2]);
+      camTween = null;
+      syncCamera();
+      return;
+    }
     const from = {
       radius: orbit.spherical.radius,
       phi: orbit.spherical.phi,
@@ -803,9 +1183,6 @@
     while (dth < -Math.PI) dth += Math.PI * 2;
     to.theta = from.theta + dth;
     camTween = { from, to, t0: performance.now(), dur: dur || 700 };
-    document.querySelectorAll('[data-cam]').forEach(function (b) {
-      b.classList.toggle('active', b.getAttribute('data-cam') === name);
-    });
   }
 
   canvas.addEventListener('pointerdown', function (e) {
@@ -1084,12 +1461,8 @@
     this.classList.toggle('active', cutaway);
     const cut = gPlate.getObjectByName('cutaway');
     if (cut) cut.visible = cutaway;
-    // fade plate cylinder a bit when cutaway
-    gPlate.children.forEach(function (ch) {
-      if (ch.isMesh && ch.geometry && ch.geometry.type === 'CylinderGeometry' && ch.material === matPlate) {
-        ch.material = cutaway ? matPlateCut : matPlate;
-      }
-    });
+    const main = gPlate.getObjectByName('mainPlate');
+    if (main) main.material = cutaway ? matPlateCut : matPlate;
   });
 
   ['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach(function (ev) {
@@ -1231,7 +1604,15 @@
     setSpeed: function (s) { speed = s; },
     explode: function (v) { explodeTarget = v ? 1 : 0; },
     isolate: setIsolate,
-    goCamera: goCamera
+    goCamera: goCamera,
+    debugCam: function () {
+      return {
+        pos: camera.position.toArray(),
+        target: orbit.target.toArray(),
+        sph: { r: orbit.spherical.radius, phi: orbit.spherical.phi, theta: orbit.spherical.theta },
+        tween: !!camTween
+      };
+    }
   };
 })();
 </script>
