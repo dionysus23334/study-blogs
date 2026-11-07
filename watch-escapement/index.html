@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
 <title>瑞士杠杆擒纵 · Swiss Lever Escapement</title>
 <style>
   :root {
@@ -145,17 +145,121 @@
     transition: left .6s ease, top .6s ease, opacity .25s;
   }
 
+  .mobile-bar { display: none; }
+
   @media (max-width: 900px) {
-    .hud { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding: 10px; }
-    .title-block, .gauges, .controls, .legend { grid-column: 1; max-width: none; }
-    .gauges { grid-row: 2; }
-    .controls { grid-row: 4; }
-    .legend { display: none; }
+    .hud {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      padding: 0;
+      gap: 0;
+    }
+    .legend { display: none !important; }
+    .title-block { display: none !important; }
+
+    .mobile-bar {
+      display: flex;
+      pointer-events: auto;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 8;
+      align-items: center;
+      gap: 8px;
+      padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;
+      background: linear-gradient(to bottom, rgba(28,30,36,0.92), rgba(28,30,36,0.55) 70%, transparent);
+    }
+    .mobile-bar .mb-title {
+      flex: 1; min-width: 0;
+      font-size: 14px; font-weight: 650; letter-spacing: 0.01em;
+      color: #ffe9a8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .mobile-bar button {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 999px;
+      min-height: 36px;
+    }
+
+    .gauges {
+      position: absolute;
+      top: calc(52px + env(safe-area-inset-top, 0px));
+      right: 10px;
+      left: auto;
+      width: min(260px, calc(100vw - 20px));
+      max-height: min(52vh, 420px);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 14px;
+      grid-column: unset !important;
+      grid-row: unset !important;
+      align-self: unset !important;
+      z-index: 7;
+      transform: translateX(110%);
+      opacity: 0;
+      pointer-events: none !important;
+      transition: transform .25s ease, opacity .2s ease;
+    }
+    .gauges.open {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto !important;
+    }
+    .gauges .g-row { padding: 6px 0; font-size: 12px; }
+    .gauges .event-log { font-size: 10px; min-height: 36px; }
+
+    .controls {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      max-width: none !important;
+      width: 100%;
+      grid-column: unset !important;
+      grid-row: unset !important;
+      z-index: 7;
+      padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+      border-radius: 16px 16px 0 0;
+      max-height: 42vh;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      transform: translateY(110%);
+      opacity: 0;
+      pointer-events: none !important;
+      transition: transform .28s ease, opacity .2s ease;
+      gap: 8px;
+    }
+    .controls.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto !important;
+    }
+    .controls .row label { font-size: 10px; margin-bottom: 0; }
+    .controls button {
+      padding: 10px 12px;
+      font-size: 13px;
+      min-height: 40px;
+      border-radius: 10px;
+    }
+
+    .tour-badge {
+      top: calc(56px + env(safe-area-inset-top, 0px));
+      font-size: 11px;
+      padding: 6px 12px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .mobile-bar .mb-title { font-size: 13px; }
+    .controls { max-height: 46vh; }
   }
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+<div class="mobile-bar" id="mobileBar">
+  <div class="mb-title">瑞士杠杆擒纵</div>
+  <button type="button" id="btnToggleGauges">读数</button>
+  <button type="button" id="btnToggleControls" class="primary">控制</button>
+</div>
 <div class="tour-badge" id="tourBadge">自动导览 · Auto tour</div>
 <div class="fake-cursor" id="fakeCursor"></div>
 
@@ -895,6 +999,46 @@
   }
 
   // UI wiring
+
+  // --- mobile sheet toggles ---
+  const gaugesEl = document.querySelector('.gauges');
+  const controlsEl = document.querySelector('.controls');
+  const btnToggleGauges = document.getElementById('btnToggleGauges');
+  const btnToggleControls = document.getElementById('btnToggleControls');
+  function isMobileUI() { return window.matchMedia('(max-width: 900px)').matches; }
+  function closeSheets() {
+    if (!gaugesEl || !controlsEl) return;
+    gaugesEl.classList.remove('open');
+    controlsEl.classList.remove('open');
+    if (btnToggleGauges) btnToggleGauges.classList.remove('active');
+    if (btnToggleControls) btnToggleControls.classList.remove('active');
+  }
+  if (btnToggleGauges) {
+    btnToggleGauges.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (!isMobileUI()) return;
+      const open = !gaugesEl.classList.contains('open');
+      if (open) { controlsEl.classList.remove('open'); if (btnToggleControls) btnToggleControls.classList.remove('active'); }
+      gaugesEl.classList.toggle('open', open);
+      btnToggleGauges.classList.toggle('active', open);
+      bumpIdle();
+    });
+  }
+  if (btnToggleControls) {
+    btnToggleControls.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (!isMobileUI()) return;
+      const open = !controlsEl.classList.contains('open');
+      if (open) { gaugesEl.classList.remove('open'); if (btnToggleGauges) btnToggleGauges.classList.remove('active'); }
+      controlsEl.classList.toggle('open', open);
+      btnToggleControls.classList.toggle('active', open);
+      bumpIdle();
+    });
+  }
+  canvas.addEventListener('pointerdown', function () {
+    if (isMobileUI()) closeSheets();
+  }, true);
+
   document.getElementById('btnPlay').addEventListener('click', function () {
     bumpIdle();
     playing = !playing;
