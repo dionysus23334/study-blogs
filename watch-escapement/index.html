@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>瑞士杠杆擒纵 · Swiss Lever Escapement</title>
 <style>
   :root {
@@ -22,8 +22,19 @@
     --mono: "SF Mono", "JetBrains Mono", "Cascadia Code", ui-monospace, monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); font-family: var(--font); color: var(--text); }
-  #c { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+  html, body {
+    position: fixed; inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: var(--bg);
+    font-family: var(--font);
+    color: var(--text);
+  }
+  #c { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; overscroll-behavior: none; }
   #c.dragging { cursor: grabbing; }
 
   .hud {
@@ -145,7 +156,7 @@
     transition: left .6s ease, top .6s ease, opacity .25s;
   }
 
-  .mobile-bar { display: none; }
+  .mobile-bar { display: none; touch-action: none; }
 
   @media (max-width: 900px) {
     .hud {
@@ -190,6 +201,8 @@
       max-height: min(52vh, 420px);
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      overscroll-behavior: contain;
       padding: 12px 14px;
       grid-column: unset !important;
       grid-row: unset !important;
@@ -221,6 +234,8 @@
       max-height: 42vh;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      overscroll-behavior: contain;
       transform: translateY(110%);
       opacity: 0;
       pointer-events: none !important;
@@ -426,9 +441,17 @@
 
   // ---------- Three.js scene ----------
   const canvas = document.getElementById('c');
+  function viewSize() {
+    const el = document.documentElement;
+    return {
+      w: el.clientWidth || window.innerWidth,
+      h: el.clientHeight || window.innerHeight
+    };
+  }
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight, false);
+  const _view0 = viewSize();
+  renderer.setSize(_view0.w, _view0.h, false);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -439,7 +462,7 @@
   scene.background = new THREE.Color(0xe8e4dc);
   scene.fog = new THREE.Fog(0xe8e4dc, 18, 42);
 
-  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.05, 100);
+  const camera = new THREE.PerspectiveCamera(42, _view0.w / Math.max(1, _view0.h), 0.05, 100);
   camera.position.set(4.2, 2.8, 5.2);
 
   // Soft studio lights (teardown / pale-studio look)
@@ -1185,19 +1208,60 @@
     camTween = { from, to, t0: performance.now(), dur: dur || 700 };
   }
 
+  const activePointers = new Map();
+  let pinchDist = 0;
+
+  function touchPointers() {
+    const pts = [];
+    activePointers.forEach(function (p) { if (p.type === 'touch') pts.push(p); });
+    return pts;
+  }
+  function spanOf(pts) {
+    if (!pts || pts.length < 2) return 0;
+    return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+  }
+  function applyPinch(dist) {
+    if (!(pinchDist > 0) || !(dist > 0)) {
+      pinchDist = dist || 0;
+      return;
+    }
+    // Spreading fingers zooms in (smaller orbit radius). syncCamera clamps minR/maxR.
+    orbit.spherical.radius *= pinchDist / dist;
+    pinchDist = dist;
+    camTween = null;
+    orbit.dragging = false;
+    orbit.panning = false;
+    syncCamera();
+  }
+
   canvas.addEventListener('pointerdown', function (e) {
     bumpIdle();
-    canvas.setPointerCapture(e.pointerId);
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+    activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: e.pointerType });
+    camTween = null;
+    if (e.pointerType === 'touch' && touchPointers().length >= 2) {
+      orbit.dragging = false;
+      orbit.panning = false;
+      pinchDist = spanOf(touchPointers());
+      canvas.classList.add('dragging');
+      return;
+    }
     orbit.lastX = e.clientX; orbit.lastY = e.clientY;
-    if (e.button === 1 || e.button === 2 || (e.button === 0 && e.shiftKey)) {
+    if (e.pointerType !== 'touch' && (e.button === 1 || e.button === 2 || (e.button === 0 && e.shiftKey))) {
       orbit.panning = true;
+      orbit.dragging = false;
     } else {
+      orbit.panning = false;
       orbit.dragging = true;
     }
     canvas.classList.add('dragging');
-    camTween = null;
   });
   canvas.addEventListener('pointermove', function (e) {
+    if (activePointers.has(e.pointerId)) {
+      const prev = activePointers.get(e.pointerId);
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: prev.type || e.pointerType });
+    }
+    if (touchPointers().length >= 2) return;
     if (!orbit.dragging && !orbit.panning) return;
     const dx = e.clientX - orbit.lastX;
     const dy = e.clientY - orbit.lastY;
@@ -1218,9 +1282,25 @@
     syncCamera();
   });
   function endDrag(e) {
+    activePointers.delete(e.pointerId);
+    try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+    const touches = touchPointers();
+    if (touches.length >= 2) {
+      pinchDist = spanOf(touches);
+      orbit.dragging = false;
+      orbit.panning = false;
+      return;
+    }
+    pinchDist = 0;
+    if (touches.length === 1) {
+      orbit.lastX = touches[0].x;
+      orbit.lastY = touches[0].y;
+      orbit.dragging = true;
+      orbit.panning = false;
+      return;
+    }
     orbit.dragging = false; orbit.panning = false;
     canvas.classList.remove('dragging');
-    try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
   }
   canvas.addEventListener('pointerup', endDrag);
   canvas.addEventListener('pointercancel', endDrag);
@@ -1233,11 +1313,75 @@
     syncCamera();
   }, { passive: false });
 
-  window.addEventListener('resize', function () {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight, false);
+  // Two-finger pinch → orbit radius. One-finger orbit stays on pointer events above.
+  canvas.addEventListener('touchstart', function (e) {
+    if (e.touches.length < 2) return;
+    if (e.cancelable) e.preventDefault();
+    const pts = [
+      { x: e.touches[0].clientX, y: e.touches[0].clientY },
+      { x: e.touches[1].clientX, y: e.touches[1].clientY }
+    ];
+    pinchDist = spanOf(pts);
+    orbit.dragging = false;
+    orbit.panning = false;
+  }, { passive: false });
+  canvas.addEventListener('touchmove', function (e) {
+    if (e.touches.length < 2) return;
+    if (e.cancelable) e.preventDefault();
+    applyPinch(Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    ));
+  }, { passive: false });
+  canvas.addEventListener('touchend', function (e) {
+    if (e.touches.length >= 2) return;
+    pinchDist = 0;
+    if (e.touches.length === 1) {
+      orbit.lastX = e.touches[0].clientX;
+      orbit.lastY = e.touches[0].clientY;
+      orbit.dragging = true;
+      orbit.panning = false;
+    }
+  }, { passive: true });
+
+  // Keep the document from rubber-banding. Open sheets may still scroll vertically.
+  let guardY = 0;
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 1) guardY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    if (e.touches.length !== 1) {
+      if (e.cancelable) e.preventDefault();
+      return;
+    }
+    const y = e.touches[0].clientY;
+    const dy = y - guardY;
+    guardY = y;
+    const sheet = e.target.closest ? e.target.closest('.gauges.open, .controls.open') : null;
+    if (sheet) {
+      const overflow = sheet.scrollHeight - sheet.clientHeight > 1;
+      if (overflow) {
+        const atTop = sheet.scrollTop <= 0;
+        const atBottom = sheet.scrollTop + sheet.clientHeight >= sheet.scrollHeight - 1;
+        if (!((atTop && dy > 0) || (atBottom && dy < 0))) return;
+      }
+    }
+    if (e.cancelable) e.preventDefault();
+  }, { passive: false });
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (type) {
+    document.addEventListener(type, function (e) { e.preventDefault(); }, { passive: false });
   });
+
+  function resizeView() {
+    const s = viewSize();
+    camera.aspect = s.w / Math.max(1, s.h);
+    camera.updateProjectionMatrix();
+    renderer.setSize(s.w, s.h, false);
+  }
+  window.addEventListener('resize', resizeView);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', resizeView);
+  }
 
   // ---------- Interaction state ----------
   let playing = true;

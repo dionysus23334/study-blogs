@@ -47,7 +47,7 @@ python3 -m http.server 8765
 | Cutaway | Semi-transparent plate |
 | Camera | Hero / Side / Top / Inside |
 | Auto tour | Idle ~22s → fake cursor walks Explode → Isolate → Assemble → Hero |
-| Mobile | Top bar → 读数 / 控制 sheets |
+| Mobile | Top bar → 读数 / 控制 sheets. One finger orbits; two-finger pinch zooms the model |
 
 ## Math model (summary)
 - Balance: θ = A·sin(2πft), **f = 4 Hz** (≈ 28800 bph), A ≈ 66°.
