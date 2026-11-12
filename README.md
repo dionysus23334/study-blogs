@@ -30,6 +30,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 
 - [Paper Town / Agent-City-Demo](https://dionysus23334.github.io/Agent-City-Demo/) — a hand-drawn interactive town with twenty neighbours, weather, time, and small story events. No API, no backend.
 - [Swiss lever escapement](https://dionysus23334.github.io/study-blogs/watch-escapement/) — interactive three.js study model of a Swiss lever watch escapement (`watch-escapement/`).
+- [投研自动化 / Investment Research Automation](https://dionysus23334.github.io/study-blogs/research-automation/) — a weekday ~08:00 (Asia/Shanghai) log of automated A-share research reports. Chinese page at `research-automation/`, English at `research-automation/en/`. The table of contents and the dated log are rendered from `research-automation/entries.json`; append one object per update. The Cursor report is one living page; the log is the index.
 
 ## Stack
 
@@ -39,6 +40,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 - `assets/agent-city.webp` — cover image for the Paper Town exploration card
 - `assets/watch-escapement.webp` — cover image for the Swiss lever escapement card
 - `watch-escapement/` — Swiss lever escapement demo (`index.html` next to local `three.min.js`)
+- `research-automation/` — 投研自动化 log (`index.html`, `en/index.html`, `log.js`, `entries.json`). Styles and the theme toggle stay in the shared `styles.css` and `main.js`; paths are relative so the page works locally and under the `/study-blogs/` base.
 - Deployed from the `gh-pages` branch
 
 ## Local preview

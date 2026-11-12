@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-11-11",
+    "session": "盘前",
+    "title": "A股热筹监控",
+    "titleEn": "A-share hot-money monitor",
+    "aka": "热钱雷达",
+    "note": "首次入库的盘前监控；Cursor 页面已被后续交易日原地覆盖，历史正文见当日 Notion 条目。",
+    "noteEn": "The first pre-market monitor filed in this log. The Cursor page has since been overwritten in place by later trading days; the historical wording is in that day's Notion entry.",
+    "canvas": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/f743c336-5bc8-4b71-91a0-98b52a017655",
+    "notion": "https://app.notion.com/p/415481033e24816489bbec1b06836e4e"
+  },
+  {
+    "date": "2026-11-12",
+    "session": "盘中",
+    "title": "A股热筹监控",
+    "titleEn": "A-share hot-money monitor",
+    "note": "午前同时点成交约 1.18 万亿元，较昨日同时点放量约三成，宽度偏弱；半导体与元件走强，光模块冲高回落，影视走弱。谨慎跟：先观察东山精密与剑桥科技，不追中际旭创，不跟影视。",
+    "noteEn": "By late morning, same-time turnover was about RMB 1.18 trillion, roughly 30% higher than yesterday at the same time, with weak breadth. Semiconductors and components were strong; optical modules spiked and then fell back; film and television weakened. Follow with care: watch 东山精密 and 剑桥科技 first, do not chase 中际旭创, and do not follow film and television.",
+    "canvas": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/f743c336-5bc8-4b71-91a0-98b52a017655",
+    "notion": "https://app.notion.com/p/416481033e24813692b2ff6a448ff9b5"
+  }
+]

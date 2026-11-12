@@ -7,7 +7,12 @@
   function apply(theme) {
     root.dataset.theme = theme;
     if (icon) icon.textContent = theme === 'dark' ? '☀' : '☾';
-    if (toggle) toggle.setAttribute('aria-label', theme === 'dark' ? '切换到浅色模式' : '切换到深色模式');
+    var en = (root.lang || '').toLowerCase().indexOf('en') === 0;
+    if (toggle) {
+      toggle.setAttribute('aria-label', theme === 'dark'
+        ? (en ? 'Switch to light mode' : '切换到浅色模式')
+        : (en ? 'Switch to dark mode' : '切换到深色模式'));
+    }
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0d10' : '#e9ecef');
   }
 
