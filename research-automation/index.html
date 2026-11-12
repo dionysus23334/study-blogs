@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>投研自动化 · Yuxi Guo</title>
+<meta name="description" content="Yuxi Guo 的投研自动化日志：交易日大约八点记下的 A 股研报索引，含目录、时段，以及 Cursor 交互报告与 Notion 归档链接。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/research-automation/en/">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="notes-page">
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <a class="brand" href="../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../#explorations">探索</a>
+      <a href="#toc">目录</a>
+      <a href="#log">日志</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../#explorations">探索</a> · 03 · 投研自动化</p>
+    <h1 class="reveal">投研自动化</h1>
+    <p class="lead reveal">交易日早上大约八点记下的 A 股研报。目录按日期和时段（<span class="nowrap">盘前、盘中、盘后</span>）跳转，日志从新到旧。日期用 Asia/Shanghai。</p>
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这份索引</p>
+      <p>Cursor 报告是同一张交互页，交易日会在原地更新。下面按日期排的是索引，不是每天一份冻结的副本。打开 Cursor 链接，看到的是最新一版。若某一天写了 Notion 链接，当天的原文在那一条归档里。</p>
+    </aside>
+
+    <div class="notes-layout" id="log-root" data-entries="entries.json">
+      <nav class="notes-toc" id="toc" aria-label="目录">
+        <p class="section-label">目录</p>
+        <ol class="toc-list" id="toc-list"></ol>
+      </nav>
+      <div class="notes-log" id="log">
+        <p class="notes-count" id="log-count">正在读取日志…</p>
+        <div id="log-list"></div>
+        <noscript><p class="notes-count">目录和日志由 entries.json 生成，需要开启 JavaScript。</p></noscript>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">投研自动化 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+<script src="log.js"></script>
+</body>
+</html>
