@@ -52,6 +52,7 @@
   }
 
   function restoreHubState() {
+    if (document.body && document.body.classList.contains('notes-page')) return;
     var raw = null;
     try { raw = sessionStorage.getItem(LANG_KEY); } catch (e) {}
     if (!raw) return;

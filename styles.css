@@ -370,6 +370,7 @@ h1 em { color: var(--acc); font-style: italic; }
 }
 
 /* research-automation notes page */
+html:has(body.notes-page) { scroll-padding-top: 0; }
 .notes-page h1 {
   margin: 14px 0 18px;
   max-width: 14em;
@@ -380,6 +381,26 @@ h1 em { color: var(--acc); font-style: italic; }
 .nowrap { white-space: nowrap; }
 .notes-page .eyebrow a { color: var(--mut); text-decoration: none; }
 .notes-page .eyebrow a:hover { color: var(--acc); }
+.header-page-title {
+  display: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 18em;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.site-header.is-title-away .header-page-title { display: block; }
+.header-page-title:hover { color: var(--acc); }
+.notes-page .brand,
+.notes-page .site-nav { flex: none; }
 .notes-callout {
   margin: 28px 0 0;
   padding: 2px 0 2px 16px;
@@ -404,9 +425,11 @@ h1 em { color: var(--acc); font-style: italic; }
   position: sticky;
   top: 80px;
   max-height: calc(100vh - 104px);
-  overflow: auto;
+  overflow: visible;
   padding-bottom: 12px;
+  scroll-margin-top: 88px;
 }
+.notes-toc.is-overflowing { overflow: auto; }
 .toc-list { list-style: none; margin: 12px 0 0; padding: 0; }
 .toc-list li { margin: 0; }
 .toc-link {
@@ -432,7 +455,7 @@ h1 em { color: var(--acc); font-style: italic; }
   font-size: 15px;
   line-height: 1.35;
 }
-.notes-log { min-width: 0; padding-bottom: 42vh; }
+.notes-log { min-width: 0; padding-bottom: 42vh; scroll-margin-top: 88px; }
 .notes-count {
   margin: 0 0 8px;
   font-family: var(--mono);
@@ -443,7 +466,7 @@ h1 em { color: var(--acc); font-style: italic; }
 .log-entry {
   padding: 26px 0 30px;
   border-top: 1px solid var(--line);
-  scroll-margin-top: 8px;
+  scroll-margin-top: 88px;
 }
 .log-meta {
   display: flex;
@@ -508,7 +531,7 @@ h1 em { color: var(--acc); font-style: italic; }
   outline-offset: 3px;
 }
 @media (max-width: 900px) {
-  html:has(body.notes-page) { scroll-padding-top: 132px; }
+  .site-header.is-title-away .header-page-title { display: none; }
   .type-cover { min-height: 320px; padding: 64px 28px 26px; }
   .notes-layout { grid-template-columns: 1fr; gap: 18px; margin-top: 28px; }
   .notes-toc {
@@ -516,6 +539,7 @@ h1 em { color: var(--acc); font-style: italic; }
     top: 64px;
     z-index: 15;
     max-height: none;
+    scroll-margin-top: 72px;
     margin: 0 -4px;
     padding: 8px 4px 0;
     background: color-mix(in srgb, var(--bg) 92%, transparent);
@@ -529,7 +553,11 @@ h1 em { color: var(--acc); font-style: italic; }
     margin-top: 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
   }
+  .notes-log,
+  .log-entry { scroll-margin-top: 140px; }
   .toc-list li { flex: none; }
   .toc-link {
     border-left: 0;
