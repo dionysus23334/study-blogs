@@ -31,6 +31,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 - [Paper Town / Agent-City-Demo](https://dionysus23334.github.io/Agent-City-Demo/) — a hand-drawn interactive town with twenty neighbours, weather, time, and small story events. No API, no backend.
 - [Swiss lever escapement](https://dionysus23334.github.io/study-blogs/watch-escapement/) — interactive three.js study model of a Swiss lever watch escapement (`watch-escapement/`).
 - [投研自动化 / Investment Research Automation](https://dionysus23334.github.io/study-blogs/research-automation/) — a weekday ~08:00 (Asia/Shanghai) log of automated A-share research reports. Chinese page at `research-automation/`, English at `research-automation/en/`. The table of contents and the dated log are rendered from `research-automation/entries.json`; append one object per update. The Cursor report is one living page; the log is the index.
+- [APP软件画廊 / App Gallery](https://dionysus23334.github.io/study-blogs/app-gallery/) — short, complete demos for iPhone apps studied in the daily fast-growth reports. Chinese page at `app-gallery/`, English at `app-gallery/en/`. Cards render from `app-gallery/catalog.json`, newest first. A new day is one demo folder plus one catalog entry; the homepage does not need another edit.
 
 ## Stack
 
@@ -41,6 +42,7 @@ The page is a hand-written gallery: two course cards, a mathematics note card, a
 - `assets/watch-escapement.webp` — cover image for the Swiss lever escapement card
 - `watch-escapement/` — Swiss lever escapement demo (`index.html` next to local `three.min.js`)
 - `research-automation/` — 投研自动化 log (`index.html`, `en/index.html`, `log.js`, `entries.json`). Styles and the theme toggle stay in the shared `styles.css` and `main.js`; paths are relative so the page works locally and under the `/study-blogs/` base.
+- `app-gallery/` — APP软件画廊 (`index.html`, `en/index.html`, `gallery.js`, `gallery.css`, `catalog.json`, `apps/`). Cards render from `catalog.json`. Demo pages reuse `styles.css` and `main.js`.
 - Deployed from the `gh-pages` branch
 
 ## Local preview
