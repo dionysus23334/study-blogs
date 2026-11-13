@@ -204,13 +204,16 @@
         var tocBox = tocScroll.getBoundingClientRect();
         if (linkBox.top < tocBox.top) tocScroll.scrollTop -= tocBox.top - linkBox.top;
         else if (linkBox.bottom > tocBox.bottom) tocScroll.scrollTop += linkBox.bottom - tocBox.bottom;
+        syncTocStripEdges();
         return;
       }
       var strip = tocScroll.querySelector('.toc-list');
       if (!strip) return;
       var stripBox = strip.getBoundingClientRect();
-      if (linkBox.left < stripBox.left) strip.scrollLeft -= stripBox.left - linkBox.left + 8;
-      else if (linkBox.right > stripBox.right) strip.scrollLeft += linkBox.right - stripBox.right + 8;
+      var edge = 28;
+      if (linkBox.left < stripBox.left + edge) strip.scrollLeft -= stripBox.left + edge - linkBox.left;
+      else if (linkBox.right > stripBox.right - edge) strip.scrollLeft += linkBox.right - (stripBox.right - edge);
+      syncTocStripEdges();
     }
 
     var ticking = false;
@@ -231,16 +234,30 @@
     update();
   }
 
+  function syncTocStripEdges() {
+    var toc = document.getElementById('toc');
+    if (!toc) return;
+    if (!window.matchMedia('(max-width: 900px)').matches) {
+      toc.classList.remove('can-scroll-left', 'can-scroll-right');
+      return;
+    }
+    var slack = tocEl.scrollWidth - tocEl.clientWidth;
+    toc.classList.toggle('can-scroll-left', tocEl.scrollLeft > 2);
+    toc.classList.toggle('can-scroll-right', slack - tocEl.scrollLeft > 2);
+  }
+
   function syncTocOverflow() {
     var toc = document.getElementById('toc');
     if (!toc) return;
     if (window.matchMedia('(max-width: 900px)').matches) {
       toc.classList.remove('is-overflowing');
+      syncTocStripEdges();
       return;
     }
     toc.classList.add('is-overflowing');
     var overflows = toc.scrollHeight > toc.clientHeight + 1;
     toc.classList.toggle('is-overflowing', overflows);
+    syncTocStripEdges();
   }
 
   function onTocWheel(event) {
@@ -295,6 +312,15 @@
 
   var tocNav = document.getElementById('toc');
   if (tocNav) tocNav.addEventListener('wheel', onTocWheel, { passive: false });
+  var stripTicking = false;
+  tocEl.addEventListener('scroll', function () {
+    if (stripTicking) return;
+    stripTicking = true;
+    requestAnimationFrame(function () {
+      syncTocStripEdges();
+      stripTicking = false;
+    });
+  }, { passive: true });
   window.addEventListener('resize', function () {
     requestAnimationFrame(syncTocOverflow);
   });
