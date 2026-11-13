@@ -16,7 +16,8 @@
         earlier: function (name) { return 'Earlier title: ' + name; },
         cursor: 'Interactive report',
         notion: 'Filing for this day',
-        tocLabel: 'Contents'
+        tocLabel: 'Contents',
+        timeline: 'Timeline'
       }
     : {
         count: function (n) { return n + ' 条 · Asia/Shanghai · 新到旧'; },
@@ -26,10 +27,17 @@
         earlier: function (name) { return '初名「' + name + '」'; },
         cursor: '交互报告',
         notion: '当日归档',
-        tocLabel: '目录'
+        tocLabel: '目录',
+        timeline: '时间轴'
       };
 
   var sessionOrder = { '盘前': 1, '盘中': 2, '盘后': 3 };
+  var renderedItems = [];
+  var timelineFracs = {};
+  var placedNarrow = null;
+  var timelineBuiltParent = 0;
+  var scrubbing = false;
+  var timelineEl = document.getElementById('toc-timeline');
   var sessionEn = { '盘前': 'Pre-market', '盘中': 'Intraday', '盘后': 'After the close' };
 
   function el(tag, className, text) {
@@ -109,6 +117,7 @@
       return;
     }
     countEl.textContent = copy.count(entries.length);
+    renderedItems = [];
     var seen = {};
 
     entries.forEach(function (entry, index) {
@@ -134,6 +143,14 @@
       tocLink.appendChild(el('span', 'toc-title', titles.primary));
       tocItem.appendChild(tocLink);
       tocEl.appendChild(tocItem);
+      renderedItems.push({
+        id: base,
+        date: date,
+        session: entry.session || '',
+        sessionRank: sessionOrder[entry.session] || 0,
+        title: titles.primary,
+        label: when
+      });
 
       var article = el('article', 'log-entry');
       article.id = base;
@@ -162,8 +179,10 @@
       logEl.appendChild(article);
     });
 
+    buildTimeline();
     bindSpy();
     syncTocOverflow();
+    syncStickyOffset();
     if (location.hash) {
       var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
       if (target) target.scrollIntoView();
@@ -178,6 +197,10 @@
 
     function update() {
       var line = Math.min(168, window.innerHeight * 0.28);
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        var sticky = document.getElementById('toc');
+        if (sticky) line = Math.max(line, sticky.getBoundingClientRect().bottom + 24);
+      }
       var current = entries[0];
       var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
       if (atBottom) {
@@ -198,6 +221,7 @@
           links[j].removeAttribute('aria-current');
         }
       }
+      syncTimelinePlayhead(current.id);
       if (!active) return;
       var linkBox = active.getBoundingClientRect();
       if (tocScroll.scrollHeight > tocScroll.clientHeight + 4) {
@@ -310,8 +334,370 @@
     sync();
   }
 
+  function dateMs(dateStr) {
+    var parsed = new Date(dateStr + 'T12:00:00+08:00');
+    return parsed.getTime();
+  }
+
+  function monthShort(ym) {
+    var parsed = new Date(ym + '-01T12:00:00+08:00');
+    try {
+      return new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'Asia/Shanghai' }).format(parsed);
+    } catch (err) {
+      return ym.slice(5);
+    }
+  }
+
+  function axisText(kind, key, spanYears) {
+    if (kind === 'year') return key;
+    if (kind === 'month') {
+      if (spanYears) return key;
+      if (lang === 'en') return monthShort(key);
+      return String(Number(key.slice(5))) + '月';
+    }
+    if (spanYears) return key;
+    return key.slice(5);
+  }
+
+  function placeTimeline() {
+    if (!timelineEl) return;
+    var narrow = window.matchMedia('(max-width: 900px)').matches;
+    var strip = document.querySelector('.toc-strip');
+    var log = document.getElementById('log');
+    if (narrow && strip && strip.parentNode) {
+      if (timelineEl.nextElementSibling !== strip) strip.parentNode.insertBefore(timelineEl, strip);
+    } else if (!narrow && log && timelineEl.parentNode !== log) {
+      log.insertBefore(timelineEl, log.firstChild);
+    }
+    placedNarrow = narrow;
+  }
+
+  function timelineModel(items, width) {
+    var points = items.map(function (item) {
+      return {
+        id: item.id,
+        date: item.date,
+        month: item.date.slice(0, 7),
+        year: item.date.slice(0, 4),
+        time: dateMs(item.date),
+        session: item.session,
+        sessionRank: item.sessionRank,
+        title: item.title,
+        label: item.label
+      };
+    }).filter(function (point) { return !isNaN(point.time); });
+    points.sort(function (a, b) {
+      if (a.time !== b.time) return a.time - b.time;
+      return a.sessionRank - b.sessionRank;
+    });
+    if (!points.length) return null;
+    var span = points[points.length - 1].time - points[0].time;
+    var spanYears = points[0].year !== points[points.length - 1].year;
+    points.forEach(function (point, index) {
+      point.frac = !span ? (points.length === 1 ? 0.5 : index / (points.length - 1)) : (point.time - points[0].time) / span;
+    });
+
+    function minGap(list) {
+      var gap = Infinity;
+      for (var i = 1; i < list.length; i++) {
+        var size = (list[i].frac - list[i - 1].frac) * width;
+        if (size > 0.5) gap = Math.min(gap, size);
+      }
+      return gap === Infinity ? width : gap;
+    }
+
+    function groupBy(keyFn) {
+      var order = [];
+      var index = {};
+      points.forEach(function (point) {
+        var key = keyFn(point);
+        if (!index[key]) {
+          index[key] = { key: key, members: [] };
+          order.push(index[key]);
+        }
+        index[key].members.push(point);
+      });
+      order.forEach(function (group) {
+        var sum = 0;
+        var target = group.members[0];
+        group.members.forEach(function (member) {
+          sum += member.frac;
+          if (member.time > target.time || (member.time === target.time && member.sessionRank > target.sessionRank)) target = member;
+        });
+        group.frac = sum / group.members.length;
+        group.id = target.id;
+        group.target = target;
+      });
+      order.sort(function (a, b) { return a.frac - b.frac; });
+      return order;
+    }
+
+    var mode = 'entry';
+    var groups = null;
+    if (!((points.length <= 20 && minGap(points) >= 8) || points.length <= 4)) {
+      var days = groupBy(function (point) { return point.date; });
+      if (days.length <= 42 && minGap(days) >= 8) {
+        mode = 'day';
+        groups = days;
+      } else {
+        var weeks = groupBy(function (point) { return String(Math.floor(point.time / 604800000)); });
+        if (weeks.length <= 26 && minGap(weeks) >= 12) {
+          mode = 'week';
+          groups = weeks;
+        } else {
+          var months = groupBy(function (point) { return point.month; });
+          if (months.length <= 18 && minGap(months) >= 14) {
+            mode = 'month';
+            groups = months;
+          } else {
+            mode = 'year';
+            groups = groupBy(function (point) { return point.year; });
+          }
+        }
+      }
+    }
+
+    var ticks = [];
+    if (mode === 'entry') {
+      var byDate = {};
+      points.forEach(function (point) {
+        if (!byDate[point.date]) byDate[point.date] = [];
+        byDate[point.date].push(point);
+      });
+      points.forEach(function (point) {
+        var group = byDate[point.date];
+        var index = group.indexOf(point);
+        ticks.push({
+          id: point.id,
+          ids: point.id,
+          frac: point.frac,
+          nudge: (index - (group.length - 1) / 2) * 6,
+          aria: point.label + ' · ' + point.title
+        });
+      });
+    } else {
+      groups.forEach(function (group) {
+        var count = group.members.length;
+        var aria = group.target.label + ' · ' + group.target.title;
+        if (count > 1) aria += ' · ' + count;
+        ticks.push({
+          id: group.id,
+          ids: group.members.map(function (member) { return member.id; }).join(','),
+          frac: group.frac,
+          nudge: 0,
+          aria: aria
+        });
+      });
+    }
+
+    var kind = mode === 'year' ? 'year' : (mode === 'month' ? 'month' : 'date');
+    var startKey = kind === 'year' ? points[0].year : (kind === 'month' ? points[0].month : points[0].date);
+    var endKey = kind === 'year' ? points[points.length - 1].year : (kind === 'month' ? points[points.length - 1].month : points[points.length - 1].date);
+    var fracs = {};
+    points.forEach(function (point) { fracs[point.id] = point.frac; });
+    return {
+      mode: mode,
+      ticks: ticks,
+      fracs: fracs,
+      startLabel: axisText(kind, startKey, spanYears),
+      endLabel: axisText(kind, endKey, spanYears)
+    };
+  }
+
+  function paintTimeline(model) {
+    timelineFracs = model.fracs;
+    timelineEl.textContent = '';
+    timelineEl.setAttribute('role', 'group');
+    timelineEl.setAttribute('aria-label', copy.timeline);
+    var track = el('div', 'toc-timeline-track');
+    track.appendChild(el('span', 'toc-timeline-end', model.startLabel));
+    var rail = el('div', 'toc-timeline-rail');
+    rail.appendChild(el('div', 'toc-timeline-axis'));
+    model.ticks.forEach(function (tick) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'toc-timeline-tick';
+      btn.setAttribute('data-id', tick.id);
+      btn.setAttribute('data-ids', tick.ids);
+      btn.setAttribute('aria-label', tick.aria);
+      btn.title = tick.aria;
+      btn.style.left = (tick.frac * 100) + '%';
+      if (tick.nudge) btn.style.marginLeft = tick.nudge + 'px';
+      rail.appendChild(btn);
+    });
+    var head = el('div', 'toc-timeline-playhead');
+    head.setAttribute('aria-hidden', 'true');
+    rail.appendChild(head);
+    track.appendChild(rail);
+    if (model.endLabel !== model.startLabel) track.appendChild(el('span', 'toc-timeline-end', model.endLabel));
+    timelineEl.appendChild(track);
+    var current = tocEl.querySelector('.toc-link.is-current');
+    var id = current ? (current.getAttribute('href') || '').slice(1) : (renderedItems[0] && renderedItems[0].id);
+    syncTimelinePlayhead(id);
+  }
+
+  function buildTimeline() {
+    if (!timelineEl) return;
+    if (!renderedItems.length) {
+      timelineEl.textContent = '';
+      return;
+    }
+    placeTimeline();
+    var parentWidth = timelineEl.parentElement ? timelineEl.parentElement.clientWidth : 320;
+    timelineBuiltParent = parentWidth;
+    var width = Math.max(120, parentWidth - 88);
+    var model = timelineModel(renderedItems, width);
+    if (!model) return;
+    paintTimeline(model);
+    requestAnimationFrame(function () {
+      var rail = timelineEl.querySelector('.toc-timeline-rail');
+      var actual = rail ? rail.clientWidth : 0;
+      if (actual > 40 && Math.abs(actual - width) > 48) {
+        var next = timelineModel(renderedItems, actual);
+        if (next) paintTimeline(next);
+      }
+      syncStickyOffset();
+    });
+  }
+
+  function syncTimelinePlayhead(id) {
+    if (!timelineEl || !id || timelineFracs[id] == null) return;
+    var head = timelineEl.querySelector('.toc-timeline-playhead');
+    if (head) head.style.left = (timelineFracs[id] * 100) + '%';
+    var ticks = timelineEl.querySelectorAll('.toc-timeline-tick');
+    for (var i = 0; i < ticks.length; i++) {
+      var ids = (ticks[i].getAttribute('data-ids') || '').split(',');
+      var on = false;
+      for (var k = 0; k < ids.length; k++) if (ids[k] === id) on = true;
+      ticks[i].classList.toggle('is-current', on);
+      if (on) ticks[i].setAttribute('aria-current', 'true');
+      else ticks[i].removeAttribute('aria-current');
+    }
+  }
+
+  function revealChip(link) {
+    if (!link) return;
+    var narrow = window.matchMedia('(max-width: 900px)').matches;
+    if (narrow) {
+      var linkBox = link.getBoundingClientRect();
+      var stripBox = tocEl.getBoundingClientRect();
+      var edge = 28;
+      if (linkBox.left < stripBox.left + edge) tocEl.scrollLeft -= stripBox.left + edge - linkBox.left;
+      else if (linkBox.right > stripBox.right - edge) tocEl.scrollLeft += linkBox.right - (stripBox.right - edge);
+      return;
+    }
+    var toc = document.getElementById('toc');
+    if (!toc || !toc.classList.contains('is-overflowing')) return;
+    var linkBoxDesktop = link.getBoundingClientRect();
+    var tocBox = toc.getBoundingClientRect();
+    if (linkBoxDesktop.top < tocBox.top) toc.scrollTop -= tocBox.top - linkBoxDesktop.top;
+    else if (linkBoxDesktop.bottom > tocBox.bottom) toc.scrollTop += linkBoxDesktop.bottom - tocBox.bottom;
+  }
+
+  function jumpToEntry(id) {
+    if (!id) return;
+    var entry = document.getElementById(id);
+    if (!entry) return;
+    var links = tocEl.querySelectorAll('.toc-link');
+    var link = null;
+    for (var i = 0; i < links.length; i++) {
+      var on = links[i].getAttribute('href') === '#' + id;
+      links[i].classList.toggle('is-current', on);
+      if (on) {
+        links[i].setAttribute('aria-current', 'location');
+        link = links[i];
+      } else {
+        links[i].removeAttribute('aria-current');
+      }
+    }
+    var rootStyle = document.documentElement.style;
+    var previous = rootStyle.scrollBehavior;
+    rootStyle.scrollBehavior = 'auto';
+    entry.scrollIntoView();
+    rootStyle.scrollBehavior = previous;
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    revealChip(link);
+    syncTimelinePlayhead(id);
+    syncTocStripEdges();
+  }
+
+  function nearestTick(clientX) {
+    if (!timelineEl) return null;
+    var ticks = timelineEl.querySelectorAll('.toc-timeline-tick');
+    var best = null;
+    var bestDist = Infinity;
+    for (var i = 0; i < ticks.length; i++) {
+      var box = ticks[i].getBoundingClientRect();
+      var dist = Math.abs(clientX - (box.left + box.width / 2));
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = ticks[i];
+      }
+    }
+    return best;
+  }
+
+  function onTimelinePointerDown(event) {
+    if (!timelineEl || !timelineEl.querySelector('.toc-timeline-tick')) return;
+    if (event.button != null && event.button !== 0) return;
+    var tick = nearestTick(event.clientX);
+    if (!tick) return;
+    scrubbing = true;
+    timelineEl.classList.add('is-scrubbing');
+    timelineEl.setAttribute('data-scrub', tick.getAttribute('data-id') || '');
+    if (timelineEl.setPointerCapture) {
+      try { timelineEl.setPointerCapture(event.pointerId); } catch (err) {}
+    }
+    jumpToEntry(tick.getAttribute('data-id'));
+    if (event.cancelable) event.preventDefault();
+  }
+
+  function onTimelinePointerMove(event) {
+    if (!scrubbing) return;
+    var tick = nearestTick(event.clientX);
+    if (!tick) return;
+    var id = tick.getAttribute('data-id');
+    if (timelineEl.getAttribute('data-scrub') === id) return;
+    timelineEl.setAttribute('data-scrub', id || '');
+    jumpToEntry(id);
+  }
+
+  function onTimelinePointerUp(event) {
+    if (!scrubbing) return;
+    scrubbing = false;
+    if (timelineEl) {
+      timelineEl.classList.remove('is-scrubbing');
+      timelineEl.removeAttribute('data-scrub');
+      if (timelineEl.releasePointerCapture) {
+        try { timelineEl.releasePointerCapture(event.pointerId); } catch (err) {}
+      }
+    }
+  }
+
+  function syncStickyOffset() {
+    var rootStyle = document.documentElement.style;
+    if (!window.matchMedia('(max-width: 900px)').matches) return;
+    var toc = document.getElementById('toc');
+    if (!toc) return;
+    var top = parseFloat(getComputedStyle(toc).top) || 0;
+    var offset = Math.ceil(top + toc.getBoundingClientRect().height + 12);
+    rootStyle.setProperty('--notes-sticky-offset', Math.max(140, offset) + 'px');
+  }
+
   var tocNav = document.getElementById('toc');
   if (tocNav) tocNav.addEventListener('wheel', onTocWheel, { passive: false });
+  if (timelineEl) {
+    timelineEl.addEventListener('pointerdown', onTimelinePointerDown);
+    timelineEl.addEventListener('pointermove', onTimelinePointerMove);
+    timelineEl.addEventListener('pointerup', onTimelinePointerUp);
+    timelineEl.addEventListener('pointercancel', onTimelinePointerUp);
+    timelineEl.addEventListener('click', function (event) {
+      var target = event.target;
+      var tick = target && target.closest ? target.closest('.toc-timeline-tick') : null;
+      if (!tick || !timelineEl.contains(tick)) return;
+      jumpToEntry(tick.getAttribute('data-id'));
+    });
+  }
   var stripTicking = false;
   tocEl.addEventListener('scroll', function () {
     if (stripTicking) return;
@@ -322,9 +708,21 @@
     });
   }, { passive: true });
   window.addEventListener('resize', function () {
-    requestAnimationFrame(syncTocOverflow);
+    requestAnimationFrame(function () {
+      var before = placedNarrow;
+      placeTimeline();
+      var parentWidth = timelineEl && timelineEl.parentElement ? timelineEl.parentElement.clientWidth : 0;
+      if (renderedItems.length && before !== null && (placedNarrow !== before || Math.abs(parentWidth - timelineBuiltParent) > 48)) buildTimeline();
+      syncTocOverflow();
+      syncStickyOffset();
+    });
   });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncTocOverflow);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      syncTocOverflow();
+      syncStickyOffset();
+    });
+  }
   bindHeaderTitle();
   syncTocOverflow();
 
