@@ -138,6 +138,7 @@
       var tocItem = document.createElement('li');
       var tocLink = document.createElement('a');
       tocLink.className = 'toc-link';
+      tocLink.draggable = false;
       tocLink.href = '#' + base;
       tocLink.appendChild(el('span', 'toc-when', when));
       tocLink.appendChild(el('span', 'toc-title', titles.primary));
@@ -263,11 +264,13 @@
     if (!toc) return;
     if (!window.matchMedia('(max-width: 900px)').matches) {
       toc.classList.remove('can-scroll-left', 'can-scroll-right');
+      tocEl.classList.remove('is-grabbable', 'is-dragging');
       return;
     }
     var slack = tocEl.scrollWidth - tocEl.clientWidth;
     toc.classList.toggle('can-scroll-left', tocEl.scrollLeft > 2);
     toc.classList.toggle('can-scroll-right', slack - tocEl.scrollLeft > 2);
+    tocEl.classList.toggle('is-grabbable', slack > 2);
   }
 
   function syncTocOverflow() {
@@ -698,6 +701,52 @@
       jumpToEntry(tick.getAttribute('data-id'));
     });
   }
+  var stripDrag = null;
+  var suppressStripClick = false;
+  function onStripPointerDown(event) {
+    if (event.pointerType && event.pointerType !== 'mouse') return;
+    if (event.button !== 0) return;
+    if (!window.matchMedia('(max-width: 900px)').matches) return;
+    if (tocEl.scrollWidth <= tocEl.clientWidth + 2) return;
+    stripDrag = { id: event.pointerId, x: event.clientX, left: tocEl.scrollLeft, moved: false };
+  }
+  function onStripPointerMove(event) {
+    if (!stripDrag || event.pointerId !== stripDrag.id) return;
+    var dx = event.clientX - stripDrag.x;
+    if (!stripDrag.moved) {
+      if (Math.abs(dx) < 5) return;
+      stripDrag.moved = true;
+      tocEl.classList.add('is-dragging');
+      if (tocEl.setPointerCapture) {
+        try { tocEl.setPointerCapture(event.pointerId); } catch (err) {}
+      }
+    }
+    tocEl.scrollLeft = stripDrag.left - dx;
+    if (event.cancelable) event.preventDefault();
+  }
+  function onStripPointerUp(event) {
+    if (!stripDrag || event.pointerId !== stripDrag.id) return;
+    if (stripDrag.moved) suppressStripClick = true;
+    tocEl.classList.remove('is-dragging');
+    if (tocEl.releasePointerCapture) {
+      try { tocEl.releasePointerCapture(event.pointerId); } catch (err) {}
+    }
+    stripDrag = null;
+    setTimeout(function () { suppressStripClick = false; }, 350);
+  }
+  tocEl.addEventListener('pointerdown', onStripPointerDown);
+  tocEl.addEventListener('pointermove', onStripPointerMove);
+  tocEl.addEventListener('pointerup', onStripPointerUp);
+  tocEl.addEventListener('pointercancel', onStripPointerUp);
+  tocEl.addEventListener('dragstart', function (event) {
+    if (window.matchMedia('(max-width: 900px)').matches) event.preventDefault();
+  });
+  tocEl.addEventListener('click', function (event) {
+    if (!suppressStripClick) return;
+    suppressStripClick = false;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
   var stripTicking = false;
   tocEl.addEventListener('scroll', function () {
     if (stripTicking) return;

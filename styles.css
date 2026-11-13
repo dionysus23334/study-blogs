@@ -695,6 +695,8 @@ html:has(body.notes-page) { scroll-padding-top: 0; }
   .notes-log,
   .log-entry { scroll-margin-top: var(--notes-sticky-offset, 140px); }
   .notes-toc .toc-timeline + .toc-strip .toc-list { margin-top: 4px; }
+  .toc-list.is-grabbable { cursor: grab; }
+  .toc-list.is-dragging { cursor: grabbing; user-select: none; }
   .toc-list li { flex: none; }
   .toc-link {
     border-left: 0;
