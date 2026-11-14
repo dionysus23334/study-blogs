@@ -246,7 +246,7 @@
     else inner.appendChild(crumb);
     var ticking = false;
     function syncTitle() {
-      header.classList.toggle('is-title-away', h1.getBoundingClientRect().bottom <= 1);
+      header.classList.toggle('is-title-away', h1.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
     }
     window.addEventListener('scroll', function () {
       if (ticking) return;

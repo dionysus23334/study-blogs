@@ -323,7 +323,7 @@
 
     var ticking = false;
     function sync() {
-      header.classList.toggle('is-title-away', h1.getBoundingClientRect().bottom <= 1);
+      header.classList.toggle('is-title-away', h1.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
     }
     window.addEventListener('scroll', function () {
       if (ticking) return;
@@ -643,6 +643,9 @@
   function onTimelinePointerDown(event) {
     if (!timelineEl || !timelineEl.querySelector('.toc-timeline-tick')) return;
     if (event.button != null && event.button !== 0) return;
+    // A finger on the sticky timeline must still be able to pan the page back up
+    // to the large title. Mouse scrubbing stays; touch and pen scroll the document.
+    if (event.pointerType && event.pointerType !== 'mouse') return;
     var tick = nearestTick(event.clientX);
     if (!tick) return;
     scrubbing = true;

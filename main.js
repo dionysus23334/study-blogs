@@ -98,4 +98,53 @@
   } else {
     reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
+
+  function bindHeaderTitle() {
+    var header = document.querySelector('.site-header');
+    var inner = header && header.querySelector('.header-inner');
+    var h1 = document.querySelector('.notes-wrap h1');
+    if (!header || !inner || !h1 || inner.querySelector('.header-page-title')) return;
+    var zh = (root.lang || '').toLowerCase().indexOf('zh') === 0;
+    var crumb = document.createElement('a');
+    crumb.className = 'header-page-title';
+    crumb.href = '#top';
+    crumb.textContent = (h1.textContent || '').trim();
+    crumb.setAttribute('aria-label', zh ? '回到页顶' : 'Back to top');
+    var nav = inner.querySelector('.site-nav');
+    if (nav) inner.insertBefore(crumb, nav);
+    else inner.appendChild(crumb);
+
+    var ticking = false;
+    function sync() {
+      header.classList.toggle(
+        'is-title-away',
+        h1.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom
+      );
+    }
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        sync();
+        ticking = false;
+      });
+    }, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
+  if (document.querySelector('.notes-wrap h1') || document.readyState !== 'loading') {
+    bindHeaderTitle();
+  } else {
+    document.addEventListener('DOMContentLoaded', bindHeaderTitle, { once: true });
+  }
+
+  // #top is the page body, not the sticky header. A sticky target is already
+  // on screen, so the browser would leave the large title scrolled away.
+  document.addEventListener('click', function (event) {
+    var link = event.target && event.target.closest ? event.target.closest('a[href="#top"]') : null;
+    if (!link) return;
+    if (event.defaultPrevented || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    window.scrollTo(0, 0);
+  });
 })();
