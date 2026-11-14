@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "entries": [
+    {
+      "id": "gowish",
+      "date": "2026-11-14",
+      "name": "GoWish",
+      "name_zh": "GoWish · 一份短清单",
+      "publisher": "Onskeskyen ApS / Ønskeskyen ApS",
+      "one_liner_zh": "一份可以加愿望、再留给别人预留的短清单。",
+      "one_liner_en": "A short list you can add a wish to, then leave one reserved for someone else.",
+      "tags": ["Wishlist", "Lifestyle"],
+      "demo": "apps/gowish/",
+      "demo_en": "apps/gowish/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/a997d920-1045-4b69-a4a1-b1e717bb2083"
+    },
     {
       "id": "workbuddy",
       "date": "2026-11-13",
