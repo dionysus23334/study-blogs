@@ -1,0 +1,222 @@
+.desk {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.14fr);
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 36px;
+  min-width: 0;
+}
+
+.desk-tasks,
+.desk-slip {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 22px 22px 18px;
+}
+
+.desk-slip { min-height: 480px; }
+
+.desk-heading {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.desk-date {
+  margin: 8px 0 0;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.task-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.task input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 5px 0 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.task input:checked {
+  background: var(--acc);
+  border-color: var(--acc);
+}
+
+.task input:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border-left: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+.task-label {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.task:has(input:checked) .task-label,
+.task.is-done .task-label {
+  color: var(--mut);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.task-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.desk-state {
+  margin: auto 0 0;
+  padding-top: 18px;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  line-height: 1.6;
+}
+
+.slip-kicker {
+  margin: 0;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.slip-body.is-in > * { animation: slip-rise .38s cubic-bezier(.2, .7, .2, 1); }
+
+@keyframes slip-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.slip-ask {
+  margin: 14px 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -.015em;
+}
+
+.slip-lines {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  counter-reset: line;
+}
+
+.slip-lines li {
+  counter-increment: line;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.slip-lines li::before {
+  content: counter(line, decimal-leading-zero);
+  padding-top: 5px;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.letter {
+  margin: 18px 0 0;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--acc);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.letter p { margin: 0 0 8px; }
+
+.letter p:last-child { margin: 0; }
+
+.slip-close {
+  margin: 18px 0 0;
+  max-width: 36em;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.slip-tasks { margin-top: 8px; }
+
+.slip-foot { margin-top: auto; padding-top: 18px; }
+
+.slip-status {
+  margin: 0 0 14px;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .03em;
+  line-height: 1.6;
+}
+
+.slip-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.demo-page .notes-callout { margin-top: 42px; }
+
+@media (max-width: 800px) {
+  .desk { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
+  .desk-slip { order: -1; min-height: 0; }
+  .desk-tasks,
+  .desk-slip { padding: 18px 16px 16px; }
+  .desk-state { margin-top: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slip-body.is-in > * { animation: none; }
+}

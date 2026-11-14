@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WorkBuddy · a quiet desk · Yuxi Guo</title>
+<meta name="description" content="A study sketch of WorkBuddy: a quiet desk, today’s tasks on one side, and a short “help me do this” in four sheets. Not the official product.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/workbuddy/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/workbuddy/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../desk.css">
+</head>
+<body class="notes-page demo-page">
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explore</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-13</p>
+    <h1 class="reveal">WorkBuddy</h1>
+    <p class="exhibit-meta reveal">
+      <span>WorkBuddy - AI 办公我帮你</span>
+      <span>Tencent Technology (Shanghai) Company Limited</span>
+      <span>com.tencent.workbuddy.app</span>
+      <span><time datetime="2026-11-13">2026-11-13</time></span>
+    </p>
+    <p class="lead reveal">A quiet desk. Three things for today on one side, and a short “help me do this” on the other, in four sheets: notes, a reply, a list, then back onto today. The meeting and the names are invented. This is a study sketch, not the official product.</p>
+
+    <div class="desk">
+      <section class="desk-tasks" aria-label="Today’s tasks">
+        <p class="section-label">Today</p>
+        <h2 class="desk-heading">Three things</h2>
+        <p class="desk-date"><time datetime="2026-11-13">2026-11-13</time> · Friday</p>
+        <ul class="task-list" id="task-list">
+          <li class="task">
+            <input type="checkbox" id="task-essay" data-task="essay">
+            <div><label class="task-label" for="task-essay">Shorten the third paragraph of the window essay</label></div>
+          </li>
+          <li class="task">
+            <input type="checkbox" id="task-door" data-task="door">
+            <div><label class="task-label" for="task-door">Write Thursday’s room number on the door</label></div>
+          </li>
+          <li class="task">
+            <input type="checkbox" id="task-lin" data-task="lin">
+            <div><label class="task-label" for="task-lin">Answer Lin’s note</label></div>
+          </li>
+        </ul>
+        <p class="desk-state" id="desk-state">Still this morning’s three things.</p>
+      </section>
+
+      <section class="desk-slip" aria-label="Help me do this">
+        <p class="slip-kicker" id="slip-kicker">01 / 04  ·  Notes</p>
+        <div class="slip-body" id="slip-body">
+          <p class="slip-ask">Summarize this morning’s short meeting in three sentences.</p>
+          <ol class="slip-lines">
+            <li>The reading moves to the small room, Thursday at seven in the evening.</li>
+            <li>The window essay stays; the second poem comes out.</li>
+            <li>Lin prints the program by Wednesday noon.</li>
+          </ol>
+        </div>
+        <div class="slip-foot">
+          <p class="slip-status" id="slip-status">Three sentences, on this sheet. The list on the other side is unchanged.</p>
+          <div class="slip-nav">
+            <button type="button" class="btn" id="slip-prev" disabled>Previous</button>
+            <button type="button" class="btn btn-primary" id="slip-next">Next sheet</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <p id="slip-live" class="visually-hidden" aria-live="polite"></p>
+
+    <noscript>
+      <p class="notes-count">Turning the sheets needs JavaScript. The first sheet is above: a three-sentence summary of the morning meeting. After it come a reply, a list, and filing them under today.</p>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>This is a study sketch made after a research note, not the official WorkBuddy product, and it does not use the official mark. On the China mainland store the app is listed as WorkBuddy - AI 办公我帮你, published by Tencent Technology (Shanghai) Company Limited. The page keeps one idea: a quiet desk, and a short “help me do this.” The meeting, the reply, and the three tasks are invented. Turn the sheets with the buttons or the left and right arrow keys. Checks stay on this page only; a refresh returns the desk to morning.</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/aa12dbde-8491-4df1-90e7-23ce80e014b3" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">WorkBuddy · study sketch · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../desk.js"></script>
+</body>
+</html>

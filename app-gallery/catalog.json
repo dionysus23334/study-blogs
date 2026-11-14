@@ -1,0 +1,31 @@
+{
+  "updated": "2026-11-13",
+  "entries": [
+    {
+      "id": "workbuddy",
+      "date": "2026-11-13",
+      "name": "WorkBuddy",
+      "name_zh": "WorkBuddy · AI 办公我帮你",
+      "publisher": "Tencent Technology (Shanghai) Company Limited",
+      "one_liner_zh": "一张安静的书桌：今日的事情放在一边，把「帮我做这件事」一步一步走完。",
+      "one_liner_en": "A quiet desk: today’s tasks on one side, and a short “help me do this” you can step through.",
+      "tags": ["AI work agent", "Productivity"],
+      "demo": "apps/workbuddy/",
+      "demo_en": "apps/workbuddy/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/aa12dbde-8491-4df1-90e7-23ce80e014b3"
+    },
+    {
+      "id": "dramawave",
+      "date": "2026-11-12",
+      "name": "DramaWave",
+      "name_zh": "DramaWave · Dramas & Reels",
+      "publisher": "SKYWORK AI PTE LTD",
+      "one_liner_zh": "竖着读三则原创的微场景。点一下，或轻轻一滑，就到下一拍。",
+      "one_liner_en": "A vertical reader for three original micro-scenes. Tap or swipe to the next beat.",
+      "tags": ["Short drama", "Reader"],
+      "demo": "apps/dramawave/",
+      "demo_en": "apps/dramawave/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/e4d8e3a5-36c7-4523-8098-fba6961f49e3"
+    }
+  ]
+}

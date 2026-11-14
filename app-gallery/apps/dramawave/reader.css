@@ -1,0 +1,172 @@
+.demo-page .reader {
+  width: min(420px, 100%);
+  margin: 36px auto 0;
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: min(520px, 70svh);
+  min-height: 420px;
+  padding: 18px 22px 14px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow: 0 22px 48px -34px color-mix(in srgb, var(--ink) 50%, transparent);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sheet-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.sheet-top span:last-child { font-variant-numeric: tabular-nums; }
+
+.sheet-progress {
+  height: 2px;
+  margin-top: 14px;
+  border-radius: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.sheet-progress span {
+  display: block;
+  height: 100%;
+  background: var(--acc);
+  border-radius: 1px;
+}
+
+.sheet-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 0 4px;
+  overflow: auto;
+}
+
+.sheet-body.is-beat { justify-content: center; padding-top: 18px; }
+
+.sheet-body.is-in > * { animation: sheet-rise .38s cubic-bezier(.2, .7, .2, 1); }
+
+@keyframes sheet-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.sheet-numeral {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 68px;
+  line-height: .85;
+  letter-spacing: -.04em;
+}
+
+.sheet h2,
+.sheet-title {
+  margin: 12px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(28px, 7vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.sheet-meta {
+  margin: 12px 0 0;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.beat-scene {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.beat-count { color: var(--mut); font-variant-numeric: tabular-nums; }
+
+.beat-kicker {
+  margin: 12px 0 0;
+  color: var(--mut);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.beat-text {
+  margin: 16px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(20px, 4.8vw, 24px);
+  line-height: 1.55;
+  letter-spacing: -.015em;
+  overflow-wrap: break-word;
+}
+
+.beat-aside {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--mut);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.sheet-hint {
+  margin: 10px 0 0;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.reader-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.demo-page .notes-callout { margin-top: 42px; }
+
+@media (max-width: 620px) {
+  .demo-page .reader { margin-top: 28px; }
+  .sheet {
+    height: min(400px, 58svh);
+    min-height: 340px;
+    padding: 16px 16px 12px;
+    border-radius: 18px;
+  }
+  .sheet-numeral { font-size: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-body.is-in > * { animation: none; }
+}

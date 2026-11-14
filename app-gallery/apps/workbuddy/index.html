@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WorkBuddy · 书桌 · Yuxi Guo</title>
+<meta name="description" content="WorkBuddy 的学习演示：一张安静的书桌。今日事项在一侧，把「帮我做这件事」走完四张纸。不是正式产品。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/workbuddy/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/workbuddy/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="desk.css">
+</head>
+<body class="notes-page demo-page">
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-13</p>
+    <h1 class="reveal">WorkBuddy</h1>
+    <p class="exhibit-meta reveal">
+      <span>WorkBuddy - AI 办公我帮你</span>
+      <span>Tencent Technology (Shanghai) Company Limited</span>
+      <span>com.tencent.workbuddy.app</span>
+      <span><time datetime="2026-11-13">2026-11-13</time></span>
+    </p>
+    <p class="lead reveal">一张安静的书桌。一边是今天的三件事，另一边把「帮我做这件事」分成四张纸：纪要、回信、清单，然后放回今天。短会和人名都是虚构的。这是学习速写，不是正式产品。</p>
+
+    <div class="desk">
+      <section class="desk-tasks" aria-label="今日事项">
+        <p class="section-label">今日</p>
+        <h2 class="desk-heading">三件事</h2>
+        <p class="desk-date"><time datetime="2026-11-13">2026-11-13</time> · 周五</p>
+        <ul class="task-list" id="task-list">
+          <li class="task">
+            <input type="checkbox" id="task-essay" data-task="essay">
+            <div><label class="task-label" for="task-essay">把窗边随笔的第三段收短</label></div>
+          </li>
+          <li class="task">
+            <input type="checkbox" id="task-door" data-task="door">
+            <div><label class="task-label" for="task-door">在门上写周四朗读的房间号</label></div>
+          </li>
+          <li class="task">
+            <input type="checkbox" id="task-lin" data-task="lin">
+            <div><label class="task-label" for="task-lin">回林的短笺</label></div>
+          </li>
+        </ul>
+        <p class="desk-state" id="desk-state">清单还是早上的三件。</p>
+      </section>
+
+      <section class="desk-slip" aria-label="帮我做这件事">
+        <p class="slip-kicker" id="slip-kicker">01 / 04  ·  纪要</p>
+        <div class="slip-body" id="slip-body">
+          <p class="slip-ask">把上午的短会收成三句。</p>
+          <ol class="slip-lines">
+            <li>朗读改到小房间，周四晚上七点。</li>
+            <li>窗边的随笔留下，第二首诗拿下。</li>
+            <li>林周三中午前把节目单印好。</li>
+          </ol>
+        </div>
+        <div class="slip-foot">
+          <p class="slip-status" id="slip-status">三句已经写在这张纸上。另一边的清单还没动。</p>
+          <div class="slip-nav">
+            <button type="button" class="btn" id="slip-prev" disabled>上一张</button>
+            <button type="button" class="btn btn-primary" id="slip-next">下一张</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <p id="slip-live" class="visually-hidden" aria-live="polite"></p>
+
+    <noscript>
+      <p class="notes-count">翻纸需要 JavaScript。上面是第一张：把上午的短会收成三句。后面还有回信、清单和放回今天。</p>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习速写，不是 WorkBuddy 的正式产品，也不使用官方标志。中国大陆店名是 WorkBuddy - AI 办公我帮你，发行方 Tencent Technology (Shanghai) Company Limited。这里只取一件事：一张安静的书桌，把「帮我做这件事」走完。短会、回信和三件事都是虚构的。用按钮或左右方向键翻纸。勾选只留在这一页，刷新后回到早上。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/aa12dbde-8491-4df1-90e7-23ce80e014b3" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">WorkBuddy · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="desk.js"></script>
+</body>
+</html>
