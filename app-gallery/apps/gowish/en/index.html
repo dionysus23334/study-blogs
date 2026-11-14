@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A short list · Yuxi Guo</title>
+<meta name="description" content="A short list: a study sketch. Add a wish, then mark it reserved or received. Not the official GoWish product. The interface and the copy are original.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/gowish/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/gowish/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../list.css">
+</head>
+<body class="notes-page demo-page">
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explore</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-14</p>
+    <h1 class="reveal">A short list</h1>
+    <p class="exhibit-meta reveal">
+      <span>GoWish</span>
+      <span>Onskeskyen ApS / Ønskeskyen ApS</span>
+      <span><time datetime="2026-11-14">2026-11-14</time></span>
+    </p>
+    <p class="lead reveal">Three small things are already on the paper: warm gloves, a well-used cookbook, a concert ticket. You can write another, mark a line reserved or received, then look at the list by state. The list has no name on it. This is a study sketch, not the official GoWish product.</p>
+
+    <div class="short-list">
+      <section class="paper" aria-labelledby="paper-heading">
+        <p class="section-label">On paper</p>
+        <h2 id="paper-heading" class="panel-heading">For the next person</h2>
+        <p class="paper-date"><time datetime="2026-11-14">2026-11-14</time> · unsigned</p>
+        <p class="paper-count" id="paper-count" role="status">Three still open. None reserved. None received.</p>
+        <button type="button" class="btn look-btn" id="look-list" aria-pressed="false">Look by state</button>
+        <ul class="wish-list" id="wish-list" aria-label="Wishes">
+          <li class="wish" data-id="gloves">
+            <div class="wish-main">
+              <p class="wish-kicker"><span class="wish-index" aria-hidden="true">01</span></p>
+              <p class="wish-title">Warm gloves</p>
+              <p class="wish-note">My fingers still get cold on the way out. Camel is enough. They need not look new.</p>
+            </div>
+            <div class="wish-actions">
+              <button type="button" class="btn wish-mark" aria-pressed="false">Reserve</button>
+              <button type="button" class="btn wish-mark" aria-pressed="false">Received</button>
+            </div>
+          </li>
+          <li class="wish" data-id="cookbook">
+            <div class="wish-main">
+              <p class="wish-kicker"><span class="wish-index" aria-hidden="true">02</span></p>
+              <p class="wish-title">A well-used cookbook</p>
+              <p class="wish-note">Oil spots in the margin are fine. Everyday dishes, the kind that can lie open by the stove.</p>
+            </div>
+            <div class="wish-actions">
+              <button type="button" class="btn wish-mark" aria-pressed="false">Reserve</button>
+              <button type="button" class="btn wish-mark" aria-pressed="false">Received</button>
+            </div>
+          </li>
+          <li class="wish" data-id="ticket">
+            <div class="wish-main">
+              <p class="wish-kicker"><span class="wish-index" aria-hidden="true">03</span></p>
+              <p class="wish-title">A concert ticket</p>
+              <p class="wish-note">Any seat. I want one evening where I can sit until the end, then leave.</p>
+            </div>
+            <div class="wish-actions">
+              <button type="button" class="btn wish-mark" aria-pressed="false">Reserve</button>
+              <button type="button" class="btn wish-mark" aria-pressed="false">Received</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="pen" aria-labelledby="pen-heading">
+        <p class="section-label">In ink</p>
+        <h2 id="pen-heading" class="panel-heading">One more line</h2>
+        <form id="wish-form" class="wish-form" action="#" method="get" novalidate>
+          <label class="wish-field">
+            <span>Wish</span>
+            <input id="wish-title" type="text" maxlength="60" autocomplete="off" placeholder="An umbrella that already knows the rain">
+          </label>
+          <label class="wish-field">
+            <span>Note, if you want one</span>
+            <textarea id="wish-note" maxlength="140" rows="3" placeholder="One sentence is enough. You can leave this empty."></textarea>
+          </label>
+          <p class="form-hint" id="form-hint" role="status"></p>
+          <button class="btn btn-primary" type="submit">Add this wish</button>
+          <p class="form-aside">After it is on the paper, mark it reserved or received. Press the same word again to put it back.</p>
+        </form>
+      </section>
+    </div>
+
+    <noscript>
+      <p class="notes-count">Adding a wish, marking one reserved or received, and looking by state need JavaScript. Without it, the paper still shows the first three: warm gloves, a well-used cookbook, and a concert ticket.</p>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>This is a study concept demo made after a research note, not the official GoWish product. The interface and the copy are original, and the page does not use the official mark, screenshots, or brand colors. The publisher is recorded as Onskeskyen ApS / Ønskeskyen ApS. The page keeps one idea: a quiet list you can add to, mark a line reserved or received, then look at it by state. The gloves, the cookbook, the ticket, and anything you write are invented. Those marks stay on this page only; a refresh returns the first three.</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/a997d920-1045-4b69-a4a1-b1e717bb2083" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">A short list · study sketch · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../list.js"></script>
+</body>
+</html>
