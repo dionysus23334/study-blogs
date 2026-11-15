@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "entries": [
+    {
+      "id": "bigfuture",
+      "date": "2026-11-15",
+      "name": "BigFuture School",
+      "name_zh": "BigFuture School · 一张成绩条",
+      "publisher": "The College Board",
+      "one_liner_zh": "打开一张折好的成绩条，看完两项虚构分数，再从三条方向里选一条放进笔记。",
+      "one_liner_en": "Open a folded score slip, read two invented section scores, then keep one of three directions in a short note.",
+      "tags": ["Education", "College planning"],
+      "demo": "apps/bigfuture/",
+      "demo_en": "apps/bigfuture/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/500c6dd6-75be-45c4-ad4c-1bb7ca0bef70"
+    },
     {
       "id": "gowish",
       "date": "2026-11-14",
