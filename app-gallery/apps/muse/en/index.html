@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hand it one errand · Yuxi Guo</title>
+<meta name="description" content="Hand it one errand: a learning concept demo, not Meta's official Muse product. An agent lays out the steps and stops before anything is sent or spent.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/muse/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/muse/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../errand.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explore</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-20</p>
+    <h1 class="reveal">Hand it one errand</h1>
+    <p class="exhibit-meta reveal">
+      <span>Muse from Meta</span>
+      <span>Meta Platforms, Inc.</span>
+      <span><time datetime="2026-11-20">2026-11-20</time></span>
+    </p>
+    <p class="lead reveal">Hand one small errand to an agent: it lays out the steps, does the parts that cost nothing, and stops at the step that would send or spend until you nod. Every move is written in the log below. Lan, the shop names and the prices are invented. This is a learning concept demo, not Meta's official Muse product.</p>
+
+    <div class="errand-desk">
+      <section class="paper slip-card" aria-labelledby="slip-heading">
+        <h2 id="slip-heading" class="errand-heading">Errand slip</h2>
+        <div class="errand-choices" role="group" aria-label="Three errands">
+          <button type="button" class="errand" data-errand="dinner" aria-pressed="false">
+            <span class="errand-title">Book Friday dinner</span>
+            <span class="errand-note">Two people, around seven, at Riverside Table.</span>
+          </button>
+          <button type="button" class="errand" data-errand="lamp" aria-pressed="false">
+            <span class="errand-title">Watch a desk lamp for a price drop</span>
+            <span class="errand-note">Buy it if it falls under ¥199; nothing else.</span>
+          </button>
+          <button type="button" class="errand" data-errand="dentist" aria-pressed="false">
+            <span class="errand-title">Move the dentist appointment</span>
+            <span class="errand-note">Tuesday won't work; ask for Thursday afternoon and draft a short note.</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="paper plan-card" id="plan" aria-labelledby="plan-heading">
+        <h2 id="plan-heading" class="errand-heading">Lan's plan</h2>
+        <p class="plan-empty" id="plan-empty">Pick one errand first.</p>
+        <ol class="plan-steps" id="plan-steps" hidden></ol>
+        <div class="gate" id="gate" tabindex="-1" hidden aria-labelledby="gate-label gate-action">
+          <p class="gate-label" id="gate-label">Needs your OK</p>
+          <p class="gate-action" id="gate-action"></p>
+          <div class="gate-actions">
+            <button type="button" class="btn btn-primary" id="gate-approve">Approve</button>
+            <button type="button" class="btn" id="gate-decline">Not now</button>
+          </div>
+          <p class="gate-result" id="gate-result" hidden></p>
+        </div>
+      </section>
+    </div>
+
+    <section class="paper activity" aria-labelledby="log-heading">
+      <div class="activity-head">
+        <h2 id="log-heading" class="errand-heading">Activity log</h2>
+        <button type="button" class="btn" id="errand-reset">Start over</button>
+      </div>
+      <p class="log-empty" id="log-empty">Nothing written down yet.</p>
+      <ol class="activity-log" id="activity-log" role="log" aria-live="polite" aria-labelledby="log-heading"></ol>
+    </section>
+
+    <noscript>
+      <section class="static-errand" aria-label="The errands without JavaScript">
+        <p class="section-label">Without JavaScript</p>
+        <h2>Three errands, and the plan for each</h2>
+        <p class="static-note">Choosing an errand, ticking the steps, and stopping before anything is sent or spent need JavaScript. A refresh clears the log.</p>
+
+        <h3>Book Friday dinner</h3>
+        <p class="static-blurb">Two people, around seven, at Riverside Table.</p>
+        <ol>
+          <li>Check Friday openings at Riverside Table</li>
+          <li>Found a table for two at 19:15</li>
+          <li>Book 19:15 under your name, for two. This step waits for your OK. Approve: Booked. Confirmation RT-0415 (invented). Not now: Not booked. The opening is held until nine tonight.</li>
+        </ol>
+
+        <h3>Watch a desk lamp for a price drop</h3>
+        <p class="static-blurb">Buy it if it falls under ¥199; nothing else.</p>
+        <ol>
+          <li>Note the target price, ¥199</li>
+          <li>Today's price is ¥238, not yet</li>
+          <li>The price fell to ¥189 (simulated in this demo)</li>
+          <li>Place the order at ¥189 and send it home. This step waits for your OK. Approve: Ordered at ¥189 (invented). Not now: Not bought. Still watching.</li>
+        </ol>
+
+        <h3>Move the dentist appointment</h3>
+        <p class="static-blurb">Tuesday won't work; ask for Thursday afternoon and draft a short note.</p>
+        <ol>
+          <li>Check the calendar: Thursday 14:00–17:00 is free</li>
+          <li>Draft the note: “Hi, I can't make next Tuesday — could we move to Thursday afternoon? Thanks.”</li>
+          <li>Send this note to the clinic. This step waits for your OK. Approve: Sent (invented). Not now: The draft stays. Nothing was sent.</li>
+        </ol>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>A learning concept demo written after a research report; not an official Meta product. Interface and copy are original — no official logo, mascot, screenshots or brand colours. Publisher noted as Meta Platforms, Inc. It keeps one idea: a personal AI agent stops before it spends or sends, waits for your OK, and keeps a record. Nothing leaves this page; a refresh clears it.</p>
+      <p><a href="https://app.notion.com/p/41e481033e2481219040f9d74f91e372" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">Hand it one errand · Study demo · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../errand.js"></script>
+</body>
+</html>

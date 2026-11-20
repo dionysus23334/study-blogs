@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-20",
   "entries": [
+    {
+      "id": "muse",
+      "date": "2026-11-20",
+      "name": "Muse from Meta",
+      "name_zh": "Muse from Meta · 一件事交给它",
+      "publisher": "Meta Platforms, Inc.",
+      "one_liner_zh": "交出一件小事，看它列出步骤，在要发信或付钱之前停下来等你点头，最后留下一行记录。",
+      "one_liner_en": "Hand over one small errand, watch it lay out the steps, and see it stop for your OK before anything is sent or spent.",
+      "tags": ["AI agent", "Productivity"],
+      "demo": "apps/muse/",
+      "demo_en": "apps/muse/en/",
+      "report": "https://app.notion.com/p/41e481033e2481219040f9d74f91e372"
+    },
     {
       "id": "bigfuture",
       "date": "2026-11-15",
