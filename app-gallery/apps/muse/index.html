@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一件事交给它 · Yuxi Guo</title>
+<meta name="description" content="一件事交给它：学习概念演示，不是 Meta 的 Muse 正式产品。把一件小事交给代理，它先列步骤，在要发信或付钱之前停下来等你点头。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/muse/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/muse/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="errand.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-20</p>
+    <h1 class="reveal">一件事交给它</h1>
+    <p class="exhibit-meta reveal">
+      <span>Muse from Meta</span>
+      <span>Meta Platforms, Inc.</span>
+      <span><time datetime="2026-11-20">2026-11-20</time></span>
+    </p>
+    <p class="lead reveal">把一件小事交给一个代理：它先列步骤，自己做不花钱的部分，到了要发信或付钱那一步就停下来，等你点头。所有动作都记在下面。阿岚、店名、价格都是编的。这是学习概念演示，不是 Meta 的 Muse 正式产品。</p>
+
+    <div class="errand-desk">
+      <section class="paper slip-card" aria-labelledby="slip-heading">
+        <h2 id="slip-heading" class="errand-heading">差事条</h2>
+        <div class="errand-choices" role="group" aria-label="三件差事">
+          <button type="button" class="errand" data-errand="dinner" aria-pressed="false">
+            <span class="errand-title">订周五晚饭</span>
+            <span class="errand-note">两个人，七点左右，河堤小馆。</span>
+          </button>
+          <button type="button" class="errand" data-errand="lamp" aria-pressed="false">
+            <span class="errand-title">盯一盏台灯降价</span>
+            <span class="errand-note">低于 ¥199 就买，别的先别动。</span>
+          </button>
+          <button type="button" class="errand" data-errand="dentist" aria-pressed="false">
+            <span class="errand-title">改约牙医</span>
+            <span class="errand-note">下周二不行，换到周四下午，替我写封短信。</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="paper plan-card" id="plan" aria-labelledby="plan-heading">
+        <h2 id="plan-heading" class="errand-heading">阿岚的计划</h2>
+        <p class="plan-empty" id="plan-empty">先选一件差事。</p>
+        <ol class="plan-steps" id="plan-steps" hidden></ol>
+        <div class="gate" id="gate" tabindex="-1" hidden aria-labelledby="gate-label gate-action">
+          <p class="gate-label" id="gate-label">待你点头</p>
+          <p class="gate-action" id="gate-action"></p>
+          <div class="gate-actions">
+            <button type="button" class="btn btn-primary" id="gate-approve">同意</button>
+            <button type="button" class="btn" id="gate-decline">先不要</button>
+          </div>
+          <p class="gate-result" id="gate-result" hidden></p>
+        </div>
+      </section>
+    </div>
+
+    <section class="paper activity" aria-labelledby="log-heading">
+      <div class="activity-head">
+        <h2 id="log-heading" class="errand-heading">活动记录</h2>
+        <button type="button" class="btn" id="errand-reset">重来</button>
+      </div>
+      <p class="log-empty" id="log-empty">还没有记下的动作。</p>
+      <ol class="activity-log" id="activity-log" role="log" aria-live="polite" aria-labelledby="log-heading"></ol>
+    </section>
+
+    <noscript>
+      <section class="static-errand" aria-label="没有脚本时的差事">
+        <p class="section-label">没有脚本时</p>
+        <h2>三件差事，和各自的步骤</h2>
+        <p class="static-note">选择差事、逐步勾完、在发信或付钱之前停下来，需要 JavaScript。刷新后记录会清空。</p>
+
+        <h3>订周五晚饭</h3>
+        <p class="static-blurb">两个人，七点左右，河堤小馆。</p>
+        <ol>
+          <li>查河堤小馆周五空位</li>
+          <li>找到 19:15 两人位</li>
+          <li>用你的名字订 19:15，两人。这一步停下来等你同意。同意：已订好。确认号 RT-0415（虚构）。先不要：没订。空位留到今晚九点。</li>
+        </ol>
+
+        <h3>盯一盏台灯降价</h3>
+        <p class="static-blurb">低于 ¥199 就买，别的先别动。</p>
+        <ol>
+          <li>记下目标价 ¥199</li>
+          <li>今天价格 ¥238，未到</li>
+          <li>价格降到 ¥189（演示中模拟）</li>
+          <li>下单 ¥189，寄到家里。这一步停下来等你同意。同意：已下单 ¥189（虚构）。先不要：没买。继续盯着。</li>
+        </ol>
+
+        <h3>改约牙医</h3>
+        <p class="static-blurb">下周二不行，换到周四下午，替我写封短信。</p>
+        <ol>
+          <li>查日历，周四 14:00–17:00 空</li>
+          <li>起草短信：「您好，下周二的预约我来不了，能否改到周四下午？谢谢。」</li>
+          <li>把这封短信发给诊所。这一步停下来等你同意。同意：已发出（虚构）。先不要：草稿留着，没发。</li>
+        </ol>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是 Meta 的正式产品，界面与文案均为另写，不使用官方标志、形象、截图或品牌色。发行方记为 Meta Platforms, Inc.。这里只取一件事：个人 AI 代理在花钱、发信之前先停下来等你同意，并留下记录。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://app.notion.com/p/41e481033e2481219040f9d74f91e372" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">一件事交给它 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="errand.js"></script>
+</body>
+</html>
