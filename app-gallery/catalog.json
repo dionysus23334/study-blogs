@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "entries": [
+    {
+      "id": "reco",
+      "date": "2026-11-21",
+      "name": "Reco Social",
+      "name_zh": "Reco Social · 帖子里藏着什么",
+      "publisher": "Reco Social, Inc.",
+      "one_liner_zh": "从一条帖子里找出顺口提到的店、片和物件，变成小卡片，挑几张放进自己的清单。",
+      "one_liner_en": "Find the places, films and things mentioned in passing in a post, turn them into small cards, and keep a few in your own list.",
+      "tags": ["Social", "Recommendations"],
+      "demo": "apps/reco/",
+      "demo_en": "apps/reco/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/947dacba-306c-45fd-bf7f-caffdf14d3b8"
+    },
     {
       "id": "muse",
       "date": "2026-11-20",
