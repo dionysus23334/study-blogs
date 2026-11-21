@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What's hiding in this post · Yuxi Guo</title>
+<meta name="description" content="What's hiding in this post: a learning concept demo, not the official Reco Social product. Find the places, films and things mentioned in a post, and keep a few in a list.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/reco/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/reco/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../finder.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explorations</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-21</p>
+    <h1 class="reveal">What's hiding in this post</h1>
+    <p class="exhibit-meta reveal">
+      <span>Reco Social</span>
+      <span>Reco Social, Inc.</span>
+      <span><time datetime="2026-11-21">2026-11-21</time></span>
+    </p>
+    <p class="lead reveal">An ordinary post often mentions a place, a film or a thing in passing. This demo finds each one, turns it into a small card, and lets you keep the ones you want in a list. The posts, names and places are invented. This is a learning concept demo, not the official Reco Social product.</p>
+
+    <div class="finder">
+      <section class="paper post-card" aria-labelledby="post-heading">
+        <h2 id="post-heading" class="finder-heading">A post</h2>
+        <div class="post-tabs" role="group" aria-label="Three posts">
+          <button type="button" class="post-tab" data-post="xiaoman" aria-pressed="true">Xiaoman</button>
+          <button type="button" class="post-tab" data-post="jie" aria-pressed="false">Jie</button>
+          <button type="button" class="post-tab" data-post="lin" aria-pressed="false">Lin</button>
+        </div>
+        <article class="index-card">
+          <p class="post-body" id="post-body"></p>
+          <p class="post-byline" id="post-byline"></p>
+        </article>
+        <div class="find-row">
+          <button type="button" class="btn btn-primary" id="find-recs">Find the recs</button>
+        </div>
+      </section>
+
+      <section class="paper found-card" aria-labelledby="found-heading">
+        <h2 id="found-heading" class="finder-heading">Found</h2>
+        <p class="found-empty" id="found-empty">Pick a post, then press Find the recs.</p>
+        <ul class="found-list" id="found-list" hidden></ul>
+      </section>
+
+      <section class="paper collection" aria-labelledby="collection-heading">
+        <div class="collection-head">
+          <h2 id="collection-heading" class="finder-heading">My collection</h2>
+          <button type="button" class="btn" id="finder-clear">Clear</button>
+        </div>
+        <label class="name-label" for="collection-name">Collection name</label>
+        <input class="collection-name" id="collection-name" type="text" value="Weekend ideas" autocomplete="off" spellcheck="false">
+        <p class="kept-empty" id="kept-empty">Nothing kept yet.</p>
+        <ol class="kept-list" id="kept-list" aria-live="polite" aria-labelledby="collection-heading"></ol>
+      </section>
+    </div>
+
+    <noscript>
+      <section class="static-finder" aria-label="The posts without JavaScript">
+        <p class="section-label">Without JavaScript</p>
+        <h2>Three posts, and the mentions inside</h2>
+        <p class="static-note">Finding the recs, underlining each mention, and keeping them need JavaScript. A refresh clears the list.</p>
+
+        <h3>Xiaoman</h3>
+        <p class="static-post">Saturday: a bowl of crab-roe noodles at Hekou — twenty minutes in line, worth it. Finished Harbour in Fog on the way home; the ending beats the trailer. Picked up a bamboo-handle umbrella too — light.</p>
+        <ul>
+          <li>Place · Hekou — “a bowl of crab-roe noodles at Hekou”</li>
+          <li>Film · Harbour in Fog — “Finished Harbour in Fog on the way home”</li>
+          <li>Thing · Bamboo-handle umbrella — “Picked up a bamboo-handle umbrella too — light.”</li>
+        </ul>
+
+        <h3>Jie</h3>
+        <p class="static-post">Three weeks of exam prep: the most useful things were a book called Slow Geometry and the window row on the library's fourth floor. Coffee: only the cold brew downstairs.</p>
+        <ul>
+          <li>Book · Slow Geometry — “a book called Slow Geometry”</li>
+          <li>Place · The window row on the library's fourth floor — “the window row on the library's fourth floor”</li>
+          <li>Drink · The cold brew downstairs — “only the cold brew downstairs.”</li>
+        </ul>
+
+        <h3>Lin</h3>
+        <p class="static-post">First solo camping trip: windy lakeside campsite, the folding lamp I packed saved the night. Finished episode three of the podcast Night Flight.</p>
+        <ul>
+          <li>Place · Lakeside campsite — “windy lakeside campsite”</li>
+          <li>Thing · Folding lamp — “the folding lamp I packed saved the night”</li>
+          <li>Podcast · Night Flight — “Finished episode three of the podcast Night Flight.”</li>
+        </ul>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>A learning concept demo written after a research report; not an official Reco Social product. Interface and copy are original — no official logo, icon, screenshots or brand colours. Publisher noted as Reco Social, Inc. It keeps one stated idea: spotting the recommendations inside a post and saving them. The report found that the app's recent download growth is tied mainly to game cash-back rewards; this demo involves no rewards or cash-out. Nothing leaves this page; a refresh clears it.</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/947dacba-306c-45fd-bf7f-caffdf14d3b8" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">What's hiding in this post · Study demo · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../finder.js"></script>
+</body>
+</html>
