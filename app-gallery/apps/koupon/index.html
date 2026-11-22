@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>这个码能用吗 · Yuxi Guo</title>
+<meta name="description" content="这个码能用吗：学习概念演示，不是 Koupon 的正式产品。把一件商品的几个优惠码先自动试一遍，再人工读条款，最后到结账页再试一次。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/koupon/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/koupon/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="check.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-22</p>
+    <h1 class="reveal">这个码能用吗</h1>
+    <p class="exhibit-meta reveal">
+      <span>Koupon</span>
+      <span>Koupon Inc.</span>
+      <span><time datetime="2026-11-22">2026-11-22</time></span>
+    </p>
+    <p class="lead reveal">网上的优惠码，很多点开就过期，或者条款里藏着门槛。这个演示做一件事：把每个码先自动试一遍，再人工读一遍条款，告诉你能不能用、值不值得用；最后到结账页再试一次，因为验过的码也可能在那一步失手。商品、店名、优惠码都是编的。这是学习概念演示，不是 Koupon 的正式产品。</p>
+
+    <div class="check">
+      <section class="paper item-card" aria-labelledby="item-heading">
+        <h2 id="item-heading" class="check-heading">一件商品</h2>
+        <div class="item-tabs" role="group" aria-label="三件商品">
+          <button type="button" class="item-tab" data-item="umbrella" aria-pressed="true">
+            <span class="tab-name">竹柄雨伞</span>
+            <span class="tab-price">¥128</span>
+          </button>
+          <button type="button" class="item-tab" data-item="lamp" aria-pressed="false">
+            <span class="tab-name">折叠露营灯</span>
+            <span class="tab-price">¥199</span>
+          </button>
+          <button type="button" class="item-tab" data-item="kettle" aria-pressed="false">
+            <span class="tab-name">手冲咖啡壶</span>
+            <span class="tab-price">¥260</span>
+          </button>
+        </div>
+        <article class="index-card" id="item-card">
+          <p class="item-shop" id="item-shop"></p>
+          <h3 class="item-name" id="item-name"></h3>
+          <p class="item-price" id="item-price"></p>
+          <ul class="chips" id="chips"></ul>
+        </article>
+        <div class="check-row">
+          <button type="button" class="btn btn-primary" id="check-twice">验两遍</button>
+        </div>
+      </section>
+
+      <section class="paper log-card" id="log-card" aria-labelledby="log-heading">
+        <h2 id="log-heading" class="check-heading">验证记录</h2>
+        <div class="log-live" id="log-live" aria-live="polite" aria-relevant="additions">
+          <p class="log-empty" id="log-empty">先选一件商品，再点「验两遍」。</p>
+          <ol class="log-list" id="log-list"></ol>
+        </div>
+      </section>
+
+      <section class="paper checkout" aria-labelledby="checkout-heading">
+        <h2 id="checkout-heading" class="check-heading">到结账页试一下</h2>
+        <p class="checkout-meta" id="checkout-meta"></p>
+        <div class="pay-row">
+          <label class="code-label" for="checkout-code">优惠码</label>
+          <input class="code-field" id="checkout-code" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="16">
+          <button type="button" class="btn btn-primary" id="checkout-go" disabled>结账</button>
+        </div>
+        <p class="checkout-hint" id="checkout-hint">先验两遍，结账才会打开。</p>
+        <div class="size-row">
+          <button type="button" class="btn" id="size-toggle" aria-pressed="false">换个尺寸</button>
+          <p class="size-note" id="size-note">当前尺寸：页面上这一件。</p>
+        </div>
+        <p class="checkout-result" id="checkout-result" aria-live="polite"></p>
+        <div class="checkout-actions">
+          <button type="button" class="btn" id="report-code" hidden>报告这个码</button>
+          <button type="button" class="btn" id="start-over">重来</button>
+        </div>
+        <ul class="report-list" id="report-list" aria-live="polite" aria-label="报告记录"></ul>
+      </section>
+    </div>
+
+    <noscript>
+      <section class="static-check" aria-label="没有脚本时的验证结果">
+        <p class="section-label">没有脚本时</p>
+        <h2>三件商品，和三个码的结论</h2>
+        <p class="static-note">验两遍、到结账页再试、换尺寸、报告这个码，需要 JavaScript。刷新后记录会清空。</p>
+
+        <h3>竹柄雨伞 · 河岸百货 · ¥128</h3>
+        <ul>
+          <li>RAIN20 · 可用 · 减两成，这件可以直接用。上次验证：12 分钟前。</li>
+          <li>SPRING50 · 已过期 · 春天的码，已经过期。上次验证：41 分钟前。</li>
+          <li>BIGBAG30 · 能用但不值 · 满 ¥300 才行，单独买这件用不上。上次验证：6 分钟前。</li>
+        </ul>
+
+        <h3>折叠露营灯 · 河岸百货 · ¥199</h3>
+        <ul>
+          <li>GLOW20 · 可用 · 少 ¥40，没有附加条件。上次验证：8 分钟前。</li>
+          <li>FEST50 · 已过期 · 灯会当天的码，过期了。上次验证：54 分钟前。</li>
+          <li>COIN3 · 能用但不值 · 少了不到五块，不值得专门用。上次验证：19 分钟前。</li>
+        </ul>
+
+        <h3>手冲咖啡壶 · 河岸百货 · ¥260</h3>
+        <ul>
+          <li>POUR40 · 可用 · 少 ¥40，没有附加条件。上次验证：4 分钟前。</li>
+          <li>APRIL10 · 已过期 · 四月的码，已经过期。上次验证：27 分钟前。</li>
+          <li>CREAM15 · 能用但不值 · 要换成象牙色才生效，这把用不上。上次验证：11 分钟前。</li>
+        </ul>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是 Koupon 的正式产品，界面与文案均为另写，不使用官方标志、图标、截图或品牌色，也不出现真实零售商。发行方记为 Koupon Inc.。这里只取它对外宣称的一件事：每个优惠码先自动测试、再人工复核，并标出上次验证时间。研报发现，它 11 月在美国榜单连续爬升，但近期不少评价说码到结账页用不上，所以演示最后留了「到结账页再试一次」这一步。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/0d3b8a51-9dc9-4f1c-8840-78ed88c8f2a6" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">这个码能用吗 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="check.js"></script>
+</body>
+</html>
