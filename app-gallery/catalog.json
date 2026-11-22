@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "entries": [
+    {
+      "id": "koupon",
+      "date": "2026-11-22",
+      "name": "Koupon",
+      "name_zh": "Koupon · 这个码能用吗",
+      "publisher": "Koupon Inc.",
+      "one_liner_zh": "把一件商品的几个优惠码先自动试、再人工读条款，标出能用、过期或能用但不值，最后到结账页再试一次。",
+      "one_liner_en": "Try each promo code automatically, read its terms like a person, stamp it works, expired or not worth it, then try it once more at checkout.",
+      "tags": ["Shopping", "Deals"],
+      "demo": "apps/koupon/",
+      "demo_en": "apps/koupon/en/",
+      "report": "https://app.notion.com/p/420481033e2481f99068e75994e0e8ed"
+    },
     {
       "id": "reco",
       "date": "2026-11-21",

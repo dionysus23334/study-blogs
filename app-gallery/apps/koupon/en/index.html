@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Does this code work? · Yuxi Guo</title>
+<meta name="description" content="Does this code work?: a learning concept demo, not the official Koupon product. Each promo code is tested automatically, then read for its terms, and tried once more at checkout.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/koupon/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/koupon/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../check.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explorations</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-22</p>
+    <h1 class="reveal">Does this code work?</h1>
+    <p class="exhibit-meta reveal">
+      <span>Koupon</span>
+      <span>Koupon Inc.</span>
+      <span><time datetime="2026-11-22">2026-11-22</time></span>
+    </p>
+    <p class="lead reveal">Many promo codes online are expired the moment you click, or hide a catch in the terms. This demo does one thing: it tries each code automatically, then reads the terms the way a person would, and tells you whether it works and whether it is worth it. Then it tries again at checkout, because a checked code can still fail at that step. The items, shop and codes are invented. This is a learning concept demo, not the official Koupon product.</p>
+
+    <div class="check">
+      <section class="paper item-card" aria-labelledby="item-heading">
+        <h2 id="item-heading" class="check-heading">One item</h2>
+        <div class="item-tabs" role="group" aria-label="Three items">
+          <button type="button" class="item-tab" data-item="umbrella" aria-pressed="true">
+            <span class="tab-name">Bamboo-handle umbrella</span>
+            <span class="tab-price">$18.00</span>
+          </button>
+          <button type="button" class="item-tab" data-item="lamp" aria-pressed="false">
+            <span class="tab-name">Folding camp lamp</span>
+            <span class="tab-price">$28.00</span>
+          </button>
+          <button type="button" class="item-tab" data-item="kettle" aria-pressed="false">
+            <span class="tab-name">Pour-over kettle</span>
+            <span class="tab-price">$36.00</span>
+          </button>
+        </div>
+        <article class="index-card" id="item-card">
+          <p class="item-shop" id="item-shop"></p>
+          <h3 class="item-name" id="item-name"></h3>
+          <p class="item-price" id="item-price"></p>
+          <ul class="chips" id="chips"></ul>
+        </article>
+        <div class="check-row">
+          <button type="button" class="btn btn-primary" id="check-twice">Check twice</button>
+        </div>
+      </section>
+
+      <section class="paper log-card" id="log-card" aria-labelledby="log-heading">
+        <h2 id="log-heading" class="check-heading">Check log</h2>
+        <div class="log-live" id="log-live" aria-live="polite" aria-relevant="additions">
+          <p class="log-empty" id="log-empty">Pick an item, then press Check twice.</p>
+          <ol class="log-list" id="log-list"></ol>
+        </div>
+      </section>
+
+      <section class="paper checkout" aria-labelledby="checkout-heading">
+        <h2 id="checkout-heading" class="check-heading">Try it at checkout</h2>
+        <p class="checkout-meta" id="checkout-meta"></p>
+        <div class="pay-row">
+          <label class="code-label" for="checkout-code">Code</label>
+          <input class="code-field" id="checkout-code" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="16">
+          <button type="button" class="btn btn-primary" id="checkout-go" disabled>Check out</button>
+        </div>
+        <p class="checkout-hint" id="checkout-hint">Check twice, and checkout will open.</p>
+        <div class="size-row">
+          <button type="button" class="btn" id="size-toggle" aria-pressed="false">Change size</button>
+          <p class="size-note" id="size-note">Size now: the one on the page.</p>
+        </div>
+        <p class="checkout-result" id="checkout-result" aria-live="polite"></p>
+        <div class="checkout-actions">
+          <button type="button" class="btn" id="report-code" hidden>Report this code</button>
+          <button type="button" class="btn" id="start-over">Start over</button>
+        </div>
+        <ul class="report-list" id="report-list" aria-live="polite" aria-label="Reports"></ul>
+      </section>
+    </div>
+
+    <noscript>
+      <section class="static-check" aria-label="Verdicts without JavaScript">
+        <p class="section-label">Without JavaScript</p>
+        <h2>Three items, and the verdict on each code</h2>
+        <p class="static-note">Check twice, trying the code at checkout, changing size and reporting need JavaScript. A refresh clears the log.</p>
+
+        <h3>Bamboo-handle umbrella · Riverside Store · $18.00</h3>
+        <ul>
+          <li>RAIN20 · Works · Twenty percent off, and this item qualifies. Last checked 12 min ago.</li>
+          <li>SPRING50 · Expired · A spring code. It has expired. Last checked 41 min ago.</li>
+          <li>BIGBAG30 · Works, not worth it · The $45 minimum is more than this item. Last checked 6 min ago.</li>
+        </ul>
+
+        <h3>Folding camp lamp · Riverside Store · $28.00</h3>
+        <ul>
+          <li>GLOW20 · Works · Five dollars off, with no catch. Last checked 8 min ago.</li>
+          <li>FEST50 · Expired · A festival-day code. It has expired. Last checked 54 min ago.</li>
+          <li>COIN3 · Works, not worth it · It saves under a dollar. Not worth a separate code. Last checked 19 min ago.</li>
+        </ul>
+
+        <h3>Pour-over kettle · Riverside Store · $36.00</h3>
+        <ul>
+          <li>POUR40 · Works · Six dollars off, with no extra condition. Last checked 4 min ago.</li>
+          <li>APRIL10 · Expired · An April code. It has expired. Last checked 27 min ago.</li>
+          <li>CREAM15 · Works, not worth it · It needs the ivory kettle. This one does not qualify. Last checked 11 min ago.</li>
+        </ul>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>A learning concept demo written after a research report; not an official Koupon product. Interface and copy are original — no official logo, icon, screenshots, brand colours or real retailers. Publisher noted as Koupon Inc. It keeps one stated idea: every promo code is tested automatically, then reviewed by a person, and shows when it was last checked. The report found the app climbing steadily on the US charts in November, while many recent reviews say codes failed at the retailer's checkout, so the demo ends with a 'try it at checkout' step. Nothing leaves this page; a refresh clears it.</p>
+      <p><a href="https://app.notion.com/p/420481033e2481f99068e75994e0e8ed" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">Does this code work? · Study demo · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../check.js"></script>
+</body>
+</html>
