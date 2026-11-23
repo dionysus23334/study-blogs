@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>开卖这一天 · Yuxi Guo</title>
+<meta name="description" content="开卖这一天：学习概念演示，不是 Quince 的正式产品。把一件东西的价钱拆开，再拖动时钟走过一次只在 App 里生效的 24 小时早鸟。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/quince/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/quince/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="sale.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-23</p>
+    <h1 class="reveal">开卖这一天</h1>
+    <p class="exhibit-meta reveal">
+      <span>Quince</span>
+      <span>Lastbrand Inc.</span>
+      <span><time datetime="2026-11-23">2026-11-23</time></span>
+    </p>
+    <p class="lead reveal">一件好材质的东西，价钱里有好几层：材料、做工、运输，还有一路上的加价。这个演示先把一件东西的价钱拆开给你看；再放进「开卖这一天」——一年只有几次的 24 小时早鸟，价钱只在 App 里结账才生效。拖动时间，看它什么时候开始、在网页和 App 里有什么不同、库存怎么一点点变少。商品、店名、成本和库存都是编的。这是学习概念演示，不是 Quince 的正式产品。</p>
+
+    <div class="sale">
+      <section class="paper thing" aria-labelledby="thing-heading">
+        <h2 id="thing-heading" class="sale-heading">一件东西</h2>
+        <div class="item-tabs" role="group" aria-label="三件东西">
+          <button type="button" class="item-tab" data-item="scarf" aria-pressed="true">
+            <span class="tab-name">羊毛围巾</span>
+            <span class="tab-material">100% 美利奴羊毛</span>
+            <span class="tab-price">¥420</span>
+          </button>
+          <button type="button" class="item-tab" data-item="linen" aria-pressed="false">
+            <span class="tab-name">亚麻床单</span>
+            <span class="tab-material">水洗亚麻</span>
+            <span class="tab-price">¥840</span>
+          </button>
+          <button type="button" class="item-tab" data-item="tote" aria-pressed="false">
+            <span class="tab-name">皮革托特包</span>
+            <span class="tab-material">植鞣牛皮</span>
+            <span class="tab-price">¥1050</span>
+          </button>
+        </div>
+        <article class="hang-tag" id="hang-tag" aria-labelledby="tag-name">
+          <p class="tag-kicker">示意</p>
+          <p class="tag-shop" id="tag-shop"></p>
+          <h3 class="tag-name" id="tag-name"></h3>
+          <p class="tag-material" id="tag-material"></p>
+          <p class="tag-price" id="tag-price"></p>
+        </article>
+        <div class="ledger">
+          <h3 id="ledger-heading" class="ledger-heading">这个价钱怎么来的</h3>
+          <div class="scale">
+            <div class="real-bar" id="real-bar" aria-hidden="true"></div>
+            <div class="ghost-bar" aria-hidden="true"></div>
+            <p class="ghost-line" id="ghost-line">
+              <span class="ghost-name" id="ghost-name"></span>
+              <span class="ghost-val" id="ghost-val"></span>
+            </p>
+          </div>
+          <ul class="split-list" id="split-list" aria-label="价钱拆开"></ul>
+          <p class="together-line">
+            <span class="together-name" id="together-name"></span>
+            <span class="together-val" id="together-val"></span>
+          </p>
+          <p class="save-line">省下的，是中间那几层。</p>
+        </div>
+      </section>
+
+      <section class="paper day" aria-labelledby="day-heading">
+        <h2 id="day-heading" class="sale-heading">开卖这一天</h2>
+        <div class="where" role="group" aria-label="在哪里看价钱">
+          <button type="button" id="ch-web" aria-pressed="true">在网页</button>
+          <button type="button" id="ch-app" aria-pressed="false">在 App 里</button>
+        </div>
+        <div class="clock">
+          <div class="clock-top">
+            <label for="clock">现在是</label>
+            <output class="clock-now" id="clock-now" for="clock">前一天 05:30</output>
+          </div>
+          <div class="clock-rail" id="clock-rail">
+            <div class="clock-line" aria-hidden="true"></div>
+            <div class="clock-band" id="clock-band" aria-hidden="true"></div>
+            <input type="range" id="clock" min="0" max="100" step="1" value="1" aria-valuetext="前一天 05:30" aria-describedby="clock-hint">
+          </div>
+          <p class="clock-ends" aria-hidden="true"><span class="clock-end">前一天 05:00</span><span class="clock-end">次日 07:00</span></p>
+          <p class="clock-hint" id="clock-hint">细蓝条是开卖的 24 小时，从开卖日 06:00 到次日 06:00。每格 30 分钟。</p>
+        </div>
+        <div class="status-live" id="status-live" aria-live="polite">
+          <p class="status-text" id="status-text"></p>
+          <p class="status-price" id="status-price" hidden></p>
+          <button type="button" class="btn" id="open-app" hidden>去 App 里看</button>
+        </div>
+        <p class="stock" id="stock" aria-live="polite"></p>
+        <div class="sale-actions">
+          <button type="button" class="btn btn-primary" id="add-bag" disabled>放进袋子</button>
+        </div>
+      </section>
+
+      <section class="paper bag" aria-labelledby="bag-heading">
+        <h2 id="bag-heading" class="sale-heading">袋子</h2>
+        <ul class="bag-list" id="bag-list" aria-live="polite" aria-relevant="all"></ul>
+        <div class="receipt" id="receipt" role="region" aria-label="收据" tabindex="-1" hidden></div>
+        <div class="bag-actions">
+          <button type="button" class="btn btn-primary" id="checkout" disabled>结账</button>
+          <button type="button" class="btn" id="start-over">重来</button>
+        </div>
+      </section>
+    </div>
+
+    <noscript>
+      <section class="static-sale" aria-label="没有脚本时的价钱">
+        <p class="section-label">没有脚本时</p>
+        <h2>三件东西的价钱，和开卖的规则</h2>
+        <p class="static-note">切换商品、拖动时间、在网页和 App 之间切换、放进袋子和结账，需要 JavaScript。刷新后记录会清空。</p>
+
+        <h3>羊毛围巾 · 素线 · ¥420</h3>
+        <p>100% 美利奴羊毛</p>
+        <ul>
+          <li>材料 · ¥168</li>
+          <li>做工 · ¥105</li>
+          <li>运输与关税 · ¥63</li>
+          <li>店的毛利 · ¥84</li>
+        </ul>
+        <p>常见的零售加价（示意） · ¥980</p>
+
+        <h3>亚麻床单 · 素线 · ¥840</h3>
+        <p>水洗亚麻</p>
+        <ul>
+          <li>材料 · ¥336</li>
+          <li>做工 · ¥252</li>
+          <li>运输与关税 · ¥126</li>
+          <li>店的毛利 · ¥126</li>
+        </ul>
+        <p>常见的零售加价（示意） · ¥1890</p>
+
+        <h3>皮革托特包 · 素线 · ¥1050</h3>
+        <p>植鞣牛皮</p>
+        <ul>
+          <li>材料 · ¥420</li>
+          <li>做工 · ¥315</li>
+          <li>运输与关税 · ¥147</li>
+          <li>店的毛利 · ¥168</li>
+        </ul>
+        <p>常见的零售加价（示意） · ¥2520</p>
+
+        <p class="static-rule">开卖从 06:00 到次日 06:00，减 20% 只在 App 里生效。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是 Quince 的正式产品，界面与文案均为另写，不使用官方标志、图标、截图、商品图或品牌色；店名「素线」是编的。发行方记为 Lastbrand Inc.。研报发现，它在美国 iPhone 榜的几次冲高（2026-03-25、10-06、11-20）都对应「只在 App 里结账」的 24 小时促销，而不是版本更新；评价里也有人抱怨「为了折扣被迫装 App」。所以演示把两件事放在一起：价钱是怎么来的，以及那一天为什么要在 App 里。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://app.notion.com/p/421481033e2481c78490d7382bd34c3a" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">开卖这一天 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="sale.js"></script>
+</body>
+</html>

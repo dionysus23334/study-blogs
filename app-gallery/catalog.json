@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "entries": [
+    {
+      "id": "quince",
+      "date": "2026-11-23",
+      "name": "Quince",
+      "name_zh": "Quince · 开卖这一天",
+      "publisher": "Lastbrand Inc.",
+      "one_liner_zh": "先把一件东西的价钱拆成材料、做工、运输和毛利，再拖动时钟走过一次只在 App 里生效的 24 小时早鸟。",
+      "one_liner_en": "Take one item's price apart into materials, making, shipping and margin, then drag the clock through a 24-hour early sale that only works in the app.",
+      "tags": ["Shopping", "DTC"],
+      "demo": "apps/quince/",
+      "demo_en": "apps/quince/en/",
+      "report": "https://app.notion.com/p/421481033e2481c78490d7382bd34c3a"
+    },
     {
       "id": "koupon",
       "date": "2026-11-22",

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sale day · Yuxi Guo</title>
+<meta name="description" content="Sale day: a learning concept demo, not the official Quince product. Take one item's price apart, then drag the clock through a 24-hour early sale that only works in the app.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/quince/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/quince/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../sale.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explorations</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-23</p>
+    <h1 class="reveal">Sale day</h1>
+    <p class="exhibit-meta reveal">
+      <span>Quince</span>
+      <span>Lastbrand Inc.</span>
+      <span><time datetime="2026-11-23">2026-11-23</time></span>
+    </p>
+    <p class="lead reveal">A well-made thing has several layers in its price: materials, making, shipping, and the markups along the way. This demo first takes one item's price apart; then it puts you in a 'sale day' — a 24-hour early sale that happens only a few times a year, where the lower price only applies when you check out in the app. Drag the clock to see when it starts, how the web and the app differ, and how the stock runs down. The items, shop, costs and stock are invented. This is a learning concept demo, not the official Quince product.</p>
+
+    <div class="sale">
+      <section class="paper thing" aria-labelledby="thing-heading">
+        <h2 id="thing-heading" class="sale-heading">One thing</h2>
+        <div class="item-tabs" role="group" aria-label="Three items">
+          <button type="button" class="item-tab" data-item="scarf" aria-pressed="true">
+            <span class="tab-name">Wool scarf</span>
+            <span class="tab-material">100% merino</span>
+            <span class="tab-price">$60</span>
+          </button>
+          <button type="button" class="item-tab" data-item="linen" aria-pressed="false">
+            <span class="tab-name">Linen sheet set</span>
+            <span class="tab-material">washed linen</span>
+            <span class="tab-price">$120</span>
+          </button>
+          <button type="button" class="item-tab" data-item="tote" aria-pressed="false">
+            <span class="tab-name">Leather tote</span>
+            <span class="tab-material">veg-tanned leather</span>
+            <span class="tab-price">$150</span>
+          </button>
+        </div>
+        <article class="hang-tag" id="hang-tag" aria-labelledby="tag-name">
+          <p class="tag-kicker">Illustrative</p>
+          <p class="tag-shop" id="tag-shop"></p>
+          <h3 class="tag-name" id="tag-name"></h3>
+          <p class="tag-material" id="tag-material"></p>
+          <p class="tag-price" id="tag-price"></p>
+        </article>
+        <div class="ledger">
+          <h3 id="ledger-heading" class="ledger-heading">Where the price comes from</h3>
+          <div class="scale">
+            <div class="real-bar" id="real-bar" aria-hidden="true"></div>
+            <div class="ghost-bar" aria-hidden="true"></div>
+            <p class="ghost-line" id="ghost-line">
+              <span class="ghost-name" id="ghost-name"></span>
+              <span class="ghost-val" id="ghost-val"></span>
+            </p>
+          </div>
+          <ul class="split-list" id="split-list" aria-label="Price split"></ul>
+          <p class="together-line">
+            <span class="together-name" id="together-name"></span>
+            <span class="together-val" id="together-val"></span>
+          </p>
+          <p class="save-line">What you save is the layers in between.</p>
+        </div>
+      </section>
+
+      <section class="paper day" aria-labelledby="day-heading">
+        <h2 id="day-heading" class="sale-heading">Sale day</h2>
+        <div class="where" role="group" aria-label="Where you see the price">
+          <button type="button" id="ch-web" aria-pressed="true">On the web</button>
+          <button type="button" id="ch-app" aria-pressed="false">In the app</button>
+        </div>
+        <div class="clock">
+          <div class="clock-top">
+            <label for="clock">Now</label>
+            <output class="clock-now" id="clock-now" for="clock">Day before 05:30</output>
+          </div>
+          <div class="clock-rail" id="clock-rail">
+            <div class="clock-line" aria-hidden="true"></div>
+            <div class="clock-band" id="clock-band" aria-hidden="true"></div>
+            <input type="range" id="clock" min="0" max="100" step="1" value="1" aria-valuetext="Day before 05:30" aria-describedby="clock-hint">
+          </div>
+          <p class="clock-ends" aria-hidden="true"><span class="clock-end">Day before 05:00</span><span class="clock-end">Day after 07:00</span></p>
+          <p class="clock-hint" id="clock-hint">The thin blue band is the 24-hour sale, from 06:00 on sale day to 06:00 the next day. Each step is 30 minutes.</p>
+        </div>
+        <div class="status-live" id="status-live" aria-live="polite">
+          <p class="status-text" id="status-text"></p>
+          <p class="status-price" id="status-price" hidden></p>
+          <button type="button" class="btn" id="open-app" hidden>Open in the app</button>
+        </div>
+        <p class="stock" id="stock" aria-live="polite"></p>
+        <div class="sale-actions">
+          <button type="button" class="btn btn-primary" id="add-bag" disabled>Add to bag</button>
+        </div>
+      </section>
+
+      <section class="paper bag" aria-labelledby="bag-heading">
+        <h2 id="bag-heading" class="sale-heading">Bag</h2>
+        <ul class="bag-list" id="bag-list" aria-live="polite" aria-relevant="all"></ul>
+        <div class="receipt" id="receipt" role="region" aria-label="Receipt" tabindex="-1" hidden></div>
+        <div class="bag-actions">
+          <button type="button" class="btn btn-primary" id="checkout" disabled>Check out</button>
+          <button type="button" class="btn" id="start-over">Start over</button>
+        </div>
+      </section>
+    </div>
+
+    <noscript>
+      <section class="static-sale" aria-label="Prices without JavaScript">
+        <p class="section-label">Without JavaScript</p>
+        <h2>Three prices, and the sale-day rule</h2>
+        <p class="static-note">Switching items, dragging the clock, moving between the web and the app, adding to the bag and checking out need JavaScript. A refresh clears the bag.</p>
+
+        <h3>Wool scarf · Plainthread · $60</h3>
+        <p>100% merino</p>
+        <ul>
+          <li>Materials · $24</li>
+          <li>Making · $15</li>
+          <li>Shipping &amp; duty · $9</li>
+          <li>Shop margin · $12</li>
+        </ul>
+        <p>Typical retail markup (illustrative) · $140</p>
+
+        <h3>Linen sheet set · Plainthread · $120</h3>
+        <p>washed linen</p>
+        <ul>
+          <li>Materials · $48</li>
+          <li>Making · $36</li>
+          <li>Shipping &amp; duty · $18</li>
+          <li>Shop margin · $18</li>
+        </ul>
+        <p>Typical retail markup (illustrative) · $270</p>
+
+        <h3>Leather tote · Plainthread · $150</h3>
+        <p>veg-tanned leather</p>
+        <ul>
+          <li>Materials · $60</li>
+          <li>Making · $45</li>
+          <li>Shipping &amp; duty · $21</li>
+          <li>Shop margin · $24</li>
+        </ul>
+        <p>Typical retail markup (illustrative) · $360</p>
+
+        <p class="static-rule">The sale runs 06:00–06:00 the next day, and −20% applies only in the app.</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>A learning concept demo written after a research report; not an official Quince product. Interface and copy are original — no official logo, icon, screenshots, product photos or brand colours; the shop name 'Plainthread' is invented. Publisher noted as Lastbrand Inc. The report found that the app's spikes on the US iPhone charts (2026-03-25, 10-06, 11-20) each lined up with a 24-hour sale that only works at checkout in the app, not with a version update — and some reviews complain about being pushed to install the app for a discount. So the demo puts the two together: where the price comes from, and why that one day happens in the app. Nothing leaves this page; a refresh clears it.</p>
+      <p><a href="https://app.notion.com/p/421481033e2481c78490d7382bd34c3a" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">Sale day · Study demo · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../sale.js"></script>
+</body>
+</html>
