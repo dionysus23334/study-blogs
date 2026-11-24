@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "entries": [
+    {
+      "id": "afu",
+      "date": "2026-11-24",
+      "name": "Ant Afu",
+      "name_zh": "蚂蚁阿福 · 说清哪里不舒服",
+      "publisher": "Ant Yikang (Guangzhou) Information Technology Co., Ltd.",
+      "one_liner_zh": "选一个开头，回答几句追问，把模糊的不舒服变成一张能拿给医生看的描述卡——不开摄像头，也不做诊断。",
+      "one_liner_en": "Pick a start, answer a few follow-up questions, and turn a vague complaint into a description card you could show a doctor — no camera, no diagnosis.",
+      "tags": ["Medical", "AI"],
+      "demo": "apps/afu/",
+      "demo_en": "apps/afu/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/7b83ccc6-0b70-4486-8fd9-d62c77cf8ab8"
+    },
     {
       "id": "quince",
       "date": "2026-11-23",
