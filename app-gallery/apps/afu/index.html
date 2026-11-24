@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>说清哪里不舒服 · Yuxi Guo</title>
+<meta name="description" content="说清哪里不舒服：学习概念演示，不是蚂蚁阿福的正式产品。选一个开头，回答几句追问，得到一张描述卡。不开摄像头，也不做诊断。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/afu/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/afu/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="say.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-24</p>
+    <h1 class="reveal">说清哪里不舒服</h1>
+    <p class="exhibit-meta reveal">
+      <span>蚂蚁阿福 Ant Afu</span>
+      <span>Ant Yikang (Guangzhou) Information Technology Co., Ltd.</span>
+      <span><time datetime="2026-11-24">2026-11-24</time></span>
+    </p>
+    <p class="lead reveal">很多人问健康问题时卡在第一步：说不清哪里不舒服、是什么样的不舒服。研报里这只应用新上线的视频「看健康」，主打的就是用追问帮你把症状说清楚，必要时再请真人医生把关。这个演示不开摄像头、也不做任何判断，只演示「追问」这一步：选一个开头，回答几个问题，右边会长出一张能拿给医生看的描述卡。场景、问题和助手「小禾」都是编的。这是学习概念演示，不是蚂蚁阿福的正式产品，也不是医疗建议。</p>
+
+    <div class="say" id="say">
+      <section class="paper talk" aria-labelledby="talk-heading">
+        <p class="kicker">追问</p>
+        <h2 id="talk-heading" class="say-heading">小禾</h2>
+        <div class="composer">
+          <p class="prompt-chip">我有点不舒服…<span class="visually-hidden">不能在这里打字，请选下面的开头。</span></p>
+          <div class="starts" role="group" aria-label="选一个开头">
+            <button type="button" class="start" data-start="rash" aria-pressed="false">手臂上起了疹子</button>
+            <button type="button" class="start" data-start="knee" aria-pressed="false">膝盖走路疼</button>
+            <button type="button" class="start" data-start="sleep" aria-pressed="false">这几天总睡不好</button>
+          </div>
+        </div>
+        <p class="log-empty" id="log-empty">选一个开头，小禾会接着问。</p>
+        <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions" aria-label="对话"></div>
+        <div class="ask" id="ask"></div>
+      </section>
+
+      <section class="paper slip" aria-labelledby="slip-heading">
+        <p class="kicker">描述卡</p>
+        <h2 id="slip-heading" class="say-heading">我的描述</h2>
+        <p class="ruler-label" id="ruler-label">说清楚了 <span id="ruler-n">0</span>/5</p>
+        <div class="ruler-track" id="ruler" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-valuetext="说清楚了 0/5" aria-labelledby="ruler-label">
+          <div class="ruler-fill" id="ruler-fill"></div>
+        </div>
+        <dl class="sheet">
+          <div class="field">
+            <dt>部位</dt>
+            <dd id="field-area"><span class="blank" aria-hidden="true">—</span><span class="visually-hidden">还没有</span></dd>
+          </div>
+          <div class="field">
+            <dt>样子</dt>
+            <dd id="field-look"><span class="blank" aria-hidden="true">—</span><span class="visually-hidden">还没有</span></dd>
+          </div>
+          <div class="field">
+            <dt>感觉</dt>
+            <dd id="field-feeling"><span class="blank" aria-hidden="true">—</span><span class="visually-hidden">还没有</span></dd>
+          </div>
+          <div class="field">
+            <dt>多久</dt>
+            <dd id="field-duration"><span class="blank" aria-hidden="true">—</span><span class="visually-hidden">还没有</span></dd>
+          </div>
+          <div class="field">
+            <dt>加重或减轻</dt>
+            <dd id="field-worse"><span class="blank" aria-hidden="true">—</span><span class="visually-hidden">还没有</span></dd>
+          </div>
+        </dl>
+        <p class="summary is-empty" id="summary" tabindex="-1">回答之后，这里会连成一段话。</p>
+        <p class="safety">这不是诊断。症状严重、突然加重或让你担心时，请直接就医或拨打急救电话。</p>
+        <div class="next">
+          <h3 class="next-heading">接下来</h3>
+          <div class="next-actions">
+            <button type="button" class="btn btn-primary" id="ask-doctor" disabled>请医生看一眼（示意）</button>
+            <button type="button" class="btn" id="copy-desc" disabled>复制描述</button>
+          </div>
+          <div class="doctor" id="doctor" hidden>
+            <div class="avatar" aria-hidden="true"></div>
+            <div class="doctor-copy">
+              <p class="doctor-title" id="doctor-title"></p>
+              <p class="doctor-note" id="doctor-note"></p>
+            </div>
+          </div>
+          <p class="copy-status" id="copy-status"></p>
+          <textarea class="copy-fallback" id="copy-fallback" hidden readonly></textarea>
+        </div>
+        <div class="slip-actions">
+          <button type="button" class="btn" id="start-over">重来</button>
+        </div>
+      </section>
+    </div>
+    <p class="visually-hidden" id="live-status" aria-live="polite"></p>
+
+    <noscript>
+      <section class="static-say" aria-label="没有脚本时的描述">
+        <p class="section-label">没有脚本时</p>
+        <h2>三个开头，和疹子这一路的追问</h2>
+        <p class="static-note">选择开头、回答追问、点身体轮廓、复制描述和重来，需要 JavaScript。刷新后记录会清空。</p>
+
+        <h3>三个开头</h3>
+        <ul>
+          <li>手臂上起了疹子</li>
+          <li>膝盖走路疼</li>
+          <li>这几天总睡不好</li>
+        </ul>
+
+        <h3>若从「手臂上起了疹子」开始，小禾会问</h3>
+        <ol>
+          <li>在哪儿？（左前臂外侧、右前臂外侧、胸口、腹部、左小腿、右小腿、后颈、后背）</li>
+          <li>是一整片，还是一颗颗？（一整片、一颗颗的小红点、几颗大一点的）</li>
+          <li>痒，还是疼？（主要是痒、又痒又疼、碰一下会疼、不太痒也不疼）</li>
+          <li>多久了？（今天，白天就有；两三天了，晚上更明显；一个多星期，时有时无）</li>
+        </ol>
+
+        <h3>一段写完的描述</h3>
+        <p>左前臂外侧，一颗颗的小红点，主要是痒，两三天了，晚上更明显。</p>
+        <p class="static-rule">这不是诊断。症状严重、突然加重或让你担心时，请直接就医或拨打急救电话。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是蚂蚁阿福的正式产品，界面与文案均为另写，不使用官方标志、图标、截图、形象或品牌色；助手「小禾」是编的。发行方记为 Ant Yikang (Guangzhou) Information Technology Co., Ltd.（蚂蚁集团）。研报发现，它在 2026-11-22 从中国区 iPhone 总免费榜 #84 跳到 #7，时间对上 11-22—23 的生态大会和新功能发布，而不是 App Store 版本更新；新功能的卖点之一，是帮说不清症状的人把话说清楚。演示只做这一步，不做诊断。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/7b83ccc6-0b70-4486-8fd9-d62c77cf8ab8" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">说清哪里不舒服 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="say.js"></script>
+</body>
+</html>
