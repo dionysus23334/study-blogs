@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "entries": [
+    {
+      "id": "dawnroom",
+      "date": "2026-11-25",
+      "name": "Dawnroom",
+      "name_zh": "天光 · 等天亮",
+      "publisher": "The Write That Stays Corporation",
+      "one_liner_zh": "装一卷底片，一张一张拍、看不到成片，送洗之后等下一次日出，再一次看完整卷。",
+      "one_liner_en": "Load a roll, shoot frame by frame without peeking, send it to the lab, and see the whole roll at the next sunrise.",
+      "tags": ["Photo", "Camera"],
+      "demo": "apps/dawnroom/",
+      "demo_en": "apps/dawnroom/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/e1e653b6-0115-42c6-aabd-43d6e48bf8a4"
+    },
     {
       "id": "afu",
       "date": "2026-11-24",

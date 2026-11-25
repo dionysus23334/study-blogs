@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>等天亮 · Yuxi Guo</title>
+<meta name="description" content="等天亮：学习概念演示，不是天光 Dawnroom 的正式产品。装一卷底片，一张一张拍、看不到成片，送洗之后等下一次日出。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/dawnroom/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/dawnroom/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="dawn.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-25</p>
+    <h1 class="reveal">等天亮</h1>
+    <p class="exhibit-meta reveal">
+      <span>天光 Dawnroom</span>
+      <span>The Write That Stays Corporation</span>
+      <span><time datetime="2026-11-25">2026-11-25</time></span>
+    </p>
+    <p class="lead reveal">手机拍照太快了，拍完马上看、马上删。研报里这只刚上架三天就冲进台湾总榜前 10 的底片相机应用，招牌玩法反其道而行：一卷底片拍完送洗，要等你所在城市的下一次日出才冲好。这个演示只做这一件事——装片、一张一张拍、看不到成片、送洗、等天亮。场景、相机「晨灯」和冲印店都是编的，照片由浏览器现场画出来，不开相机。这是学习概念演示，不是天光 Dawnroom 的正式产品。</p>
+
+    <div class="dawn" id="dawn">
+      <section class="paper camera" id="camera" aria-labelledby="camera-heading" tabindex="-1">
+        <p class="kicker">相机</p>
+        <h2 id="camera-heading" class="dawn-heading">晨灯 · Daybreak</h2>
+        <p class="camera-note">一卷底片。拍的时候看不见。</p>
+
+        <div class="load-row">
+          <div class="canister" aria-hidden="true">
+            <svg viewBox="0 0 92 78">
+              <rect x="24" y="8" width="40" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M64 32h16v10h-10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M74 32V20h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <circle cx="44" cy="56" r="2" fill="currentColor"/>
+            </svg>
+            <span class="canister-count" id="canister-count">—</span>
+          </div>
+          <div>
+            <p class="choice-label" id="count-label">张数</p>
+            <div class="rolls" role="group" aria-labelledby="count-label">
+              <button type="button" class="roll" data-count="12" aria-pressed="false">12<span class="visually-hidden"> 张</span></button>
+              <button type="button" class="roll" data-count="24" aria-pressed="false">24<span class="visually-hidden"> 张</span></button>
+              <button type="button" class="roll" data-count="36" aria-pressed="false">36<span class="visually-hidden"> 张</span></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="roll-name" id="roll-label" hidden></p>
+
+        <div class="meter">
+          <p class="counter" id="counter-num">00 / —</p>
+          <div class="ticks" id="ticks" aria-hidden="true"></div>
+        </div>
+
+        <div class="finder" id="finder">
+          <span class="corner tl" aria-hidden="true"></span>
+          <span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span>
+          <span class="corner br" aria-hidden="true"></span>
+          <div class="finder-copy">
+            <p class="finder-kicker">取景器</p>
+            <p class="finder-left" id="finder-left">先装一卷</p>
+          </div>
+        </div>
+
+        <p class="now-scene" id="now-scene">装好一卷之后选一个场景。取景器不会显示画面。</p>
+        <div class="scenes" role="group" aria-label="场景">
+          <button type="button" class="scene" data-scene="lanterns" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M4 12c12 8 32-4 56 4" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="16" cy="20" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="34" cy="16" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="52" cy="21" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M6 36h52" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>夜市灯笼</span>
+          </button>
+          <button type="button" class="scene" data-scene="seawall" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M2 16h60M2 22h60" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="2" y="24" width="60" height="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M16 24v8M32 24v8M48 24v8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M46 30v6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="46" cy="29" r="1.6" fill="currentColor"/>
+            </svg>
+            <span>海边堤防</span>
+          </button>
+          <button type="button" class="scene" data-scene="cat" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <rect x="14" y="4" width="36" height="24" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M14 16h36M32 4v24" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M10 28h44" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="40" cy="26" r="4.2" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M36.5 23.2l1.4-3.2 1.6 2.6M40 23.4l1.2-3.4 1.8 3" fill="currentColor"/>
+              <path d="M42 28c4 1 7-2 6-6" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>窗边的猫</span>
+          </button>
+          <button type="button" class="scene" data-scene="rain" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M6 8v26h22V12h30v22" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="40" cy="14" r="2" fill="currentColor"/>
+              <path d="M40 16v14" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="36" cy="34" rx="14" ry="3.2" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>雨后街角</span>
+          </button>
+        </div>
+
+        <div class="transport">
+          <button type="button" class="shutter" id="shutter" aria-describedby="camera-hint" disabled>快门</button>
+          <button type="button" class="btn" id="advance" aria-describedby="camera-hint" disabled>过片</button>
+        </div>
+        <p class="camera-hint" id="camera-hint"></p>
+        <button type="button" class="btn send-early" id="send-early" disabled>提前送洗</button>
+        <p class="keyline">焦点在相机里时，空格是快门，A 是过片。</p>
+      </section>
+
+      <section class="paper lab" id="lab" aria-labelledby="lab-heading">
+        <p class="kicker">冲印</p>
+        <h2 id="lab-heading" class="dawn-heading">转角冲印</h2>
+        <p class="lab-note">拍完才送出。成片要等到下一次日出。</p>
+
+        <div id="lab-wait">
+          <div class="envelope" aria-hidden="true">
+            <div class="envelope-sheet">
+              <span class="envelope-flap"></span>
+              <span class="envelope-word">空信封</span>
+              <span class="env-line a"></span>
+              <span class="env-line b"></span>
+            </div>
+          </div>
+          <p>拍完，或提前送洗，这里才会写成一张取件单。</p>
+        </div>
+
+        <div id="lab-slip" hidden>
+          <dl class="slip-fields">
+            <div class="field">
+              <dt>卷</dt>
+              <dd id="slip-roll"></dd>
+            </div>
+            <div class="field">
+              <dt>张数</dt>
+              <dd id="slip-count"></dd>
+            </div>
+            <div class="field">
+              <dt>取件</dt>
+              <dd>下一次日出</dd>
+            </div>
+          </dl>
+          <div class="cities" role="group" aria-label="取件城市">
+            <button type="button" class="city" data-city="taipei" aria-pressed="true">台北</button>
+            <button type="button" class="city" data-city="hongkong" aria-pressed="false">香港</button>
+            <button type="button" class="city" data-city="tokyo" aria-pressed="false">东京</button>
+            <button type="button" class="city" data-city="london" aria-pressed="false">伦敦</button>
+            <button type="button" class="city" data-city="newyork" aria-pressed="false">纽约</button>
+          </div>
+          <div class="sunrise-block">
+            <p class="sunrise-meta"><span id="sunrise-city"></span> <span id="sunrise-date"></span></p>
+            <p class="sunrise-time"><span id="sunrise-time">—</span><span class="approx">近似</span></p>
+            <p class="approx-note">近似。用固定的经纬度和标准时差估算下一次日出，不读取你的位置。</p>
+            <p class="countdown-line"><span>距离日出</span><span id="countdown">—</span></p>
+          </div>
+          <div class="sky" id="sky" aria-hidden="true">
+            <span class="sky-sun"></span>
+          </div>
+          <button type="button" class="btn btn-primary fast" id="fast">快转这一夜（示意）</button>
+          <p class="quiet">真正的应用里，等不及的话可以付费加急冲洗；这里不做付费。</p>
+        </div>
+
+        <div id="sheet" hidden>
+          <p class="kicker">取件</p>
+          <h3 class="dawn-sub" id="sheet-heading" tabindex="-1">天亮了</h3>
+          <div class="sheet-paper">
+            <div class="strip">
+              <p class="strip-edge" id="strip-edge"></p>
+              <div class="frames" id="frames" role="group" aria-label="接触印样"></div>
+              <p class="strip-foot" id="strip-foot"></p>
+            </div>
+          </div>
+          <button type="button" class="btn reload" id="reload">再装一卷</button>
+        </div>
+      </section>
+    </div>
+    <p class="visually-hidden" id="live-status" aria-live="polite"></p>
+
+    <dialog class="frame-dialog" id="frame-dialog" aria-labelledby="frame-caption">
+      <div class="frame-bar">
+        <p class="kicker" id="frame-caption"></p>
+        <button type="button" class="btn" id="frame-close">关闭</button>
+      </div>
+      <canvas id="frame-large"></canvas>
+    </dialog>
+
+    <noscript>
+      <section class="static-dawn" aria-label="没有脚本时的说明">
+        <p class="section-label">没有脚本时</p>
+        <h2>等天亮，五步</h2>
+        <p class="static-note">装片、快门、过片、送洗、换城市、快转和点开单张，都需要 JavaScript。刷新后记录会清空。</p>
+        <ol>
+          <li>装一卷：在 12、24、36 张里选一个。</li>
+          <li>拍摄但看不到：从四个场景里选一个，按下快门。取景器只告诉你还剩几张。拍完必须过片，才能拍下一张。</li>
+          <li>送到冲印店：整卷拍完，或提前送洗。单据上写着卷名、张数，以及取件时间——下一次日出。</li>
+          <li>等到下一次日出。等不及的话，页面上可以快转这一夜，只是示意，没有付费。</li>
+          <li>天亮取件：一整卷同时出现在一张接触印样上。</li>
+        </ol>
+        <h3>四个场景</h3>
+        <ul>
+          <li>夜市灯笼</li>
+          <li>海边堤防</li>
+          <li>窗边的猫</li>
+          <li>雨后街角</li>
+        </ul>
+        <h3>一张单据</h3>
+        <p>卷 A · 2026-11-25。已拍 8 张，一卷 24 张。取件：下一次日出。城市：台北。日出时间是近似值，例如晚秋的台北大约在 06:20。</p>
+        <p>相机叫「晨灯」，冲印店叫「转角冲印」，都是编的。照片由浏览器现场画出来，不开相机。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是天光 Dawnroom 的正式产品，界面与文案均为另写，不使用官方标志、图标、截图、相机名或底片名；相机「晨灯」、冲印店和场景都是编的。发行方记为 The Write That Stays Corporation（影留事业）。研报发现，它 2026-11-21 在 App Store 上架，台湾总免费榜从 11-23 的 #95 升到 11-24 的 #9，属于新品首发爬升，未见商店版本更新触发；它与 2021 年 Dispo「次日 9 点冲洗」同属延迟揭晓相机，并把「等不及」做成了付费加急。演示只做「等天亮」这一步，没有付费。日出时间为近似计算。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/e1e653b6-0115-42c6-aabd-43d6e48bf8a4" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">等天亮 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="dawn.js"></script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wait for dawn · Yuxi Guo</title>
+<meta name="description" content="Wait for dawn: a learning concept demo, not the official Dawnroom app. Load a roll, shoot without seeing the frames, and wait until the next sunrise.">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/dawnroom/">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/dawnroom/en/">
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../gallery.css">
+<link rel="stylesheet" href="../dawn.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../../en/#explorations">Explorations</a>
+      <a href="../../../en/">Gallery</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="Language">
+      <span class="lang-current" lang="en">EN</span><span class="lang-sep">/</span><a href="../" lang="zh-CN">ZH</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../../en/#explorations">Explorations</a> · 04 · <a href="../../../en/">Gallery</a> · 2026-11-25</p>
+    <h1 class="reveal">Wait for dawn</h1>
+    <p class="exhibit-meta reveal">
+      <span>天光 Dawnroom</span>
+      <span>The Write That Stays Corporation</span>
+      <span><time datetime="2026-11-25">2026-11-25</time></span>
+    </p>
+    <p class="lead reveal">Phone photos are too fast: shoot, look, delete. The app in today's report — a film-camera app that reached Taiwan's overall top 10 three days after launch — does the opposite with its signature camera: finish a roll, send it to the lab, and it develops at the next sunrise in your city. This demo does just that one thing: load a roll, shoot frame by frame without seeing anything, send it off, wait for dawn. The scenes, the 'Daybreak' camera and the lab are invented; every photo is drawn in your browser, and no camera is used. This is a learning concept demo, not the official Dawnroom app.</p>
+
+    <div class="dawn" id="dawn">
+      <section class="paper camera" id="camera" aria-labelledby="camera-heading" tabindex="-1">
+        <p class="kicker">Camera</p>
+        <h2 id="camera-heading" class="dawn-heading">Daybreak · 晨灯</h2>
+        <p class="camera-note">A roll of film. Nothing to see until dawn.</p>
+
+        <div class="load-row">
+          <div class="canister" aria-hidden="true">
+            <svg viewBox="0 0 92 78">
+              <rect x="24" y="8" width="40" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M64 32h16v10h-10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M74 32V20h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <circle cx="44" cy="56" r="2" fill="currentColor"/>
+            </svg>
+            <span class="canister-count" id="canister-count">—</span>
+          </div>
+          <div>
+            <p class="choice-label" id="count-label">Exposures</p>
+            <div class="rolls" role="group" aria-labelledby="count-label">
+              <button type="button" class="roll" data-count="12" aria-pressed="false">12<span class="visually-hidden"> exposures</span></button>
+              <button type="button" class="roll" data-count="24" aria-pressed="false">24<span class="visually-hidden"> exposures</span></button>
+              <button type="button" class="roll" data-count="36" aria-pressed="false">36<span class="visually-hidden"> exposures</span></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="roll-name" id="roll-label" hidden></p>
+
+        <div class="meter">
+          <p class="counter" id="counter-num">00 / —</p>
+          <div class="ticks" id="ticks" aria-hidden="true"></div>
+        </div>
+
+        <div class="finder" id="finder">
+          <span class="corner tl" aria-hidden="true"></span>
+          <span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span>
+          <span class="corner br" aria-hidden="true"></span>
+          <div class="finder-copy">
+            <p class="finder-kicker">Viewfinder</p>
+            <p class="finder-left" id="finder-left">Load a roll</p>
+          </div>
+        </div>
+
+        <p class="now-scene" id="now-scene">Load a roll, then pick a scene. The viewfinder never shows the picture.</p>
+        <div class="scenes" role="group" aria-label="Scenes">
+          <button type="button" class="scene" data-scene="lanterns" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M4 12c12 8 32-4 56 4" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="16" cy="20" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="34" cy="16" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="52" cy="21" rx="4.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M6 36h52" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>Night-market lanterns</span>
+          </button>
+          <button type="button" class="scene" data-scene="seawall" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M2 16h60M2 22h60" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="2" y="24" width="60" height="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M16 24v8M32 24v8M48 24v8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M46 30v6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="46" cy="29" r="1.6" fill="currentColor"/>
+            </svg>
+            <span>Seawall</span>
+          </button>
+          <button type="button" class="scene" data-scene="cat" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <rect x="14" y="4" width="36" height="24" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M14 16h36M32 4v24" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M10 28h44" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="40" cy="26" r="4.2" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M36.5 23.2l1.4-3.2 1.6 2.6M40 23.4l1.2-3.4 1.8 3" fill="currentColor"/>
+              <path d="M42 28c4 1 7-2 6-6" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>Cat by the window</span>
+          </button>
+          <button type="button" class="scene" data-scene="rain" aria-pressed="false" disabled>
+            <svg viewBox="0 0 64 40" aria-hidden="true">
+              <path d="M6 8v26h22V12h30v22" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="40" cy="14" r="2" fill="currentColor"/>
+              <path d="M40 16v14" fill="none" stroke="currentColor" stroke-width="1.3"/>
+              <ellipse cx="36" cy="34" rx="14" ry="3.2" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>Street corner after rain</span>
+          </button>
+        </div>
+
+        <div class="transport">
+          <button type="button" class="shutter" id="shutter" aria-describedby="camera-hint" disabled>Shutter</button>
+          <button type="button" class="btn" id="advance" aria-describedby="camera-hint" disabled>Advance</button>
+        </div>
+        <p class="camera-hint" id="camera-hint"></p>
+        <button type="button" class="btn send-early" id="send-early" disabled>Send early</button>
+        <p class="keyline">With focus in the camera, Space is the shutter and A advances.</p>
+      </section>
+
+      <section class="paper lab" id="lab" aria-labelledby="lab-heading">
+        <p class="kicker">Lab</p>
+        <h2 id="lab-heading" class="dawn-heading">Corner Lab</h2>
+        <p class="lab-note">It leaves only when the roll is done. The pictures wait for the next sunrise.</p>
+
+        <div id="lab-wait">
+          <div class="envelope" aria-hidden="true">
+            <div class="envelope-sheet">
+              <span class="envelope-flap"></span>
+              <span class="envelope-word">Empty envelope</span>
+              <span class="env-line a"></span>
+              <span class="env-line b"></span>
+            </div>
+          </div>
+          <p>Finish the roll, or send it early, and this becomes a pick-up slip.</p>
+        </div>
+
+        <div id="lab-slip" hidden>
+          <dl class="slip-fields">
+            <div class="field">
+              <dt>Roll</dt>
+              <dd id="slip-roll"></dd>
+            </div>
+            <div class="field">
+              <dt>Frames</dt>
+              <dd id="slip-count"></dd>
+            </div>
+            <div class="field">
+              <dt>Pick-up</dt>
+              <dd>Next sunrise</dd>
+            </div>
+          </dl>
+          <div class="cities" role="group" aria-label="Pick-up city">
+            <button type="button" class="city" data-city="taipei" aria-pressed="true">Taipei</button>
+            <button type="button" class="city" data-city="hongkong" aria-pressed="false">Hong Kong</button>
+            <button type="button" class="city" data-city="tokyo" aria-pressed="false">Tokyo</button>
+            <button type="button" class="city" data-city="london" aria-pressed="false">London</button>
+            <button type="button" class="city" data-city="newyork" aria-pressed="false">New York</button>
+          </div>
+          <div class="sunrise-block">
+            <p class="sunrise-meta"><span id="sunrise-city"></span> <span id="sunrise-date"></span></p>
+            <p class="sunrise-time"><span id="sunrise-time">—</span><span class="approx">Approximate</span></p>
+            <p class="approx-note">Approximate. The next sunrise is estimated from a fixed latitude, longitude and standard time offset. Your location is not used.</p>
+            <p class="countdown-line"><span>Until sunrise</span><span id="countdown">—</span></p>
+          </div>
+          <div class="sky" id="sky" aria-hidden="true">
+            <span class="sky-sun"></span>
+          </div>
+          <button type="button" class="btn btn-primary fast" id="fast">Fast-forward the night (demo)</button>
+          <p class="quiet">In the real app you can pay to rush a roll; this demo has no payments.</p>
+        </div>
+
+        <div id="sheet" hidden>
+          <p class="kicker">Pick-up</p>
+          <h3 class="dawn-sub" id="sheet-heading" tabindex="-1">It's dawn</h3>
+          <div class="sheet-paper">
+            <div class="strip">
+              <p class="strip-edge" id="strip-edge"></p>
+              <div class="frames" id="frames" role="group" aria-label="Contact sheet"></div>
+              <p class="strip-foot" id="strip-foot"></p>
+            </div>
+          </div>
+          <button type="button" class="btn reload" id="reload">Load another roll</button>
+        </div>
+      </section>
+    </div>
+    <p class="visually-hidden" id="live-status" aria-live="polite"></p>
+
+    <dialog class="frame-dialog" id="frame-dialog" aria-labelledby="frame-caption">
+      <div class="frame-bar">
+        <p class="kicker" id="frame-caption"></p>
+        <button type="button" class="btn" id="frame-close">Close</button>
+      </div>
+      <canvas id="frame-large"></canvas>
+    </dialog>
+
+    <noscript>
+      <section class="static-dawn" aria-label="Description without JavaScript">
+        <p class="section-label">Without JavaScript</p>
+        <h2>Wait for dawn, in five steps</h2>
+        <p class="static-note">Loading a roll, the shutter, advancing, sending, changing city, fast-forwarding and opening a frame need JavaScript. A refresh clears the page.</p>
+        <ol>
+          <li>Load a roll: choose 12, 24 or 36 exposures.</li>
+          <li>Shoot without seeing: pick one of four scenes and press the shutter. The viewfinder only tells you how many are left. You must advance before the next shot.</li>
+          <li>Send it to the lab: when the roll is full, or sooner. The slip names the roll and the exposures, and the pick-up is the next sunrise.</li>
+          <li>Wait for that sunrise. If you will not wait, the page can fast-forward the night. That is only a demo, and there is no payment.</li>
+          <li>Pick up at dawn: the whole roll appears at once on a contact sheet.</li>
+        </ol>
+        <h3>Four scenes</h3>
+        <ul>
+          <li>Night-market lanterns</li>
+          <li>Seawall</li>
+          <li>Cat by the window</li>
+          <li>Street corner after rain</li>
+        </ul>
+        <h3>One lab slip</h3>
+        <p>Roll A · 2026-11-25. 8 frames of a 24-exposure roll. Pick-up: next sunrise. City: Taipei. The sunrise time is approximate — late November in Taipei is about 06:20.</p>
+        <p>The camera is called Daybreak and the lab is called Corner Lab. Both are invented. Every photo is drawn in the browser. No camera is used.</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">About this demo</p>
+      <p>A learning concept demo written after a research report; not the official Dawnroom app. Interface and copy are original — no official logo, icon, screenshots, camera names or film-stock names; the 'Daybreak' camera, the lab and the scenes are invented. Publisher noted as The Write That Stays Corporation. The report found the app launched on the App Store on 2026-11-21 and climbed Taiwan's overall free chart from #95 on 23 November to #9 on 24 November — a launch climb, not triggered by a store update. Like Dispo's 'develops at 9 a.m. tomorrow' in 2021, it delays the reveal, and it sells a paid rush for the impatient. This demo does only the wait-for-dawn step, with no payments. Sunrise times are approximate. Nothing leaves this page; a refresh clears it.</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/e1e653b6-0115-42c6-aabd-43d6e48bf8a4" target="_blank" rel="noopener noreferrer">Research report ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">Wait for dawn · Study demo · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../../main.js"></script>
+<script src="../dawn.js"></script>
+</body>
+</html>
