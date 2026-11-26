@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拍后换卷 · Yuxi Guo</title>
+<meta name="description" content="拍后换卷：学习概念演示，不是 Gloam 相機的正式产品。先按快门，再在暗房里换色调。场景和照片都是编的，不开相机。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/gloam/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/gloam/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="reroll.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-26</p>
+    <h1 class="reveal">拍后换卷</h1>
+    <p class="exhibit-meta reveal">
+      <span>Gloam 相機</span>
+      <span>英泽 樊（个人开发者）</span>
+      <span><time datetime="2026-11-26">2026-11-26</time></span>
+    </p>
+    <p class="lead reveal">胶片相机最难的一步，是按快门之前就得决定装哪卷胶片。研报里这只冲进台湾总免费榜前 5 的胶片模拟相机，有个关键设计：每张照片都留一份「数字底片」，拍完还能换胶片、调影调和白平衡，不需要了再清除。这个演示只做这一件事——先拍，再在暗房里换卷。场景、相机「暮色」和四种色调都是编的，照片由浏览器现场画出来，不开相机。这是学习概念演示，不是 Gloam 相機的正式产品。</p>
+
+    <div class="gloam" id="gloam">
+      <section class="paper camera" id="camera" aria-labelledby="camera-heading" tabindex="-1">
+        <p class="kicker">相机</p>
+        <h2 id="camera-heading" class="gloam-heading">暮色 · Dusk</h2>
+        <p class="camera-note">框线里面会被拍下来。外面多出来的一圈，只是给你看。</p>
+        <p class="counter" id="counter">00 / 08</p>
+        <div class="finder" id="finder">
+          <canvas id="finder-canvas" aria-label="取景器，骑楼午后，中性画面，预备色调暖调负片，尚未成张。细框以内会被拍下。"></canvas>
+          <div class="frame-line" aria-hidden="true">
+            <span class="ft t"></span>
+            <span class="ft r"></span>
+            <span class="ft b"></span>
+            <span class="ft l"></span>
+          </div>
+          <div class="finder-shade" aria-hidden="true"></div>
+        </div>
+        <p class="choice-label" id="scene-label">场景</p>
+        <div class="scenes" role="group" aria-labelledby="scene-label">
+          <button type="button" class="scene" data-scene="arcade" aria-pressed="true">
+            <canvas width="160" height="110" aria-hidden="true"></canvas>
+            <span>骑楼午后</span>
+          </button>
+          <button type="button" class="scene" data-scene="railing" aria-pressed="false">
+            <canvas width="160" height="110" aria-hidden="true"></canvas>
+            <span>海边栏杆</span>
+          </button>
+          <button type="button" class="scene" data-scene="plant" aria-pressed="false">
+            <canvas width="160" height="110" aria-hidden="true"></canvas>
+            <span>窗台盆栽</span>
+          </button>
+          <button type="button" class="scene" data-scene="store" aria-pressed="false">
+            <canvas width="160" height="110" aria-hidden="true"></canvas>
+            <span>夜里的便利店</span>
+          </button>
+        </div>
+        <p class="choice-label" id="look-label">这一张的色调</p>
+        <div class="looks" id="camera-looks" role="group" aria-labelledby="look-label">
+          <button type="button" class="look" data-look="warm" aria-pressed="true">暖调负片</button>
+          <button type="button" class="look" data-look="cool" aria-pressed="false">冷调反转</button>
+          <button type="button" class="look" data-look="ccd" aria-pressed="false">数码 CCD</button>
+          <button type="button" class="look" data-look="mono" aria-pressed="false">黑白颗粒</button>
+        </div>
+        <div class="transport">
+          <button type="button" class="shutter" id="shutter" aria-describedby="camera-hint">快门</button>
+        </div>
+        <p class="camera-hint" id="camera-hint"></p>
+        <p class="process-line" id="process" aria-hidden="true"></p>
+        <p class="keyline">焦点在相机里时，空格是快门。</p>
+      </section>
+
+      <div class="side">
+        <section class="paper strip-panel" id="strip" aria-labelledby="strip-heading">
+          <p class="kicker">接触印样</p>
+          <h2 id="strip-heading" class="gloam-heading">这一卷</h2>
+          <p class="panel-note">最多八张。点一张，到暗房里换色调。</p>
+          <p class="strip-edge" id="strip-edge">暮色 · 空卷</p>
+          <div class="strip-scroll">
+            <p class="strip-empty" id="strip-empty">还没有照片。先选场景和色调，再按快门。</p>
+            <div class="frames" id="frames" role="group" aria-label="接触印样"></div>
+          </div>
+          <button type="button" class="btn" id="new-roll">换一卷</button>
+          <p class="keyline">焦点在这一条上时，按 1 到 8 选中对应的一张。</p>
+        </section>
+
+        <section class="paper darkroom" id="darkroom" aria-labelledby="darkroom-heading">
+          <p class="kicker">暗房</p>
+          <h2 id="darkroom-heading" class="gloam-heading">换色调</h2>
+          <p class="panel-note">底片还在的时候，色调、影调和白平衡都可以重来。</p>
+          <p class="panel-note" id="darkroom-empty">从接触印样里点一张。</p>
+          <div id="darkroom-work" hidden>
+            <p class="compare-legend"><span>底片</span><span>现在的色调</span></p>
+            <div class="compare" id="compare">
+              <canvas id="compare-after" aria-label="现在的色调"></canvas>
+              <canvas id="compare-before" class="compare-before" aria-label="底片"></canvas>
+              <button type="button" class="divider" id="divider" role="slider" aria-label="前后对比，左边是底片，右边是现在的色调" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="底片占左边 50%" aria-describedby="split-hint"></button>
+            </div>
+            <p class="keyline" id="split-hint">左右方向键移动分界。按住 Shift 走得更快。</p>
+            <p class="negative-line" id="negative-line">底片还在，可以一直换。</p>
+            <p class="baked-note" id="baked-note" tabindex="-1" hidden>底片已清除，这张定稿了。</p>
+            <p class="choice-label" id="dark-look-label">换成</p>
+            <div class="looks" id="dark-looks" role="group" aria-labelledby="dark-look-label">
+              <button type="button" class="look" data-look="warm" aria-pressed="false">暖调负片</button>
+              <button type="button" class="look" data-look="cool" aria-pressed="false">冷调反转</button>
+              <button type="button" class="look" data-look="ccd" aria-pressed="false">数码 CCD</button>
+              <button type="button" class="look" data-look="mono" aria-pressed="false">黑白颗粒</button>
+            </div>
+            <div class="slider">
+              <div class="slider-head">
+                <label for="tone">影调</label>
+                <span class="slider-readout" id="tone-readout">0</span>
+              </div>
+              <input id="tone" type="range" min="-2" max="2" step="0.1" value="0" aria-valuetext="影调 0">
+              <p class="slider-ends" aria-hidden="true"><span>−2</span><span>+2</span></p>
+            </div>
+            <div class="slider">
+              <div class="slider-head">
+                <label for="wb">白平衡</label>
+                <span class="slider-readout" id="wb-readout">0</span>
+              </div>
+              <input id="wb" type="range" min="-2" max="2" step="0.1" value="0" aria-valuetext="白平衡，中性，0">
+              <p class="slider-ends" aria-hidden="true"><span>冷</span><span>暖</span></p>
+            </div>
+            <div class="clear-box">
+              <button type="button" class="btn" id="clear-ask">清除底片</button>
+              <div class="clear-confirm" id="clear-confirm" hidden>
+                <p id="clear-q" tabindex="-1">清除之后不能再换。确定清除这张的底片？</p>
+                <div class="clear-actions">
+                  <button type="button" class="btn" id="clear-yes">清除</button>
+                  <button type="button" class="btn" id="clear-no">留下</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <p class="visually-hidden" id="live-status" aria-live="polite"></p>
+
+    <noscript>
+      <section class="static-gloam" aria-label="没有脚本时的说明">
+        <p class="section-label">没有脚本时</p>
+        <h2>拍后换卷，五步</h2>
+        <p class="static-note">选场景、按快门、点开一张、换色调、清除底片，都需要 JavaScript。刷新后记录会清空。</p>
+        <ol>
+          <li>选一个场景。取景器里是中性的画面，细框以外还能看见一圈。</li>
+          <li>先选一种色调，再按快门。快门之后会短暂显示「冲片中」，然后这一张落到接触印样上，带着一个橙色日期印 '26 11 26。</li>
+          <li>在接触印样上点开这一张，进入暗房。</li>
+          <li>拍完再换：同一张底片可以换成四种色调，并拖动影调（−2 到 +2）和白平衡（冷到暖）。中间的分界用来对比底片和现在的色调。</li>
+          <li>清除底片：确认之后这张定稿，不能再换。换一卷会清空接触印样。</li>
+        </ol>
+        <h3>四个场景</h3>
+        <ul>
+          <li>骑楼午后</li>
+          <li>海边栏杆</li>
+          <li>窗台盆栽</li>
+          <li>夜里的便利店</li>
+        </ul>
+        <h3>四种色调</h3>
+        <ul>
+          <li>暖调负片</li>
+          <li>冷调反转</li>
+          <li>数码 CCD</li>
+          <li>黑白颗粒</li>
+        </ul>
+        <p>相机叫「暮色」，场景和色调都是编的。照片由浏览器现场画出来，不开相机。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是 Gloam 相機的正式产品，界面与文案均为另写，不使用官方标志、图标、截图、机身名或胶片名；相机「暮色」、四种色调和场景都是编的。发行方记为个人开发者「英泽 樊」。研报发现，它 2026-08-09 上架，先在中国大陆社区积累口碑，lastDate 2026-11-24 这一期 AppMagic 台湾 iPhone 免费日榜（含游戏）升到 #2（+551）、香港 #4（+348）；冲高与第三方记录的 Apple 台湾精选同日，未见商店版本更新触发。它的变现是年度会员与终身买断。演示只做「拍后换卷」这一步，没有付费。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/79468b4d-4077-4c9a-8212-69fae8772753" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">拍后换卷 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="reroll.js"></script>
+</body>
+</html>
