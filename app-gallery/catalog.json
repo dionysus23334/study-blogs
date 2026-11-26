@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "entries": [
+    {
+      "id": "gloam",
+      "date": "2026-11-26",
+      "name": "Gloam Cam",
+      "name_zh": "Gloam 相機 · 拍后换卷",
+      "publisher": "Yingze Fan (英泽 樊)",
+      "one_liner_zh": "先按快门，再到暗房里换胶片：底片留着就能一直换，清除之后才定稿。",
+      "one_liner_en": "Shoot first, change the film later in the darkroom: keep the negative and you can keep switching; clear it and the frame is final.",
+      "tags": ["Photo", "Camera"],
+      "demo": "apps/gloam/",
+      "demo_en": "apps/gloam/en/",
+      "report": "https://app.notion.com/p/424481033e24815a8cf8f2cc0eb0e087"
+    },
     {
       "id": "dawnroom",
       "date": "2026-11-25",
