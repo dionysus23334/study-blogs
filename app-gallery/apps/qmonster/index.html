@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>对完这一期 · Yuxi Guo</title>
+<meta name="description" content="对完这一期：学习概念演示，不是發票怪獸的正式产品。对着编出来的练习发票核对一期编出来的号码。号码是编的，不能用来对真发票。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/qmonster/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/qmonster/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="check.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-27</p>
+    <h1 class="reveal">对完这一期</h1>
+    <p class="exhibit-meta reveal">
+      <span>發票怪獸</span>
+      <span>Spring Trees Technology CO., LTD.</span>
+      <span><time datetime="2026-11-27">2026-11-27</time></span>
+    </p>
+    <p class="lead reveal">统一发票每逢单月 25 日开奖。研报里这只已经上架十年的对奖应用，平时并不在台湾总免费榜前 50，却在 2026-11-25 开奖日跳到应用日榜 #3。它把『先把发票存好，开奖那天一对』做成一件愿意打开的小事。这个演示只做这一步：对着一叠编出来的练习发票，核对一期编出来的号码，看末几位是否相同。号码全部是编的，不能用来对真发票。这是学习概念演示，不是發票怪獸的正式产品。</p>
+
+    <div class="desk" id="desk">
+      <div class="desk-grid">
+        <section class="paper stack" aria-labelledby="stack-heading">
+          <p class="kicker">已存</p>
+          <h2 id="stack-heading" class="desk-heading">已存的练习发票</h2>
+          <p class="disclaimer">号码是编的，不能用来对真发票。</p>
+          <p class="panel-note">这五张开奖前就在这里。末几位要等这一期揭开才对。</p>
+          <div id="receipt-list" class="receipt-list" role="list" aria-labelledby="stack-heading"></div>
+          <div class="practice">
+            <label class="field-label" for="practice">再写一张八位练习号码</label>
+            <input id="practice" type="text" inputmode="numeric" maxlength="8" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-describedby="practice-hint practice-error">
+            <p class="field-hint" id="practice-hint">刚好八位数字。留空就只对这五张。</p>
+            <p class="field-error" id="practice-error"></p>
+            <p class="keyline">在这一格按 Enter：还没开，焦点就到「开这一期」；已经开了，就再对一次。Esc 清空。</p>
+          </div>
+        </section>
+
+        <div class="side">
+          <section class="slip" id="slip" aria-labelledby="slip-heading">
+            <p class="kicker">开奖条</p>
+            <h2 id="slip-heading" class="desk-heading">这一期</h2>
+            <p class="term-name" id="term-name">练习期 · 01</p>
+            <p class="disclaimer">号码是编的，不能用来对真发票。</p>
+            <div id="slip-body">
+              <p class="slip-wait">还没开。按下之后，练习号码才写在这里。</p>
+            </div>
+            <p class="summary" id="summary">五张练习发票已经放好。按「开这一期」核对末几位。</p>
+            <div class="actions">
+              <button type="button" class="btn btn-primary" id="draw-term" aria-describedby="disclaimer">开这一期</button>
+              <button type="button" class="btn" id="new-term">换一期</button>
+            </div>
+          </section>
+
+          <section class="paper reward" aria-labelledby="reward-heading">
+            <p class="kicker">图章</p>
+            <h2 id="reward-heading" class="desk-heading">对完之后</h2>
+            <p class="reward-note" id="reward-note">对上之后，图章才会收下发票，并印上日期。</p>
+            <div class="stage" id="stage" aria-hidden="true">
+              <div class="mini"></div>
+              <div class="seal">
+                <svg viewBox="0 0 92 92" focusable="false">
+                  <circle cx="46" cy="42" r="30" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+                  <circle cx="46" cy="42" r="23" fill="none" stroke="currentColor" stroke-width="1"></circle>
+                  <circle cx="46" cy="34" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+                  <path d="M46 39.5 V54 M34 46 H58 M37 66 L46 54 L55 66" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="square"></path>
+                </svg>
+              </div>
+              <p class="ink-date">2026-11-27</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <p class="visually-hidden" id="live-status" aria-live="polite"></p>
+    </div>
+
+    <noscript>
+      <section class="static-desk" aria-label="没有脚本时的说明">
+        <p class="section-label">没有脚本时</p>
+        <h2>对完这一期，五步</h2>
+        <p class="static-note">开奖、核对、图章和换一期都需要 JavaScript。号码全部是编的，不能用来对真发票。刷新后这一页会清空。</p>
+        <ol>
+          <li>已存的练习发票：五张编出来的发票已经放好，各有日期、店名和八位号码。还可以再写一张刚好八位的练习号码。</li>
+          <li>开这一期：按下去之后，开奖条揭开一组编出来的号码。一组是特别的，一组是其次的，还有三组用来对齐末几位。</li>
+          <li>核对末几位：每一张标成没有对上，或末 3 位、末 4 位、末 5 位、末 6 位、末 7 位、八位全同。对上的末几位用蓝色标出。</li>
+          <li>安静的图章：只有对上之后，一枚圆加直线画成的几何图章才收下发票，并印上日期。</li>
+          <li>换一期：再编一组发票和号码，结果清空。号码仍然是编的。</li>
+        </ol>
+        <h3>练习期 · 01 的五张发票</h3>
+        <ul>
+          <li>纸巷文具 · 2026-09-04 · 90807212 · 末 3 位相同</li>
+          <li>暮色豆浆 · 2026-09-17 · 87003434 · 末 4 位相同</li>
+          <li>北窗书店 · 2026-09-28 · 10293847 · 没有对上</li>
+          <li>河岸修车 · 2026-10-09 · 56471029 · 没有对上</li>
+          <li>三月茶叶 · 2026-10-22 · 81726390 · 没有对上</li>
+        </ul>
+        <h3>练习期 · 01 的开奖条</h3>
+        <ul>
+          <li>特别一组 · 11223344</li>
+          <li>其次一组 · 55667788</li>
+          <li>用来对齐的三组 · 12121212、34343434、56565656</li>
+        </ul>
+        <p>号码是编的，不能用来对真发票。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是一篇研报之后的学习概念演示，不是發票怪獸的正式产品。界面与文案均为另写，不使用官方标志、图标、截图或角色形象；练习发票、开奖号码和那个小小的几何图章都是编的。发行方是春樹科技（Spring Trees Technology CO., LTD.）。研报发现，AppMagic lastDate 2026-11-25（财政部 115 年 9–10 月期开奖日）台湾 iPhone 应用免费日榜 #3（+855），同一天还有三款对奖应用一齐冲高；11-20 的 4.20.0 只是载具便利贴换图，未见更新节点触发。变现未见订阅档，主要是一次性内购与广告，以及开发商的品牌合作。演示只做『对完这一期』，没有付费，也没有真实开奖数据。数据不离开这一页，刷新后清空。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/888a6356-1848-4dbb-8b94-f54f2183a7bb" target="_blank" rel="noopener noreferrer">当日研报 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">对完这一期 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="check.js"></script>
+</body>
+</html>
