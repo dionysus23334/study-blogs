@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "entries": [
+    {
+      "id": "qmonster",
+      "date": "2026-11-27",
+      "name": "Invoice Monster",
+      "name_zh": "發票怪獸 · 对完这一期",
+      "publisher": "Spring Trees Technology CO., LTD.",
+      "one_liner_zh": "先把练习发票存好，开奖之后对末几位：号码是编的，只用来看清『对完这一期』这件事。",
+      "one_liner_en": "Save the practice receipts first, then match trailing digits after the draw: the numbers are invented, so you can see the 'check this draw' step clearly.",
+      "tags": ["Finance", "Utility"],
+      "demo": "apps/qmonster/",
+      "demo_en": "apps/qmonster/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/888a6356-1848-4dbb-8b94-f54f2183a7bb"
+    },
     {
       "id": "gloam",
       "date": "2026-11-26",

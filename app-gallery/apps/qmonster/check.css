@@ -1,0 +1,439 @@
+/* 对完这一期 — cream receipts, a thin-rule draw slip, one geometric stamp. */
+
+.desk {
+  --ticket: #f4efe6;
+  --ticket-ink: #241f18;
+  --ticket-soft: rgba(36, 31, 24, .62);
+  margin-top: 36px;
+  min-width: 0;
+}
+
+html[data-theme="dark"] .desk {
+  --ticket: #322b22;
+  --ticket-ink: #f4ecdf;
+  --ticket-soft: rgba(244, 236, 223, .62);
+}
+
+.desk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  min-width: 0;
+}
+
+.desk .side {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+
+.disclaimer {
+  margin: 10px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--acc);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.desk .paper {
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 22px 22px 18px;
+}
+
+.desk .paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 22px;
+  width: 36px;
+  height: 1px;
+  background: var(--acc);
+}
+
+.desk .kicker,
+.prize-label,
+.field-label {
+  margin: 8px 0 0;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.desk-heading {
+  margin: 2px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+
+.panel-note,
+.slip-wait,
+.reward-note,
+.summary {
+  margin: 8px 0 0;
+  max-width: 38em;
+  color: var(--mut);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.summary {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.term-name {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  line-height: 1.4;
+}
+
+.receipt-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.receipt {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 12px 14px 12px 26px;
+  background: var(--ticket);
+  color: var(--ticket-ink);
+}
+
+.receipt::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -8px;
+  bottom: -8px;
+  width: 14px;
+  background: radial-gradient(circle at 0 8px, var(--bg) 5px, transparent 5.5px);
+  background-size: 14px 16px;
+  background-repeat: repeat-y;
+}
+
+.receipt-shop,
+.receipt-date,
+.receipt-num,
+.receipt-tier {
+  margin: 0;
+}
+
+.receipt-shop {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.receipt-date {
+  margin-top: 2px;
+  color: var(--ticket-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  line-height: 1.4;
+}
+
+.receipt-num {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 22px;
+  letter-spacing: .12em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.receipt-num .match {
+  color: var(--acc);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.receipt-tier {
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.receipt.is-hit .receipt-tier { color: var(--acc); }
+.receipt.is-miss .receipt-tier { color: var(--ticket-soft); }
+
+.receipt.is-typed {
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.practice {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.field-label { margin: 0; }
+
+.practice input {
+  width: 100%;
+  max-width: 16em;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 18px;
+  letter-spacing: .16em;
+}
+
+.field-hint,
+.keyline,
+.field-error {
+  margin: 0;
+  max-width: 40em;
+}
+
+.field-hint,
+.keyline {
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .03em;
+  line-height: 1.55;
+}
+
+.field-error {
+  color: var(--acc);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.field-error:empty { display: none; }
+
+.slip {
+  min-width: 0;
+  padding: 4px 2px 2px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.prize {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.prize-label { margin: 0; }
+
+.prize-num {
+  margin: 2px 0 0;
+  font-family: var(--mono);
+  font-size: 20px;
+  letter-spacing: .16em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.desk .btn.is-off,
+.desk .btn.is-off:hover,
+.desk .btn.is-off:focus-visible {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--mut);
+  cursor: default;
+}
+
+.stage {
+  position: relative;
+  height: 128px;
+  margin-top: 14px;
+}
+
+.mini {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 42px;
+  height: 54px;
+  border: 1px solid var(--line);
+  background: var(--ticket);
+  opacity: 0;
+}
+
+.mini::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -6px;
+  bottom: -6px;
+  width: 10px;
+  background: radial-gradient(circle at 0 6px, var(--panel) 3px, transparent 3.5px);
+  background-size: 10px 12px;
+}
+
+.mini::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 6px;
+  top: 16px;
+  height: 18px;
+  border-top: 1px solid var(--ticket-soft);
+  border-bottom: 1px solid var(--ticket-soft);
+}
+
+.seal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 92px;
+  height: 92px;
+  color: var(--mut);
+}
+
+.seal svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ink-date {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  color: var(--acc);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: .06em;
+  line-height: 1;
+  opacity: 0;
+}
+
+.stage.is-reward .mini {
+  opacity: 1;
+  left: calc(100% - 146px);
+}
+
+.stage.is-reward .seal { color: var(--acc); }
+
+.stage.is-reward .ink-date { opacity: 1; }
+
+.static-desk {
+  margin-top: 28px;
+  padding: 18px 0 2px;
+  border-top: 1px solid var(--line);
+}
+
+.static-desk h2 {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.static-desk h3 {
+  margin: 20px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -.02em;
+}
+
+.static-desk p,
+.static-desk .static-note { margin: 8px 0 0; max-width: 40em; }
+
+.static-desk .static-note {
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  line-height: 1.6;
+}
+
+.static-desk ul,
+.static-desk ol { margin: 8px 0 0; padding-left: 1.25em; }
+
+.static-desk li {
+  padding: 3px 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.demo-page .notes-callout { margin-top: 42px; }
+
+.desk button,
+.desk input,
+.desk .summary { scroll-margin-top: 88px; scroll-margin-bottom: 24px; }
+
+@media (min-width: 760px) {
+  .desk-grid { grid-template-columns: minmax(0, 1.08fr) minmax(260px, 0.92fr); }
+}
+
+@media (max-width: 759px) {
+  .desk { margin-top: 28px; }
+  .desk .paper { padding: 18px 16px 16px; }
+  .desk .paper::before { left: 16px; }
+  .receipt-num { font-size: 20px; letter-spacing: .08em; }
+  .prize-num { font-size: 18px; letter-spacing: .12em; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stage.is-reward .mini {
+    animation: arrive .68s ease;
+  }
+
+  .stage.is-reward .ink-date {
+    animation: ink .35s ease .5s both;
+  }
+}
+
+@keyframes arrive {
+  from { opacity: 1; left: 0; }
+  to { opacity: 1; left: calc(100% - 146px); }
+}
+
+@keyframes ink {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage.is-reward .mini,
+  .stage.is-reward .ink-date {
+    animation: none;
+  }
+}
