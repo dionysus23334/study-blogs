@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "entries": [
+    {
+      "id": "oneoneone",
+      "date": "2026-11-28",
+      "name": "1.1.1.1: Faster Internet",
+      "name_zh": "1.1.1.1 · 开一下",
+      "publisher": "Cloudflare, Inc.",
+      "one_liner_zh": "按一下，把还能看见去向的路改写成一跳加密的近处 hop。练习站是编的，也不会改你的网络。",
+      "one_liner_en": "One tap rewrites a path that can still see the destination as an encrypted nearer hop. Practice Station is invented, and nothing happens to your network.",
+      "tags": ["Utility", "Network"],
+      "demo": "apps/oneoneone/",
+      "demo_en": "apps/oneoneone/en/",
+      "report": "https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/7cd0ad7b-6c48-4904-ae56-791c20dd66fb"
+    },
     {
       "id": "qmonster",
       "date": "2026-11-27",
