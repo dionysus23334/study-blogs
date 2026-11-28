@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>开一下 · Yuxi Guo</title>
+<meta name="description" content="开一下：学习概念演示。一条还能看见去向的路，按一下改写成加密的近处 hop。不会改你的网络。">
+<meta name="theme-color" content="#e9ecef">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231f37ff'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='white' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/oneoneone/en/">
+<link rel="alternate" hreflang="zh-CN" href="https://dionysus23334.github.io/study-blogs/app-gallery/apps/oneoneone/">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../gallery.css">
+<link rel="stylesheet" href="tap.css">
+</head>
+<body id="top" class="notes-page demo-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../../../">
+      <span class="brand-name">Yuxi Guo</span>
+      <span class="brand-sub">study archive</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../#explorations">探索</a>
+      <a href="../../">画廊</a>
+      <a href="https://github.com/dionysus23334" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <div class="lang-switch" aria-label="语言">
+      <a href="en/" lang="en">EN</a><span class="lang-sep">/</span><span class="lang-current" lang="zh-CN">中文</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅色">
+      <span class="theme-icon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="shell notes-wrap">
+    <p class="eyebrow reveal"><a href="../../../#explorations">探索</a> · 04 · <a href="../../">画廊</a> · 2026-11-28</p>
+    <h1 class="reveal">开一下</h1>
+    <p class="exhibit-meta reveal">
+      <span>1.1.1.1: Faster Internet</span>
+      <span>Cloudflare, Inc.</span>
+      <span><time datetime="2026-11-28">2026-11-28</time></span>
+    </p>
+    <p class="lead reveal">一条连接可以有两种写法。没开的时候，路上还站着观察点，去向的名字就写在它旁边，所以这条路上还能看见去向。按一下「开一下」，停一停，中间换成加密的近处 hop，那个名字从观察点身边拿走，页边只留下「读不出名字」。练习站是编出来的站点。这是学习用的概念演示，不会改你的网络。</p>
+
+    <div class="tap" id="tap" data-state="off">
+      <p class="tap-notice" id="tap-notice">这是学习用的概念演示，不会改你的网络。</p>
+      <div class="tap-grid">
+        <section class="paper path" aria-labelledby="path-heading">
+          <p class="kicker">路径</p>
+          <h2 id="path-heading" class="tap-heading">这条路</h2>
+          <ol class="route" id="route">
+            <li class="node node-device">
+              <span class="tick" aria-hidden="true"></span>
+              <p class="node-role">设备</p>
+              <p class="node-name">这台设备</p>
+              <p class="node-note">从这里出发</p>
+            </li>
+            <li class="node node-mid">
+              <span class="tick" aria-hidden="true"></span>
+              <p class="node-role" id="mid-role">中间</p>
+              <p class="node-name" id="mid-name">路上的观察点</p>
+              <p class="slip">
+                <span class="slip-label">看得见这个名字</span>
+                <span class="slip-name">练习站 · Practice Station</span>
+              </p>
+              <p class="seal">
+                <span class="seal-label">已收起</span>
+                <span class="seal-strokes" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+                <span class="seal-note">名字收在这一跳里</span>
+              </p>
+              <p class="fade-mark">
+                <span class="fade-name">观察点</span><span class="fade-sep" aria-hidden="true"> · </span><span class="fade-note">读不出名字</span>
+              </p>
+            </li>
+            <li class="node node-dest">
+              <span class="tick" aria-hidden="true"></span>
+              <p class="node-role">去向</p>
+              <p class="node-name">练习站 · Practice Station</p>
+              <p class="node-note">编出来的站点</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="paper switchboard" aria-labelledby="switch-heading">
+          <p class="kicker">开关</p>
+          <h2 id="switch-heading" class="tap-heading">开一下</h2>
+          <p class="explain" id="explain">中间这一站还能读出去向的名字。按下去，停一停，这条路改写成加密的近处 hop。</p>
+          <button type="button" class="paper-switch" id="paper-switch" aria-pressed="false" aria-controls="route" aria-describedby="tap-notice tap-status">
+            <span class="switch-track" aria-hidden="true">
+              <span class="switch-end switch-end-off">关</span>
+              <span class="switch-rule"><span class="switch-mark"></span></span>
+              <span class="switch-end switch-end-on">开</span>
+            </span>
+            <span class="switch-label" id="switch-label">开一下</span>
+          </button>
+          <p class="status" id="tap-status">这条路上还能看见去向</p>
+          <figure class="bars">
+            <figcaption>示意</figcaption>
+            <div class="bar bar-long">
+              <span class="bar-label">绕远一点</span>
+              <span class="bar-rule" aria-hidden="true"></span>
+            </div>
+            <div class="bar bar-short">
+              <span class="bar-label">近处一跳</span>
+              <span class="bar-rule" aria-hidden="true"></span>
+            </div>
+            <p class="bar-note">两条线的长短是编的，不是测出来的快慢。</p>
+          </figure>
+        </section>
+      </div>
+      <p class="visually-hidden" id="live-status" aria-live="polite" aria-atomic="true"></p>
+    </div>
+
+    <noscript>
+      <section class="static-desk" aria-label="没有脚本时的说明">
+        <p class="section-label">没有脚本时</p>
+        <h2>开一下，两种说法</h2>
+        <p class="static-note">开关、停顿和改写路径需要 JavaScript。这是学习用的概念演示，不会改你的网络。刷新后回到没开。</p>
+        <h3>没开</h3>
+        <ol>
+          <li>这台设备。从这里出发。</li>
+          <li>路上的观察点。看得见这个名字：练习站 · Practice Station。</li>
+          <li>练习站 · Practice Station。编出来的站点。</li>
+        </ol>
+        <p>这条路上还能看见去向</p>
+        <h3>开了之后</h3>
+        <ol>
+          <li>这台设备。</li>
+          <li>加密的近处 hop。名字收在这一跳里。</li>
+          <li>练习站 · Practice Station。</li>
+        </ol>
+        <p>观察点留在页边，读不出名字。</p>
+        <p>去向被收进加密 hop</p>
+        <p>再按一次同一个开关，回到没开的说法。两条长短不一的线只是示意，不是测出来的快慢。</p>
+      </section>
+    </noscript>
+
+    <aside class="notes-callout reveal">
+      <p class="section-label">关于这个演示</p>
+      <p>这是个人学习档案里的概念演示，不是 Cloudflare 或 1.1.1.1 的正式产品。它不会安装 VPN，不会更改 DNS，也不会联系任何网络。界面与文案均为另写，不用官方标志、云朵形象、截图或口号。图上是一条竖线，和一枚在横线上滑动的记号。练习站是编出来的站点。两条长短不一的线标着「示意」，不是测出来的快慢。开关只改这一页上的图。刷新后回到没开。</p>
+      <p><a href="https://cursor.com/canvas/store-a8a30e19-264b-41ce-ab56-87b4bf95def6/7cd0ad7b-6c48-4904-ae56-791c20dd66fb" target="_blank" rel="noopener noreferrer">快增 App 日报 · 1.1.1.1: Faster Internet · 2026-11-28 ↗</a></p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-left">
+    <span class="brand-name">Yuxi Guo</span>
+    <span class="footer-muted">开一下 · 学习演示 · 2026</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-muted">Plain HTML/CSS · No tracking</span>
+    <a href="#top" class="back-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../../../main.js"></script>
+<script src="tap.js"></script>
+</body>
+</html>
